@@ -12,7 +12,9 @@ public class Encounter : MonoBehaviour {
 	private List<PartyMember> party = new List<PartyMember>();
 
 	[SerializeField] GameObject progressBarPrefab;
+	[SerializeField] GameObject uiButtonPrefab;
 	[SerializeField] GameObject WorldCanvas;
+
 
 	public void Start() {
 		allHotspots = new List<Hotspot>();
@@ -93,6 +95,10 @@ public class Encounter : MonoBehaviour {
 
 	public UIProgressBar CreateProgressBar() {
 		return Instantiate(progressBarPrefab, WorldCanvas.transform).GetComponent<UIProgressBar>();
+	}
+
+	public UIButton CreateUIButton() {
+		return Instantiate(uiButtonPrefab, WorldCanvas.transform).GetComponent<UIButton>();
 	}
 
 

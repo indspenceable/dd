@@ -406,6 +406,8 @@ MonoBehaviour:
     type: 2}
   progressBarPrefab: {fileID: 1128010747971580, guid: ec35d4b9d05204da7a0d6bc53e8f34bb,
     type: 2}
+  uiButtonPrefab: {fileID: 1250209264098804, guid: 960c524aa308046309d59360c904035a,
+    type: 2}
   WorldCanvas: {fileID: 596407552}
 --- !u!4 &437181570
 Transform:
@@ -558,7 +560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 1
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
@@ -566,7 +568,7 @@ MonoBehaviour:
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
+  m_DynamicPixelsPerUnit: 1000
 --- !u!223 &596407555
 Canvas:
   m_ObjectHideFlags: 0
