@@ -26,7 +26,7 @@ public class Monster : MonoBehaviour {
 	void Update() {
 		if (totalDamage > 0) {
 			if (healthBar == null ) {
-				healthBar = e.CreateProgressBar();
+				healthBar = e.CreateProgressBar(transform);
 				healthBar.transform.position = transform.position + new Vector3(0,1);
 			}
 			healthBar.SetPct(1f - (totalDamage / (float)hp));

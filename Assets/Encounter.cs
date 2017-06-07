@@ -93,8 +93,8 @@ public class Encounter : MonoBehaviour {
 
 
 
-	public UIProgressBar CreateProgressBar() {
-		return Instantiate(progressBarPrefab, WorldCanvas.transform).GetComponent<UIProgressBar>();
+	public UIProgressBar CreateProgressBar(Transform t) {
+		return Instantiate(progressBarPrefab, t).GetComponent<UIProgressBar>();
 	}
 
 	public UIButton CreateUIButton() {
@@ -104,14 +104,14 @@ public class Encounter : MonoBehaviour {
 
 
 	private void BuildMonster(Hotspot hotspot) {
-		Monster m = Instantiate(monsterPrefab, hotspot.transform.position, Quaternion.identity).GetComponent<Monster>();
+		Monster m = Instantiate(monsterPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<Monster>();
 		hotspot.SetMonster(m);
 		m.SetEncounter(this);
 		monsters.Add(m);
 	}
 
 	private void BuildPartyMember(Hotspot hotspot) {
-		PartyMember p = Instantiate(partyMemberPrefab, hotspot.transform.position, Quaternion.identity).GetComponent<PartyMember>();
+		PartyMember p = Instantiate(partyMemberPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<PartyMember>();
 		hotspot.SetPartyMember(p);
 		p.SetEncounter(this);
 		party.Add(p);
