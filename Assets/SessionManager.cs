@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 
 [System.Serializable]
@@ -16,6 +18,9 @@ public class DungeonRoom {
 	public Vector3 ToVec() {
 		return new Vector3(x-4.5f, y-4.5f);
 	}
+	public bool Equals(DungeonRoom o) {
+		return x == o.x  && y==o.y && state == o.state;
+	}
 }
 [System.Serializable]
 public class Link {
@@ -25,23 +30,68 @@ public class Link {
 	}
 	public int source;
 	public int dest;
+	public bool Equals(Link o) {
+		return this.source == o.source && this.dest == o.dest;
+	}
 }
 [System.Serializable]
 public class Layout {
 	public List<DungeonRoom> rooms = new List<DungeonRoom>();
 	public List<Link> doors = new List<Link>();
+
+	public bool Equals(Layout o) {
+		if (rooms.Count != o.rooms.Count ||
+			doors.Count != o.doors.Count) {
+			return false;
+		}
+		for (int i = 0; i < rooms.Count; i += 1) {
+			if (! rooms[i].Equals(o.rooms[i])) return false;
+		}
+		for (int i = 0; i < doors.Count; i += 1) {
+			if (! doors[i].Equals(o.doors[i])) return false;
+		}
+		return true;
+	}
+}
+
+[System.Serializable]
+public class SerializableGameState {
+	public Layout layout;
+
+	public bool Equals(SerializableGameState o) {
+		return layout.Equals(o.layout);
+	}
 }
 public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject mapPrefab;
 	[SerializeField] GameObject encounterPrefab;
-
-	public Layout layout;
-
 	private GameObject currentMode;
+	public SerializableGameState state;
 
 	IEnumerator Start() {
 		yield return BuildLayout();
 		SwapToMapMode();
+		StartCoroutine(CheckSaves());
+	}
+
+	// TODO this needs to go before production! but for the time being, it's a nice
+	// safety net :)
+	private IEnumerator CheckSaves() {
+		var formatter = new BinaryFormatter();
+		while (true) {
+			MemoryStream outputStream = new MemoryStream();
+			formatter.Serialize(outputStream, state);
+			var data = outputStream.ToArray();
+			var inputStream = new MemoryStream(data, 0, data.Length);
+			var newState = (SerializableGameState)formatter.Deserialize(inputStream);
+			if (!state.Equals(newState)) {
+				Debug.Log("They're not equal!");
+			} else {
+				Debug.Log("All g!");
+			}
+			yield return new WaitForSeconds(0.75f);
+		}
+
 	}
 
 	private void KillCurrentMode() {
@@ -66,7 +116,7 @@ public class SessionManager : MonoBehaviour {
 	}
 
 	private IEnumerator BuildLayout() {
-		layout = new Layout();
+		Layout layout = new Layout();
 		layout.rooms.Add(new DungeonRoom(5,5));
 		layout.rooms[0].state = RoomComponent.State.CLEARED;
 		yield return null;
@@ -96,5 +146,6 @@ public class SessionManager : MonoBehaviour {
 			}
 //			yield return null;
 		}
+		state.layout = layout;
 	}
 }

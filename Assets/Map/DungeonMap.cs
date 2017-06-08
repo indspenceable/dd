@@ -29,7 +29,7 @@ public class DungeonMap : MonoBehaviour {
 	private SessionManager session;
 	public Layout layout {
 		get {
-			return session.layout;
+			return session.state.layout;
 		}
 	}
 		
