@@ -8,7 +8,12 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject mapPrefab;
 	[SerializeField] GameObject encounterPrefab;
 	private GameObject currentMode;
-	public GameState state;
+
+	[HideInInspector]
+	private GameState _state;
+	public GameState state {
+		get { return _state; }
+	}
 
 	IEnumerator Start() {
 		yield return BuildLayout();
@@ -83,6 +88,7 @@ public class SessionManager : MonoBehaviour {
 //				Debug.Log("" + layout.rooms.Count*100f / requiredRoomCount + "% (" + layout.rooms.Count + "/" + requiredRoomCount + ")");
 			}
 		}
+		_state = new GameState();
 		state.layout = layout;
 	}
 }
