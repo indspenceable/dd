@@ -33,9 +33,9 @@ public class PartyMember : MonoBehaviour {
 			// Display the buttons for actions!
 			{
 				UIButton go = e.CreateUIButton();
-				go.SetText("Bow");
+				go.SetText(p.weapon.name);
 				go.transform.position = p.transform.position + new Vector3(-1, -1f);
-				go.SetOnClick(() => e.InstallListener(new Attack(p, this, e)));
+				go.SetOnClick(() => e.InstallListener(new AttackWithWeapon(p, p.weapon, this, e)));
 				partyMemberActions.Add(go);
 			}
 			{
@@ -54,15 +54,17 @@ public class PartyMember : MonoBehaviour {
 		}
 	}
 
-	public class Attack : Encounter.ActionListener {
+	public class AttackWithWeapon : Encounter.ActionListener {
 		private PartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
+		private Weapon w;
 
-		public Attack(PartyMember p, Encounter.ActionListener previous, Encounter e) {
+		public AttackWithWeapon(PartyMember p, Weapon w, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
+			this.w = w;
 		}
 
 		public void PartyMemberClicked(PartyMember target) {
@@ -71,7 +73,7 @@ public class PartyMember : MonoBehaviour {
 		}
 		public void MonsterClicked(Monster m) {
 			Debug.Log("Clicked on a monster! time to get to work.");
-			p.TakeAction(p.InitiateAttack(m), 7f);
+			p.TakeAction(p.InitiateAttack(m, w.damage), w.readyTime);
 			e.InstallListener(null);
 		}
 		public void Cancel() {
@@ -118,9 +120,11 @@ public class PartyMember : MonoBehaviour {
 	[SerializeField] GameObject SelectedReticle;
 
 	private Encounter e;
+	public Weapon weapon;
 	public Hotspot hotspot;
-	public void SetEncounter(Encounter e) {
+	public void SetupEncounter(Encounter e, Weapon w) {
 		this.e = e;
+		this.weapon = w;
 	}
 	public void MarkSelected(bool amSelected) {
 		this.SelectedReticle.SetActive(amSelected);
@@ -165,9 +169,9 @@ public class PartyMember : MonoBehaviour {
 		StartCoroutine(action);
 	}
 
-	public IEnumerator InitiateAttack(Monster m) {
+	public IEnumerator InitiateAttack(Monster m, int damage) {
 		// TODO animate this
-		m.TakeDamage(3);
+		m.TakeDamage(damage);
 		yield return null;
 	}
 

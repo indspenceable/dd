@@ -18,7 +18,7 @@ public class Monster : MonoBehaviour {
 		this.totalDamage += hitAmount;
 		if (this.totalDamage > hp) {
 			RemoveHealthBar();
-			Destroy(gameObject);
+			e.DestroyMonster(this);
 		}
 	}
 

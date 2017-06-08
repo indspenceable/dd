@@ -15,8 +15,11 @@ public class Encounter : MonoBehaviour {
 	[SerializeField] GameObject uiButtonPrefab;
 	[SerializeField] GameObject WorldCanvas;
 
+	[SerializeField] List<Weapon> weapons;
+	[SerializeField] GameManager gm;
 
 	public void Start() {
+//		this.gm = gm;
 		allHotspots = new List<Hotspot>();
 		allHotspots.AddRange(monsterHotspots);
 		allHotspots.AddRange(playerHotspots);
@@ -41,6 +44,13 @@ public class Encounter : MonoBehaviour {
 		void Cancel();
 		void InstallUI();
 		void UninstallUI();
+	}
+	class NoOp : ActionListener {
+		public void PartyMemberClicked(PartyMember p){}
+		public void MonsterClicked(Monster m){}
+		public void Cancel(){}
+		public void InstallUI(){}
+		public void UninstallUI(){}
 	}
 	private ActionListener al = null;
 	class EncounterEventListener : ActionListener {
@@ -74,7 +84,19 @@ public class Encounter : MonoBehaviour {
 		this.al.InstallUI();
 	}
 
-	public void Update() {
+	public void DestroyMonster(Monster m) {
+		monsters.Remove(m);
+		Destroy(m.gameObject);
+		if (monsters.Count == 0) {
+			InstallListener(new NoOp());
+			StartCoroutine(GoToMapScreen());
+		}
+	}
+
+	private IEnumerator GoToMapScreen(){
+		// TODO visual effects go here.
+		yield return null;
+//		gm.EndEncounter(this);
 	}
 
 	public void ClickPartyMember(PartyMember p) {
@@ -90,9 +112,6 @@ public class Encounter : MonoBehaviour {
 		InstallListener(new PartyMember.Selected(p, null, this));
 	}
 
-
-
-
 	public UIProgressBar CreateProgressBar(Transform t) {
 		return Instantiate(progressBarPrefab, t).GetComponent<UIProgressBar>();
 	}
@@ -100,8 +119,6 @@ public class Encounter : MonoBehaviour {
 	public UIButton CreateUIButton() {
 		return Instantiate(uiButtonPrefab, WorldCanvas.transform).GetComponent<UIButton>();
 	}
-
-
 
 	private void BuildMonster(Hotspot hotspot) {
 		Monster m = Instantiate(monsterPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<Monster>();
@@ -113,7 +130,7 @@ public class Encounter : MonoBehaviour {
 	private void BuildPartyMember(Hotspot hotspot) {
 		PartyMember p = Instantiate(partyMemberPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<PartyMember>();
 		hotspot.SetPartyMember(p);
-		p.SetEncounter(this);
+		p.SetupEncounter(this, weapons[Random.Range(0, weapons.Count)]);
 		party.Add(p);
 	}
 

@@ -109,6 +109,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedReticle: {fileID: 1475472346540184}
+  weapon:
+    name: 
+    minRange: 0
+    maxRange: 0
+    damage: 0
+    readyTime: 0
+  hotspot: {fileID: 0}
 --- !u!212 &212161462189435524
 SpriteRenderer:
   m_ObjectHideFlags: 1
