@@ -20,6 +20,8 @@ public class DungeonMap : MonoBehaviour {
 				dm.StartEncounter(r);
 			} else {
 				// TODO you should be able to go to some other rooms.
+				// But for now, just take you to party management
+				dm.session.SwapToManagement();
 			}
 		}
 	}

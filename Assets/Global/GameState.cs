@@ -12,19 +12,32 @@ public class RoomContents {
 }
 [System.Serializable] 
 public class Item {
-	public string name;
-	// TODO stats here.
+	[System.Serializable]
+	public struct Definition{
+		public Sprite image;
+	}
+	public int index;
+	public Item(int index) {
+		this.index = index;
+	}
+	public Definition GetDef(SessionManager session) {
+		return session.itemDefs[index];
+	}
 	public override bool Equals(System.Object obj) {
 		Item o = obj as Item;
 		if (o == null) return false;
-		return o.name.Equals(name);
+		return o.index == index;
 	}
 }
 [System.Serializable] 
 public class PartyMember {
 	public int image;
-	public List<Item> inventory;
+	public List<Item> inventory = new List<Item>();
 	// TODO add skills here
+
+	public Sprite GetImage(SessionManager session) {
+		return session.partyImages[image];
+	}
 	public override bool Equals(System.Object obj) {
 		PartyMember o = obj as PartyMember;
 		if (o == null) return false;
@@ -70,8 +83,8 @@ public class Layout {
 [System.Serializable]
 public class GameState {
 	public Layout layout;
-	public List<Item> inventory;
-	public List<PartyMember> party;
+	public List<Item> inventory = new List<Item>();
+	public List<PartyMember> party = new List<PartyMember>();
 	public override bool Equals(System.Object obj) {
 		GameState o = obj as GameState;
 		if (o == null) return false;

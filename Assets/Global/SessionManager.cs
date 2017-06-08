@@ -7,7 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject mapPrefab;
 	[SerializeField] GameObject encounterPrefab;
+	[SerializeField] GameObject partyManagementPrefab;
 	[SerializeField] public List<Sprite> partyImages;
+	[SerializeField] public List<Item.Definition> itemDefs;
 
 
 	private GameObject currentMode;
@@ -22,7 +24,14 @@ public class SessionManager : MonoBehaviour {
 		_state = new GameState();
 		yield return BuildLayout();
 		yield return BuildParty();
-		SwapToMapMode();
+//		SwapToMapMode();
+		state.inventory.Add(new Item(0));
+		state.inventory.Add(new Item(1));
+		state.inventory.Add(new Item(1));
+		state.inventory.Add(new Item(0));
+		state.inventory.Add(new Item(3));
+		state.inventory.Add(new Item(2));
+		SwapToManagement();
 		StartCoroutine(CheckSaves());
 	}
 
@@ -67,6 +76,13 @@ public class SessionManager : MonoBehaviour {
 		currentMode = e.gameObject;
 	}
 
+	public void SwapToManagement() {
+		KillCurrentMode();
+		PartyManagement pm = Instantiate(partyManagementPrefab).GetComponent<PartyManagement>();
+		pm.Setup(this);
+		currentMode = pm.gameObject;
+	}
+
 	private IEnumerator BuildLayout() {
 		Layout layout = new Layout();
 		layout.rooms.Add(new RoomData(new Coord(5,5)));
@@ -102,6 +118,7 @@ public class SessionManager : MonoBehaviour {
 		for (int i = 0; i < 3; i += 1) {
 			var partyMember = new PartyMember();
 			partyMember.image = Random.Range(0, partyImages.Count);
+			partyMember.inventory.Add(new Item(Random.Range(0, itemDefs.Count)));
 			state.party.Add(partyMember);
 		}
 	}
