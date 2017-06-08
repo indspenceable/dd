@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
 public class DungeonRoom {
 	public DungeonRoom(int x, int y) {
@@ -30,66 +31,41 @@ public class Layout {
 	public List<DungeonRoom> rooms = new List<DungeonRoom>();
 	public List<Link> doors = new List<Link>();
 }
-
-public class DungeonMap : MonoBehaviour {
-	public interface EventListener {
-		void ClickOnRoom(RoomComponent r);
-	}
-	public class NoOp : EventListener{
-		public void ClickOnRoom(RoomComponent r){}
-	}
-	public class GoToBattle: EventListener {
-		DungeonMap dm;
-		public GoToBattle(DungeonMap dm) {
-			this.dm = dm;
-		}
-		public void ClickOnRoom(RoomComponent r) {
-			if (r.GetState() == RoomComponent.State.UNEXPLORED) {
-				// Let's go to a battle!
-//				dm.StartEncounter(r);
-			} else {
-				// TODO you should be able to go to some other rooms.
-			}
-		}
-	}
+public class SessionManager : MonoBehaviour {
+	[SerializeField] GameObject mapPrefab;
+	[SerializeField] GameObject encounterPrefab;
 
 	public Layout layout;
-	[SerializeField] GameObject roomPrefab;
-	private EventListener el;
 
-	// Use this for initialization
-	void Start () {
-		this.el = new NoOp();
-		StartCoroutine(Build());
-	}
-		
-	public void RoomClicked(RoomComponent r){
-		el.ClickOnRoom(r);
+	private GameObject currentMode;
+
+	IEnumerator Start() {
+		yield return BuildLayout();
+		SwapToMapMode();
 	}
 
-	// Update is called once per frame
-	void Update () {
-	}
-
-	public void OnDrawGizmos() {
-		if (layout == null || layout.rooms.Count == 0) return;
-
-		Gizmos.color = Color.white;
-		foreach(var r in layout.rooms) {
-			Gizmos.DrawWireCube(r.ToVec(), Vector3.one);
-		}
-		var rz = layout.rooms[0];
-		Gizmos.color = Color.green;
-		Gizmos.DrawWireCube(layout.rooms[0].ToVec(), Vector3.one);
-		Gizmos.color = Color.yellow;
-		foreach(var c in layout.doors) {
-			var r = layout.rooms[c.source];
-			var r2 = layout.rooms[c.dest];
-			Gizmos.DrawLine(r.ToVec(), r2.ToVec());
+	private void KillCurrentMode() {
+		if (currentMode != null) {
+			Destroy(currentMode);
+			currentMode = null;
 		}
 	}
 
-	private IEnumerator Build() {
+	public void SwapToMapMode(){
+		KillCurrentMode();
+		DungeonMap dm = Instantiate(mapPrefab).GetComponent<DungeonMap>();
+		dm.Setup(this);
+		currentMode = dm.gameObject;
+	}
+
+	public void SwapToEncounter() {
+		KillCurrentMode();
+		Encounter e = Instantiate(encounterPrefab).GetComponent<Encounter>();
+		e.Setup(this);
+		currentMode = e.gameObject;
+	}
+
+	private IEnumerator BuildLayout() {
 		layout = new Layout();
 		layout.rooms.Add(new DungeonRoom(5,5));
 		layout.rooms[0].state = RoomComponent.State.CLEARED;
@@ -118,16 +94,7 @@ public class DungeonMap : MonoBehaviour {
 				layout.rooms.Add(new DungeonRoom(x,y));
 				Debug.Log("" + layout.rooms.Count*100f / requiredRoomCount + "% (" + layout.rooms.Count + "/" + requiredRoomCount + ")");
 			}
-			yield return null;
-		}
-		BuildGameObjects();
-		this.el = new GoToBattle(this);
-	}
-
-	private void BuildGameObjects() {
-		for (int i = 0; i < layout.rooms.Count; i+=1) {
-			RoomComponent r = Instantiate(roomPrefab, layout.rooms[i].ToVec(), Quaternion.identity, transform).GetComponent<RoomComponent>();
-			r.Setup(this, i);
+//			yield return null;
 		}
 	}
 }

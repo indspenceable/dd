@@ -16,14 +16,13 @@ public class Encounter : MonoBehaviour {
 	[SerializeField] GameObject WorldCanvas;
 
 	[SerializeField] List<Weapon> weapons;
-	[SerializeField] GameManager gm;
+	[SerializeField] SessionManager session;
 
-	public void Start() {
-//		this.gm = gm;
+	public void Setup(SessionManager session) {
+		this.session = session;
 		allHotspots = new List<Hotspot>();
 		allHotspots.AddRange(monsterHotspots);
 		allHotspots.AddRange(playerHotspots);
-
 
 		// Set up the players + monsters
 		foreach(var hotspot in monsterHotspots) {
@@ -94,9 +93,8 @@ public class Encounter : MonoBehaviour {
 	}
 
 	private IEnumerator GoToMapScreen(){
-		// TODO visual effects go here.
 		yield return null;
-//		gm.EndEncounter(this);
+		session.SwapToMapMode();
 	}
 
 	public void ClickPartyMember(PartyMember p) {
