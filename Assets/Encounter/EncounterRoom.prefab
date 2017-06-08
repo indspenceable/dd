@@ -487,14 +487,14 @@ MonoBehaviour:
   - name: Crossbow
     minRange: 0
     maxRange: 0
-    damage: 0
+    damage: 9
     readyTime: 13
   - name: Whip
     minRange: 0
     maxRange: 5
     damage: 3
     readyTime: 1
-  gm: {fileID: 0}
+  session: {fileID: 0}
 --- !u!114 &114825564720275934
 MonoBehaviour:
   m_ObjectHideFlags: 1

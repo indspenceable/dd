@@ -4,20 +4,32 @@ using UnityEngine;
 
 [System.Serializable]
 public class RoomContents {
-	public bool Equals(RoomContents o) {
-		return o!=null;
+	public override bool Equals(System.Object obj) {
+		PartyMember o = obj as PartyMember;
+		if (o == null) return false;
+		return true;
 	}
 }
 [System.Serializable] 
 public class Item {
 	public string name;
 	// TODO stats here.
+	public override bool Equals(System.Object obj) {
+		Item o = obj as Item;
+		if (o == null) return false;
+		return o.name.Equals(name);
+	}
 }
 [System.Serializable] 
 public class PartyMember {
 	public int image;
 	public List<Item> inventory;
 	// TODO add skills here
+	public override bool Equals(System.Object obj) {
+		PartyMember o = obj as PartyMember;
+		if (o == null) return false;
+		return Util.ListEquals(inventory, o.inventory) && image == o.image;
+	}
 }
 
 [System.Serializable]
@@ -37,7 +49,9 @@ public class RoomData {
 	public Vector3 ToVec() {
 		return pos.ToVec() - new Vector3(4.5f, 4.5f);
 	}
-	public bool Equals(RoomData o) {
+	public override bool Equals(System.Object obj) {
+		RoomData o = obj as RoomData;
+		if (o == null) return false;
 		return pos.Equals(o.pos) && state == o.state && contents == o.contents;
 	}
 }
@@ -46,18 +60,10 @@ public class Layout {
 	public List<RoomData> rooms = new List<RoomData>();
 	public List<Coord> doors = new List<Coord>();
 
-	public bool Equals(Layout o) {
-		if (rooms.Count != o.rooms.Count ||
-			doors.Count != o.doors.Count) {
-			return false;
-		}
-		for (int i = 0; i < rooms.Count; i += 1) {
-			if (! rooms[i].Equals(o.rooms[i])) return false;
-		}
-		for (int i = 0; i < doors.Count; i += 1) {
-			if (! doors[i].Equals(o.doors[i])) return false;
-		}
-		return true;
+	public override bool Equals(System.Object obj) {
+		Layout o = obj as Layout;
+		if (o == null) return false;
+		return Util.ListEquals(rooms, o.rooms) && Util.ListEquals(doors, o.doors);
 	}
 }
 
@@ -66,7 +72,23 @@ public class GameState {
 	public Layout layout;
 	public List<Item> inventory;
 	public List<PartyMember> party;
-	public bool Equals(GameState o) {
-		return layout.Equals(o.layout);
+	public override bool Equals(System.Object obj) {
+		GameState o = obj as GameState;
+		if (o == null) return false;
+		return layout.Equals(o.layout) && 
+			Util.ListEquals(inventory, o.inventory) &&
+			Util.ListEquals(party, o.party);
+	}
+}
+public class Util {
+	public static bool ListEquals<T>(List<T> first, List<T> second) {
+		if (first == null && second == null) return true;
+		if (first == null || second == null) return false;
+
+		if (first.Count != second.Count) return false;
+		for (int i = 0; i < first.Count; i += 1) {
+			if (! first[i].Equals(second[i])) return false;
+		}
+		return true;
 	}
 }
