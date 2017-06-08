@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomComponent : MonoBehaviour {
-	// TODO this shouldn't actually live here.
-	public enum State {
-		UNEXPLORED,
-		IN_PROGRESS,
-		CLEARED,
-	}
 	private SpriteRenderer sr;
 	private DungeonMap manager;
 	public int index;
@@ -25,13 +19,13 @@ public class RoomComponent : MonoBehaviour {
 			SetState(manager.layout.rooms[index].state);
 		}
 	}
-	public State GetState() {
+	public RoomData.State GetState() {
 		return manager.layout.rooms[index].state;
 	}
-	public void SetState(State s) {
-		if (s == State.UNEXPLORED) {
+	public void SetState(RoomData.State s) {
+		if (s == RoomData.State.UNEXPLORED) {
 			sr.color = Color.red;
-		} else if (s == State.IN_PROGRESS) {
+		} else if (s == RoomData.State.IN_PROGRESS) {
 			sr.color = Color.magenta;
 		} else {
 			sr.color = Color.green;

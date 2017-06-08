@@ -97,7 +97,7 @@ public class Encounter : MonoBehaviour {
 
 	private IEnumerator GoToMapScreen(){
 		yield return null;
-		session.state.layout.rooms[roomIndex].state = RoomComponent.State.CLEARED;
+		session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 		session.SwapToMapMode();
 	}
 

@@ -15,7 +15,7 @@ public class DungeonMap : MonoBehaviour {
 			this.dm = dm;
 		}
 		public void ClickOnRoom(RoomComponent r) {
-			if (r.GetState() == RoomComponent.State.UNEXPLORED) {
+			if (r.GetState() == RoomData.State.UNEXPLORED) {
 				// Let's go to a battle!
 				dm.StartEncounter(r);
 			} else {
