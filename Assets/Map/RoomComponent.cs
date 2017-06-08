@@ -11,7 +11,7 @@ public class RoomComponent : MonoBehaviour {
 	}
 	private SpriteRenderer sr;
 	private DungeonMap manager;
-	private int index;
+	public int index;
 
 	public void Setup(DungeonMap manager, int index) {
 		this.manager = manager;

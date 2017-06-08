@@ -108,10 +108,10 @@ public class SessionManager : MonoBehaviour {
 		currentMode = dm.gameObject;
 	}
 
-	public void SwapToEncounter() {
+	public void SwapToEncounter(int index) {
 		KillCurrentMode();
 		Encounter e = Instantiate(encounterPrefab).GetComponent<Encounter>();
-		e.Setup(this);
+		e.Setup(this, index);
 		currentMode = e.gameObject;
 	}
 

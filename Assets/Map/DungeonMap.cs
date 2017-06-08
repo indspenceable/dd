@@ -39,7 +39,7 @@ public class DungeonMap : MonoBehaviour {
 
 	void StartEncounter(RoomComponent r) {
 		//TODO refelct the room itself...
-		session.SwapToEncounter();
+		session.SwapToEncounter(r.index);
 	}
 
 	public void Setup(SessionManager session) {

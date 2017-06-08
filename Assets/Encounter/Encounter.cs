@@ -17,17 +17,20 @@ public class Encounter : MonoBehaviour {
 
 	[SerializeField] List<Weapon> weapons;
 	[SerializeField] SessionManager session;
+	private int roomIndex;
 
-	public void Setup(SessionManager session) {
+	public void Setup(SessionManager session, int roomIndex) {
 		this.session = session;
+		this.roomIndex = roomIndex;
 		allHotspots = new List<Hotspot>();
 		allHotspots.AddRange(monsterHotspots);
 		allHotspots.AddRange(playerHotspots);
 
 		// Set up the players + monsters
 		foreach(var hotspot in monsterHotspots) {
-			BuildMonster(hotspot);
+//			BuildMonster(hotspot);
 		}
+		BuildMonster(monsterHotspots[0]);
 		foreach(var hotspot in playerHotspots) {
 			BuildPartyMember(hotspot);
 		}
@@ -94,6 +97,7 @@ public class Encounter : MonoBehaviour {
 
 	private IEnumerator GoToMapScreen(){
 		yield return null;
+		session.state.layout.rooms[roomIndex].state = RoomComponent.State.CLEARED;
 		session.SwapToMapMode();
 	}
 
