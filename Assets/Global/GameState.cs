@@ -8,6 +8,17 @@ public class RoomContents {
 		return o!=null;
 	}
 }
+[System.Serializable] 
+public class Item {
+	public string name;
+	// TODO stats here.
+}
+[System.Serializable] 
+public class PartyMember {
+	public int image;
+	public List<Item> inventory;
+	// TODO add skills here
+}
 
 [System.Serializable]
 public class RoomData {
@@ -53,7 +64,8 @@ public class Layout {
 [System.Serializable]
 public class GameState {
 	public Layout layout;
-
+	public List<Item> inventory;
+	public List<PartyMember> party;
 	public bool Equals(GameState o) {
 		return layout.Equals(o.layout);
 	}

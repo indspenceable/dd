@@ -7,6 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject mapPrefab;
 	[SerializeField] GameObject encounterPrefab;
+	[SerializeField] public List<Sprite> partyImages;
+
+
 	private GameObject currentMode;
 
 	[HideInInspector]
@@ -16,7 +19,9 @@ public class SessionManager : MonoBehaviour {
 	}
 
 	IEnumerator Start() {
+		_state = new GameState();
 		yield return BuildLayout();
+		yield return BuildParty();
 		SwapToMapMode();
 		StartCoroutine(CheckSaves());
 	}
@@ -88,7 +93,16 @@ public class SessionManager : MonoBehaviour {
 //				Debug.Log("" + layout.rooms.Count*100f / requiredRoomCount + "% (" + layout.rooms.Count + "/" + requiredRoomCount + ")");
 			}
 		}
-		_state = new GameState();
 		state.layout = layout;
+	}
+
+	public IEnumerator BuildParty() {
+		yield return null;
+		state.party = new List<PartyMember>();
+		for (int i = 0; i < 3; i += 1) {
+			var partyMember = new PartyMember();
+			partyMember.image = Random.Range(0, partyImages.Count);
+			state.party.Add(partyMember);
+		}
 	}
 }

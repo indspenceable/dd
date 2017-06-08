@@ -9,7 +9,7 @@ public class Encounter : MonoBehaviour {
 	[SerializeField] GameObject monsterPrefab;
 	[SerializeField] GameObject partyMemberPrefab;
 	private List<Monster> monsters = new List<Monster>();
-	private List<PartyMember> party = new List<PartyMember>();
+	private List<EncounterPartyMember> party = new List<EncounterPartyMember>();
 
 	[SerializeField] GameObject progressBarPrefab;
 	[SerializeField] GameObject uiButtonPrefab;
@@ -31,8 +31,11 @@ public class Encounter : MonoBehaviour {
 //			BuildMonster(hotspot);
 		}
 		BuildMonster(monsterHotspots[0]);
-		foreach(var hotspot in playerHotspots) {
-			BuildPartyMember(hotspot);
+//		foreach(var hotspot in playerHotspots) {
+//			BuildPartyMember(hotspot);
+//		}
+		for (int i = 0; i < session.state.party.Count; i+=1) {
+			BuildPartyMember(playerHotspots[i], session.partyImages[session.state.party[i].image]);
 		}
 
 		// Install the default action listener!
@@ -41,14 +44,14 @@ public class Encounter : MonoBehaviour {
 	}
 
 	public interface ActionListener {
-		void PartyMemberClicked(PartyMember p);
+		void PartyMemberClicked(EncounterPartyMember p);
 		void MonsterClicked(Monster m);
 		void Cancel();
 		void InstallUI();
 		void UninstallUI();
 	}
 	class NoOp : ActionListener {
-		public void PartyMemberClicked(PartyMember p){}
+		public void PartyMemberClicked(EncounterPartyMember p){}
 		public void MonsterClicked(Monster m){}
 		public void Cancel(){}
 		public void InstallUI(){}
@@ -60,7 +63,7 @@ public class Encounter : MonoBehaviour {
 		public EncounterEventListener(Encounter e) {
 			this.e = e;
 		}
-		public void PartyMemberClicked(PartyMember p) {
+		public void PartyMemberClicked(EncounterPartyMember p) {
 			e.SelectPartyMember(p);
 		}
 		public void MonsterClicked(Monster m){
@@ -101,7 +104,7 @@ public class Encounter : MonoBehaviour {
 		session.SwapToMapMode();
 	}
 
-	public void ClickPartyMember(PartyMember p) {
+	public void ClickPartyMember(EncounterPartyMember p) {
 		al.PartyMemberClicked(p);
 	}
 
@@ -109,9 +112,9 @@ public class Encounter : MonoBehaviour {
 		al.MonsterClicked(m);
 	}
 
-	public void SelectPartyMember(PartyMember p) {
+	public void SelectPartyMember(EncounterPartyMember p) {
 		Debug.Log("Selecting a party member!");
-		InstallListener(new PartyMember.Selected(p, null, this));
+		InstallListener(new EncounterPartyMember.Selected(p, null, this));
 	}
 
 	public UIProgressBar CreateProgressBar(Transform t) {
@@ -129,10 +132,10 @@ public class Encounter : MonoBehaviour {
 		monsters.Add(m);
 	}
 
-	private void BuildPartyMember(Hotspot hotspot) {
-		PartyMember p = Instantiate(partyMemberPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<PartyMember>();
+	private void BuildPartyMember(Hotspot hotspot, Sprite s) {
+		EncounterPartyMember p = Instantiate(partyMemberPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<EncounterPartyMember>();
 		hotspot.SetPartyMember(p);
-		p.SetupEncounter(this, weapons[Random.Range(0, weapons.Count)]);
+		p.Setup(this, s, weapons[Random.Range(0, weapons.Count)]);
 		party.Add(p);
 	}
 

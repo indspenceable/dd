@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyMember : MonoBehaviour {
+public class EncounterPartyMember : MonoBehaviour {
 	public class Selected : Encounter.ActionListener {
-		private PartyMember p;
+		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
 		private List<UIButton> partyMemberActions;
 
-		public Selected(PartyMember p, Encounter.ActionListener previous, Encounter e) {
+		public Selected(EncounterPartyMember p, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
 		}
 
-		public void PartyMemberClicked(PartyMember target) {
+		public void PartyMemberClicked(EncounterPartyMember target) {
 			Debug.Log("Clicked on another of my peers");
 			e.SelectPartyMember(target);
 		}
@@ -55,19 +55,19 @@ public class PartyMember : MonoBehaviour {
 	}
 
 	public class AttackWithWeapon : Encounter.ActionListener {
-		private PartyMember p;
+		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
 		private Weapon w;
 
-		public AttackWithWeapon(PartyMember p, Weapon w, Encounter.ActionListener previous, Encounter e) {
+		public AttackWithWeapon(EncounterPartyMember p, Weapon w, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
 			this.w = w;
 		}
 
-		public void PartyMemberClicked(PartyMember target) {
+		public void PartyMemberClicked(EncounterPartyMember target) {
 			Debug.Log("Clicked on another of my peers");
 			e.SelectPartyMember(target);
 		}
@@ -88,17 +88,17 @@ public class PartyMember : MonoBehaviour {
 	}
 
 	public class Swap : Encounter.ActionListener {
-		private PartyMember p;
+		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
 
-		public Swap(PartyMember p, Encounter.ActionListener previous, Encounter e) {
+		public Swap(EncounterPartyMember p, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
 		}
 
-		public void PartyMemberClicked(PartyMember target) {
+		public void PartyMemberClicked(EncounterPartyMember target) {
 			p.TakeAction(p.SwapWith(target), 3f);
 			e.InstallListener(null);
 		}
@@ -122,8 +122,9 @@ public class PartyMember : MonoBehaviour {
 	private Encounter e;
 	public Weapon weapon;
 	public Hotspot hotspot;
-	public void SetupEncounter(Encounter e, Weapon w) {
+	public void Setup(Encounter e, Sprite s, Weapon w) {
 		this.e = e;
+		GetComponent<SpriteRenderer>().sprite = s;
 		this.weapon = w;
 	}
 	public void MarkSelected(bool amSelected) {
@@ -175,7 +176,7 @@ public class PartyMember : MonoBehaviour {
 		yield return null;
 	}
 
-	public IEnumerator SwapWith(PartyMember p) {
+	public IEnumerator SwapWith(EncounterPartyMember p) {
 		float dt = 0f;
 		float duration = 1f;
 		Vector3 p1 = transform.position;
