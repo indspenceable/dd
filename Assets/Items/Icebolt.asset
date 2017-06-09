@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Name: Icebolt
   m_EditorClassIdentifier: 
   image: {fileID: 21300016, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
+  damage: 8
+  readyTime: 8

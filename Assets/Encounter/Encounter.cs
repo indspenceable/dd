@@ -14,9 +14,10 @@ public class Encounter : MonoBehaviour {
 	[SerializeField] GameObject progressBarPrefab;
 	[SerializeField] GameObject uiButtonPrefab;
 	[SerializeField] GameObject WorldCanvas;
+	[SerializeField] public Sprite swapSprite;
 
-	[SerializeField] List<Weapon> weapons;
-	[SerializeField] SessionManager session;
+	[HideInInspector]
+	public SessionManager session;
 	private int roomIndex;
 
 	public void Setup(SessionManager session, int roomIndex) {
@@ -35,7 +36,7 @@ public class Encounter : MonoBehaviour {
 //			BuildPartyMember(hotspot);
 //		}
 		for (int i = 0; i < session.state.party.Count; i+=1) {
-			BuildPartyMember(playerHotspots[i], session.partyImages[session.state.party[i].image]);
+			BuildPartyMember(playerHotspots[i], session.state.party[i]);
 		}
 
 		// Install the default action listener!
@@ -132,10 +133,10 @@ public class Encounter : MonoBehaviour {
 		monsters.Add(m);
 	}
 
-	private void BuildPartyMember(Hotspot hotspot, Sprite s) {
+	private void BuildPartyMember(Hotspot hotspot, PartyMember pm) {
 		EncounterPartyMember p = Instantiate(partyMemberPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<EncounterPartyMember>();
 		hotspot.SetPartyMember(p);
-		p.Setup(this, s, weapons[Random.Range(0, weapons.Count)]);
+		p.Setup(this, pm);
 		party.Add(p);
 	}
 

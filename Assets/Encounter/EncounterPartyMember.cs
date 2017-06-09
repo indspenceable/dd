@@ -31,16 +31,19 @@ public class EncounterPartyMember : MonoBehaviour {
 			p.MarkSelected(true);
 			partyMemberActions = new List<UIButton>();
 			// Display the buttons for actions!
+			//TODO this should go for each item in the inventory
 			{
 				UIButton go = e.CreateUIButton();
-				go.SetText(p.weapon.name);
+				var weapon = p.p.inventory[0];
+				go.SetImage(weapon.GetDef(e.session).image);
 				go.transform.position = p.transform.position + new Vector3(-1, -1f);
-				go.SetOnClick(() => e.InstallListener(new AttackWithWeapon(p, p.weapon, this, e)));
+				go.SetOnClick(() => e.InstallListener(new AttackWithWeapon(p, 0, this, e)));
 				partyMemberActions.Add(go);
 			}
 			{
 				UIButton go = e.CreateUIButton();
-				go.SetText("Swap");
+//				go.SetText("Swap");
+				go.SetImage(e.swapSprite);
 				go.transform.position = p.transform.position + new Vector3(1, -1f);
 				go.SetOnClick(() => e.InstallListener(new Swap(p, this, e)));
 				partyMemberActions.Add(go);
@@ -58,13 +61,13 @@ public class EncounterPartyMember : MonoBehaviour {
 		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
-		private Weapon w;
+		int weapon;
 
-		public AttackWithWeapon(EncounterPartyMember p, Weapon w, Encounter.ActionListener previous, Encounter e) {
+		public AttackWithWeapon(EncounterPartyMember p, int w, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
-			this.w = w;
+			this.weapon = w;
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
@@ -73,6 +76,7 @@ public class EncounterPartyMember : MonoBehaviour {
 		}
 		public void MonsterClicked(Monster m) {
 			Debug.Log("Clicked on a monster! time to get to work.");
+			var w = p.p.inventory[weapon].GetDef(e.session);
 			p.TakeAction(p.InitiateAttack(m, w.damage), w.readyTime);
 			e.InstallListener(null);
 		}
@@ -120,12 +124,12 @@ public class EncounterPartyMember : MonoBehaviour {
 	[SerializeField] GameObject SelectedReticle;
 
 	private Encounter e;
-	public Weapon weapon;
+	private PartyMember p;
 	public Hotspot hotspot;
-	public void Setup(Encounter e, Sprite s, Weapon w) {
+	public void Setup(Encounter e, PartyMember p) {
 		this.e = e;
-		GetComponent<SpriteRenderer>().sprite = s;
-		this.weapon = w;
+		this.p = p;
+		GetComponent<SpriteRenderer>().sprite = p.GetImage(e.session);
 	}
 	public void MarkSelected(bool amSelected) {
 		this.SelectedReticle.SetActive(amSelected);
@@ -165,6 +169,7 @@ public class EncounterPartyMember : MonoBehaviour {
 			dt += Time.deltaTime;
 			b.SetPct(dt/duration);
 		}
+		yield return null;
 		CleanupLeasedObjects();
 
 		StartCoroutine(action);

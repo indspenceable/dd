@@ -465,35 +465,10 @@ MonoBehaviour:
     type: 2}
   progressBarPrefab: {fileID: 1128010747971580, guid: ec35d4b9d05204da7a0d6bc53e8f34bb,
     type: 2}
-  uiButtonPrefab: {fileID: 1250209264098804, guid: 960c524aa308046309d59360c904035a,
+  uiButtonPrefab: {fileID: 1025732478603958, guid: 8a73b6fac3b1b4407bba71860b06ae24,
     type: 2}
   WorldCanvas: {fileID: 1542156138316538}
-  weapons:
-  - name: Bow
-    minRange: 2
-    maxRange: 5
-    damage: 3
-    readyTime: 7
-  - name: Laser
-    minRange: 2
-    maxRange: 10
-    damage: 7
-    readyTime: 17
-  - name: Throwing Knife
-    minRange: 0
-    maxRange: 3
-    damage: 5
-    readyTime: 4
-  - name: Crossbow
-    minRange: 0
-    maxRange: 0
-    damage: 9
-    readyTime: 13
-  - name: Whip
-    minRange: 0
-    maxRange: 5
-    damage: 3
-    readyTime: 1
+  swapSprite: {fileID: 21300010, guid: c305322c9d4a04f218e5fbe0cc3a380d, type: 3}
   session: {fileID: 0}
 --- !u!114 &114825564720275934
 MonoBehaviour:
@@ -585,7 +560,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 359785263
-  m_SortingLayer: 1
+  m_SortingLayer: -3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f2d9e3edcd407457c97dcd94ec74702d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

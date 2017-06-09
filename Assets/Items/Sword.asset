@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
+  damage: 5
+  readyTime: 2

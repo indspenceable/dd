@@ -4,10 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 public class UIButton : MonoBehaviour {
-	public void SetText(string t) {
-		GetComponentInChildren<Text>().text = t;
+	public void SetImage(Sprite s) {
+		GetComponent<SpriteRenderer>().sprite = s;
 	}
+	private UnityAction action;
 	public void SetOnClick(UnityAction action) {
-		GetComponent<Button>().onClick.AddListener(action);
+		this.action = action;
+	}
+	void OnMouseDown() {
+		if (action != null) {
+			action.Invoke();
+		}
 	}
 }

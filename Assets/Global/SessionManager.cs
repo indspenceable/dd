@@ -49,6 +49,8 @@ public class SessionManager : MonoBehaviour {
 		_state = (GameState)formatter.Deserialize(stream);
 		stream.Close();
 		SwapToManagement();
+		StartCoroutine(CheckSaves());
+
 	}
 
 	// TODO this needs to go before production! but for the time being, it's a nice
