@@ -8,9 +8,9 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject mapPrefab;
 	[SerializeField] GameObject encounterPrefab;
 	[SerializeField] GameObject partyManagementPrefab;
+	[SerializeField] GameObject mainMenuPrefab;
 	[SerializeField] public List<Sprite> partyImages;
 	[SerializeField] public List<Item.Definition> itemDefs;
-
 
 	private GameObject currentMode;
 
@@ -20,11 +20,19 @@ public class SessionManager : MonoBehaviour {
 		get { return _state; }
 	}
 
-	IEnumerator Start() {
+	void Start() {
+		SwapToMainMenu();
+	}
+
+	public void StartGame() {
+		StartCoroutine(DoGameStart());
+	}
+
+	public IEnumerator DoGameStart() {
+		KillCurrentMode();
 		_state = new GameState();
 		yield return BuildLayout();
 		yield return BuildParty();
-//		SwapToMapMode();
 		state.inventory.Add(new Item(0));
 		state.inventory.Add(new Item(1));
 		state.inventory.Add(new Item(1));
@@ -35,8 +43,19 @@ public class SessionManager : MonoBehaviour {
 		StartCoroutine(CheckSaves());
 	}
 
+	public void LoadSavedGame() {
+		var formatter = new BinaryFormatter();
+		FileStream stream = File.Open(filePath(), FileMode.Open);
+		_state = (GameState)formatter.Deserialize(stream);
+		stream.Close();
+		SwapToManagement();
+	}
+
 	// TODO this needs to go before production! but for the time being, it's a nice
 	// safety net :)
+	private string filePath() {
+		return Application.persistentDataPath + "/dd.gd";
+	}
 	private IEnumerator CheckSaves() {
 		var formatter = new BinaryFormatter();
 		while (true) {
@@ -50,7 +69,12 @@ public class SessionManager : MonoBehaviour {
 			} else {
 				Debug.Log("All g!");
 			}
-			yield return new WaitForSeconds(0.75f);
+
+			FileStream stream = File.Create(filePath()); //you can call it anything you want
+			formatter.Serialize(stream, state);
+			stream.Close();
+			Debug.Log("Wrote state.");
+			yield return new WaitForSeconds(1f);
 		}
 
 	}
@@ -81,6 +105,13 @@ public class SessionManager : MonoBehaviour {
 		PartyManagement pm = Instantiate(partyManagementPrefab).GetComponent<PartyManagement>();
 		pm.Setup(this);
 		currentMode = pm.gameObject;
+	}
+
+	public void SwapToMainMenu() {
+		KillCurrentMode();
+		MainMenu mm = Instantiate(mainMenuPrefab).GetComponent<MainMenu>();
+		mm.Setup(this);
+		currentMode = mm.gameObject;
 	}
 
 	private IEnumerator BuildLayout() {
