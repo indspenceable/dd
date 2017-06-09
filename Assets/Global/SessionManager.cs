@@ -10,7 +10,7 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject partyManagementPrefab;
 	[SerializeField] GameObject mainMenuPrefab;
 	[SerializeField] public List<Sprite> partyImages;
-	[SerializeField] public List<Item.Definition> itemDefs;
+	[SerializeField] public List<ItemDefinition> itemDefs;
 
 	private GameObject currentMode;
 

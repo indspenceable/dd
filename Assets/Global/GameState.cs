@@ -12,15 +12,11 @@ public class RoomContents {
 }
 [System.Serializable] 
 public class Item {
-	[System.Serializable]
-	public struct Definition{
-		public Sprite image;
-	}
 	public int index;
 	public Item(int index) {
 		this.index = index;
 	}
-	public Definition GetDef(SessionManager session) {
+	public ItemDefinition GetDef(SessionManager session) {
 		return session.itemDefs[index];
 	}
 	public override bool Equals(System.Object obj) {
