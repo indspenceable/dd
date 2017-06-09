@@ -32,21 +32,32 @@ public class EncounterPartyMember : MonoBehaviour {
 			partyMemberActions = new List<UIButton>();
 			// Display the buttons for actions!
 			//TODO this should go for each item in the inventory
+			var Buttons = new List<GameObject>();
+			for (int i = 0; i < p.p.inventory.Count; i += 1)
 			{
 				UIButton go = e.CreateUIButton();
-				var weapon = p.p.inventory[0];
+				var weapon = p.p.inventory[i];
 				go.SetImage(weapon.GetDef(e.session).image);
-				go.transform.position = p.transform.position + new Vector3(-1, -1f);
-				go.SetOnClick(() => e.InstallListener(new AttackWithWeapon(p, 0, this, e)));
+//				go.transform.position = p.transform.position + new Vector3(-1, -1f);
+				Debug.Log("I is " + i);
+				var listener = new AttackWithWeapon(p, i, this, e);
+				go.SetOnClick(() => e.InstallListener(listener));
 				partyMemberActions.Add(go);
+				Buttons.Add(go.gameObject);
 			}
 			{
 				UIButton go = e.CreateUIButton();
 //				go.SetText("Swap");
 				go.SetImage(e.swapSprite);
-				go.transform.position = p.transform.position + new Vector3(1, -1f);
+//				go.transform.position = p.transform.position + new Vector3(1, -1f);
 				go.SetOnClick(() => e.InstallListener(new Swap(p, this, e)));
 				partyMemberActions.Add(go);
+				Buttons.Add(go.gameObject);
+			}
+			for(int i = 0; i <Buttons.Count; i+=1) {
+				float theta = (180 + Mathf.Lerp(0f, 180f, (i+1)/(float)(Buttons.Count+1)));
+				float thetaRad = Mathf.Deg2Rad * theta;
+				Buttons[i].transform.position = p.transform.position + new Vector3(Mathf.Cos(thetaRad), Mathf.Sin(thetaRad))*1.5f;
 			}
 		}
 		public void UninstallUI() {
@@ -68,6 +79,7 @@ public class EncounterPartyMember : MonoBehaviour {
 			this.e = e;
 			this.prev = previous;
 			this.weapon = w;
+			Debug.Log("Setting weapon to " + w);
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
@@ -76,6 +88,7 @@ public class EncounterPartyMember : MonoBehaviour {
 		}
 		public void MonsterClicked(Monster m) {
 			Debug.Log("Clicked on a monster! time to get to work.");
+			Debug.Log("weapon " + weapon);
 			var w = p.p.inventory[weapon].GetDef(e.session);
 			p.TakeAction(p.InitiateAttack(m, w.damage), w.readyTime);
 			e.InstallListener(null);

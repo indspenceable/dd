@@ -151,7 +151,11 @@ public class SessionManager : MonoBehaviour {
 		for (int i = 0; i < 3; i += 1) {
 			var partyMember = new PartyMember();
 			partyMember.image = Random.Range(0, partyImages.Count);
-			partyMember.inventory.Add(new Item(Random.Range(0, itemDefs.Count)));
+			int k = Random.Range(1, 4);
+			Debug.Log("K is " + k);
+			for (int j = k; j > 0; j -= 1) {
+				partyMember.inventory.Add(new Item(Random.Range(0, itemDefs.Count)));
+			}
 			state.party.Add(partyMember);
 		}
 	}
