@@ -2,43 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour {
-	private Encounter e;
+public class Monster : EncounterEntityBase {
 	[SerializeField] int hp;
-	private int totalDamage = 0;
+
 	public void SetEncounter(Encounter e) {
 		this.e = e;
+	}
+
+	protected override int HP() {
+		return hp;
 	}
 
 	void OnMouseDown() {
 		e.ClickMonster(this);
 	}
 
-	public void TakeDamage(int hitAmount) {
-		this.totalDamage += hitAmount;
-		if (this.totalDamage > hp) {
-			RemoveHealthBar();
-			e.DestroyMonster(this);
-		}
-	}
-
-	private UIProgressBar healthBar;
-	void Update() {
-		if (totalDamage > 0) {
-			if (healthBar == null ) {
-				healthBar = e.CreateProgressBar(transform);
-				healthBar.transform.position = transform.position + new Vector3(0,1);
-			}
-			healthBar.SetPct(1f - (totalDamage / (float)hp));
-		} else {
-			RemoveHealthBar();
-		}
-	}
-
-	private void RemoveHealthBar() {
-		if (healthBar != null) {
-			Destroy(healthBar.gameObject);
-			healthBar = null;
-		}
+	protected override void Destroy() {
+		e.DestroyMonster(this);
 	}
 }

@@ -139,6 +139,4 @@ public class Encounter : MonoBehaviour {
 		p.Setup(this, pm);
 		party.Add(p);
 	}
-
-
 }

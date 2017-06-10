@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EncounterPartyMember : MonoBehaviour {
+public class EncounterPartyMember : EncounterEntityBase {
 	public class Selected : Encounter.ActionListener {
 		private EncounterPartyMember p;
 		private Encounter e;
@@ -79,18 +79,14 @@ public class EncounterPartyMember : MonoBehaviour {
 			this.e = e;
 			this.prev = previous;
 			this.weapon = w;
-			Debug.Log("Setting weapon to " + w);
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
-			Debug.Log("Clicked on another of my peers");
 			e.SelectPartyMember(target);
 		}
 		public void MonsterClicked(Monster m) {
-			Debug.Log("Clicked on a monster! time to get to work.");
-			Debug.Log("weapon " + weapon);
 			var w = p.p.inventory[weapon].GetDef(e.session);
-			p.TakeAction(p.InitiateAttack(m, w.damage), w.readyTime);
+			p.TakeAction(p.Attack(m, w.damage), w.readyTime);
 			e.InstallListener(null);
 		}
 		public void Cancel() {
@@ -134,64 +130,18 @@ public class EncounterPartyMember : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] GameObject SelectedReticle;
+	protected override void Destroy() {
+		throw new System.NotImplementedException("EncounterPartyMember#Destroy not implemented");
+	}
 
-	private Encounter e;
-	private PartyMember p;
-	public Hotspot hotspot;
 	public void Setup(Encounter e, PartyMember p) {
 		this.e = e;
 		this.p = p;
 		GetComponent<SpriteRenderer>().sprite = p.GetImage(e.session);
 	}
-	public void MarkSelected(bool amSelected) {
-		this.SelectedReticle.SetActive(amSelected);
-	}
-
-	// TODO this should probably be something that tracks which mousebutton was used ETC.
-	void OnMouseDown() {
-		e.ClickPartyMember(this);
-	}
-
-	private List<GameObject> leasedObjects;
-	private Coroutine currentAction;
-	public void TakeAction(IEnumerator action, float time) {
-		if (currentAction != null) {
-			StopCoroutine(currentAction);
-			CleanupLeasedObjects();
-		}
-		leasedObjects = new List<GameObject>();
-		currentAction = StartCoroutine(InitiateAction(time, action));
-	}
-
-	public IEnumerator InitiateAction(float duration, IEnumerator action) {
-		UIProgressBar b = e.CreateProgressBar(transform);
-		leasedObjects.Add(b.gameObject);
-		b.transform.position = transform.position + new Vector3(0f, 0.5f);
-		float dt = 0f;
-		while (dt < duration) {
-			yield return null;
-			// TODO make sure we check if we're paused here!
-			// TODO if our target disappears we should probably cancel this action.
-
-			// now that it's generalized this doesn't work!
-			//			if (m == null ){
-			//				CleanupLeasedObjects();
-			//				yield break;
-			//			}
-			dt += Time.deltaTime;
-			b.SetPct(dt/duration);
-		}
-		yield return null;
-		CleanupLeasedObjects();
-
-		StartCoroutine(action);
-	}
-
-	public IEnumerator InitiateAttack(Monster m, int damage) {
-		// TODO animate this
-		m.TakeDamage(damage);
-		yield return null;
+		
+	protected override int HP() {
+		return 5;
 	}
 
 	public IEnumerator SwapWith(EncounterPartyMember p) {
@@ -214,11 +164,8 @@ public class EncounterPartyMember : MonoBehaviour {
 		h2.SetPartyMember(this);
 	}
 
-	private void CleanupLeasedObjects() {
-		foreach(var go in leasedObjects) {
-			Destroy(go);
-		}
-		StopCoroutine(currentAction);
-		currentAction = null;
+
+	void OnMouseDown() {
+		e.ClickPartyMember(this);
 	}
 }
