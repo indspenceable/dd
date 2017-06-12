@@ -11,6 +11,7 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject mainMenuPrefab;
 	[SerializeField] public List<Sprite> partyImages;
 	[SerializeField] public List<ItemDefinition> itemDefs;
+	[SerializeField] public List<MonsterDefinition> monsterDefs;
 
 	private GameObject currentMode;
 
@@ -98,7 +99,7 @@ public class SessionManager : MonoBehaviour {
 	public void SwapToEncounter(int index) {
 		KillCurrentMode();
 		Encounter e = Instantiate(encounterPrefab).GetComponent<Encounter>();
-		e.Setup(this, index);
+		e.Setup(this, index, (ContentsEncounter)state.layout.rooms[index].contents);
 		currentMode = e.gameObject;
 	}
 
@@ -138,11 +139,22 @@ public class SessionManager : MonoBehaviour {
 				foreach(var c in newConnections) {
 					layout.doors.Add(new Coord(c, layout.rooms.Count));
 				}
-				layout.rooms.Add(new RoomData(pos));
+				layout.rooms.Add(BuildRoomData(pos));
 //				Debug.Log("" + layout.rooms.Count*100f / requiredRoomCount + "% (" + layout.rooms.Count + "/" + requiredRoomCount + ")");
 			}
 		}
 		state.layout = layout;
+	}
+
+	RoomData BuildRoomData(Coord pos) {
+		var rd = new RoomData(pos);
+		var ec = new ContentsEncounter();
+		ec.monsters = new List<int>();
+		for (int i = Random.Range(1, 5); i > 0; i-=1) {
+			ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+		}
+		rd.contents = ec;
+		return rd;
 	}
 
 	public IEnumerator BuildParty() {

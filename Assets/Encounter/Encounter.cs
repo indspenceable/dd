@@ -8,7 +8,7 @@ public class Encounter : MonoBehaviour {
 	[SerializeField] List<Hotspot> playerHotspots;
 	[SerializeField] GameObject monsterPrefab;
 	[SerializeField] GameObject partyMemberPrefab;
-	private List<Monster> monsters = new List<Monster>();
+	private List<EncounterMonster> monsters = new List<EncounterMonster>();
 	private List<EncounterPartyMember> party = new List<EncounterPartyMember>();
 
 	[SerializeField] GameObject progressBarPrefab;
@@ -20,21 +20,18 @@ public class Encounter : MonoBehaviour {
 	public SessionManager session;
 	private int roomIndex;
 
-	public void Setup(SessionManager session, int roomIndex) {
+	public void Setup(SessionManager session, int roomIndex, ContentsEncounter ec) {
 		this.session = session;
 		this.roomIndex = roomIndex;
 		allHotspots = new List<Hotspot>();
 		allHotspots.AddRange(monsterHotspots);
 		allHotspots.AddRange(playerHotspots);
 
-		// Set up the players + monsters
-		foreach(var hotspot in monsterHotspots) {
-//			BuildMonster(hotspot);
+
+		for (int i = 0; i < ec.monsters.Count; i+=1){
+			BuildMonster(monsterHotspots[i], session.monsterDefs[ec.monsters[i]]);
+			i+= 1;
 		}
-		BuildMonster(monsterHotspots[0]);
-//		foreach(var hotspot in playerHotspots) {
-//			BuildPartyMember(hotspot);
-//		}
 		for (int i = 0; i < session.state.party.Count; i+=1) {
 			BuildPartyMember(playerHotspots[i], session.state.party[i]);
 		}
@@ -46,14 +43,14 @@ public class Encounter : MonoBehaviour {
 
 	public interface ActionListener {
 		void PartyMemberClicked(EncounterPartyMember p);
-		void MonsterClicked(Monster m);
+		void MonsterClicked(EncounterMonster m);
 		void Cancel();
 		void InstallUI();
 		void UninstallUI();
 	}
 	class NoOp : ActionListener {
 		public void PartyMemberClicked(EncounterPartyMember p){}
-		public void MonsterClicked(Monster m){}
+		public void MonsterClicked(EncounterMonster m){}
 		public void Cancel(){}
 		public void InstallUI(){}
 		public void UninstallUI(){}
@@ -67,7 +64,7 @@ public class Encounter : MonoBehaviour {
 		public void PartyMemberClicked(EncounterPartyMember p) {
 			e.SelectPartyMember(p);
 		}
-		public void MonsterClicked(Monster m){
+		public void MonsterClicked(EncounterMonster m){
 			// Nothing!
 		}
 		public void Cancel() {
@@ -90,7 +87,7 @@ public class Encounter : MonoBehaviour {
 		this.al.InstallUI();
 	}
 
-	public void DestroyMonster(Monster m) {
+	public void DestroyMonster(EncounterMonster m) {
 		monsters.Remove(m);
 		Destroy(m.gameObject);
 		if (monsters.Count == 0) {
@@ -109,7 +106,7 @@ public class Encounter : MonoBehaviour {
 		al.PartyMemberClicked(p);
 	}
 
-	public void ClickMonster(Monster m) {
+	public void ClickMonster(EncounterMonster m) {
 		al.MonsterClicked(m);
 	}
 
@@ -126,10 +123,10 @@ public class Encounter : MonoBehaviour {
 		return Instantiate(uiButtonPrefab, WorldCanvas.transform).GetComponent<UIButton>();
 	}
 
-	private void BuildMonster(Hotspot hotspot) {
-		Monster m = Instantiate(monsterPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<Monster>();
+	private void BuildMonster(Hotspot hotspot, MonsterDefinition def) {
+		EncounterMonster m = Instantiate(monsterPrefab, hotspot.transform.position, Quaternion.identity, transform).GetComponent<EncounterMonster>();
 		hotspot.SetMonster(m);
-		m.SetEncounter(this);
+		m.Setup(this, def);
 		monsters.Add(m);
 	}
 

@@ -159,6 +159,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c09144c7406374da78e9435785e26093, type: 2}
   - {fileID: 11400000, guid: 6f2b6651315a045268dbc70dbdba6c66, type: 2}
   - {fileID: 11400000, guid: fcf5189ef36434ef5a0eb2545a33d817, type: 2}
+  monsterDefs:
+  - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}
 --- !u!4 &771138791
 Transform:
   m_ObjectHideFlags: 0

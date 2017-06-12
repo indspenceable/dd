@@ -7,28 +7,43 @@ public class PartyManagement : MonoBehaviour {
 	[SerializeField] List<ManagementPartyMember> partyMembers;
 	[SerializeField] List<ManagementPartyInventorySlot> leftSlots;
 	[SerializeField] List<ManagementPartyInventorySlot>rightSlots;
+
+	public int currentPartyMember;
 	public void Setup(SessionManager session) {
 		this.session = session;
+		foreach(var l in leftSlots) {
+			l.Setup(session, this);
+		}
+		foreach(var r in rightSlots) {
+			r.Setup(session, this);
+		}
+		Deselect();
+		RefreshView();
+	}
 
+	public void RefreshView() {
 		for (int i = 0; i < partyMembers.Count; i+=1) {
 			partyMembers[i].Setup(session, this, i);
 		}
-
-		for (int i = 0; i < leftSlots.Count; i += 1) {
-			leftSlots[i].Setup(session, this, i);
-		}
-		for (int i = 0; i < rightSlots.Count; i += 1) {
-//			rightSlots[i].Setup(session, this, 999);
-		}
-
-		// TODO you should be able to drag items between inventory slots to move them all around
-
+		RefreshGroupInventorySlots();
+		RefreshPMInventorySlots();
 	}
+
+	public void RefreshGroupInventorySlots() {
+		for (int i = 0; i < leftSlots.Count; i += 1) {
+			leftSlots[i].SetupAsGroupInventorySlot(i);
+		}
+	}
+
 	public void ClickPartyMember(int index) {
+		currentPartyMember = index;
+		RefreshPMInventorySlots();
+	}
+	public void RefreshPMInventorySlots() {
 		rightSlots[1].gameObject.SetActive(true);
-		rightSlots[1].gameObject.GetComponent<SpriteRenderer>().sprite = session.state.party[index].GetImage(session);
+		rightSlots[1].gameObject.GetComponent<SpriteRenderer>().sprite = session.state.party[currentPartyMember].GetImage(session);
 		for (int i = 3; i < rightSlots.Count; i += 1) {
-			rightSlots[i].SetupAsPartyInventory(session, this, index, i-3);
+			rightSlots[i].SetupAsPartyMemberInventorySlot(currentPartyMember, i-3);
 			rightSlots[i].gameObject.SetActive(true);
 		}
 	}

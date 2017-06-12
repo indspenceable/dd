@@ -19,7 +19,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			Debug.Log("Clicked on another of my peers");
 			e.SelectPartyMember(target);
 		}
-		public void MonsterClicked(Monster m) {
+		public void MonsterClicked(EncounterMonster m) {
 //			Debug.Log("Clicked on a monster! time to get to work.");
 //			p.TakeAction(p.InitiateAttack(m));
 //			e.InstallListener(null);
@@ -84,7 +84,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		public void PartyMemberClicked(EncounterPartyMember target) {
 			e.SelectPartyMember(target);
 		}
-		public void MonsterClicked(Monster m) {
+		public void MonsterClicked(EncounterMonster m) {
 			var w = p.p.inventory[weapon].GetDef(e.session);
 			p.TakeAction(p.Attack(m, w.damage), w.readyTime);
 			e.InstallListener(null);
@@ -115,7 +115,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			p.TakeAction(p.SwapWith(target), 3f);
 			e.InstallListener(null);
 		}
-		public void MonsterClicked(Monster m) {
+		public void MonsterClicked(EncounterMonster m) {
 			// Can't swap with enemy! Yet.
 			// TODO make this work?
 		}

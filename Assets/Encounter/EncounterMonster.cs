@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : EncounterEntityBase {
+public class EncounterMonster : EncounterEntityBase {
 	[SerializeField] int hp;
 
-	public void SetEncounter(Encounter e) {
+	public void Setup(Encounter e, MonsterDefinition def) {
 		this.e = e;
+		GetComponent<SpriteRenderer>().sprite = def.image;
 	}
 
 	protected override int HP() {

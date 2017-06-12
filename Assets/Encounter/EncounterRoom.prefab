@@ -459,7 +459,7 @@ MonoBehaviour:
   - {fileID: 114999427286843528}
   - {fileID: 114222888565272934}
   - {fileID: 114660407077334722}
-  monsterPrefab: {fileID: 1368660956242418, guid: f3ea2ce7fef834b508d8fef0fb53a4e2,
+  monsterPrefab: {fileID: 1368660956242418, guid: e60c92f97b7b041199d2e578010dc5af,
     type: 2}
   partyMemberPrefab: {fileID: 1368660956242418, guid: 9c71ba371f2be4f33885513f64d5d1db,
     type: 2}

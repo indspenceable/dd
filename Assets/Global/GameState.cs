@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class RoomContents {
+public abstract class RoomContents {
+}
+
+[System.Serializable]
+public class ContentsEncounter : RoomContents {
+	public List<int> monsters;
 	public override bool Equals(System.Object obj) {
-		PartyMember o = obj as PartyMember;
+		Debug.Log(this);
+		Debug.Log(obj);
+		ContentsEncounter o = obj as ContentsEncounter;
 		if (o == null) return false;
 		return true;
 	}
 }
+
 [System.Serializable] 
 public class Item {
 	public int index;
@@ -61,7 +69,8 @@ public class RoomData {
 	public override bool Equals(System.Object obj) {
 		RoomData o = obj as RoomData;
 		if (o == null) return false;
-		return pos.Equals(o.pos) && state == o.state && contents == o.contents;
+		// TODO this should be cleaned up after the roomcontents part gets more fleshed out
+		return pos.Equals(o.pos) && state == o.state && (contents == o.contents || o.contents.Equals(contents));
 	}
 }
 [System.Serializable]
