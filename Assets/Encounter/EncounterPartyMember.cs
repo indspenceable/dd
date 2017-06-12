@@ -86,7 +86,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 		public void MonsterClicked(EncounterMonster m) {
 			var w = p.p.inventory[weapon].GetDef(e.session);
-			p.TakeAction(p.Attack(m, w.damage), w.readyTime);
+			p.TakeAction(p.Attack(m, w.damage), () => m != null, w.readyTime);
 			e.InstallListener(null);
 		}
 		public void Cancel() {
@@ -112,7 +112,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
-			p.TakeAction(p.SwapWith(target), 3f);
+			p.TakeAction(p.SwapWith(target), () => target != null, 3f);
 			e.InstallListener(null);
 		}
 		public void MonsterClicked(EncounterMonster m) {

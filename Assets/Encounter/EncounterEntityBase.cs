@@ -16,16 +16,16 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	private List<GameObject> leasedObjects;
 	private Coroutine currentAction;
-	public void TakeAction(IEnumerator action, float time) {
+	public void TakeAction(IEnumerator action, ValidityCheck valid, float time) {
 		if (currentAction != null) {
 			StopCoroutine(currentAction);
 			CleanupLeasedObjects();
 		}
 		leasedObjects = new List<GameObject>();
-		currentAction = StartCoroutine(InitiateAction(time, action));
+		currentAction = StartCoroutine(InitiateAction(time, action, valid));
 	}
-
-	public IEnumerator InitiateAction(float duration, IEnumerator action) {
+	public delegate bool ValidityCheck();
+	public IEnumerator InitiateAction(float duration, IEnumerator action, ValidityCheck valid) {
 		UIProgressBar b = e.CreateProgressBar(transform);
 		leasedObjects.Add(b.gameObject);
 		b.transform.position = transform.position + new Vector3(0f, 0.5f);
@@ -36,6 +36,12 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			// TODO if our target disappears we should probably cancel this action.
 			dt += Time.deltaTime;
 			b.SetPct(dt/duration);
+
+
+			if (!valid()) {
+				CleanupLeasedObjects();
+				yield break;
+			}
 		}
 		yield return null;
 		CleanupLeasedObjects();
