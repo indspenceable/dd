@@ -15,7 +15,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	}
 
 	private List<GameObject> leasedObjects;
-	private Coroutine currentAction;
+	protected Coroutine currentAction;
 	public void TakeAction(IEnumerator action, ValidityCheck valid, float time) {
 		if (currentAction != null) {
 			StopCoroutine(currentAction);

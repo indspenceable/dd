@@ -136,4 +136,8 @@ public class Encounter : MonoBehaviour {
 		p.Setup(this, pm);
 		party.Add(p);
 	}
+
+	public EncounterPartyMember GetRandomPartyMember() {
+		return party[Random.Range(0, party.Count)];
+	}
 }

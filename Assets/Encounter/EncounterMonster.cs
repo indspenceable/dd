@@ -10,6 +10,13 @@ public class EncounterMonster : EncounterEntityBase {
 		GetComponent<SpriteRenderer>().sprite = def.image;
 	}
 
+	void Update() {
+		if (this.currentAction == null) {
+			// Try to take 
+			TakeAction(Attack(e.GetRandomPartyMember(), 3), () => e != null, 7f);
+		}
+	}
+
 	protected override int HP() {
 		return hp;
 	}

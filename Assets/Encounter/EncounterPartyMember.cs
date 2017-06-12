@@ -141,7 +141,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 	}
 		
 	protected override int HP() {
-		return 5;
+		return 50;
 	}
 
 	public IEnumerator SwapWith(EncounterPartyMember p) {
