@@ -19,11 +19,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			Debug.Log("Clicked on another of my peers");
 			e.SelectPartyMember(target);
 		}
-		public void MonsterClicked(EncounterMonster m) {
-//			Debug.Log("Clicked on a monster! time to get to work.");
-//			p.TakeAction(p.InitiateAttack(m));
-//			e.InstallListener(null);
-		}
+		public void MonsterClicked(EncounterMonster m) {}
 		public void Cancel() {
 			e.InstallListener(prev);
 		}
@@ -38,8 +34,6 @@ public class EncounterPartyMember : EncounterEntityBase {
 				UIButton go = e.CreateUIButton();
 				var weapon = p.p.inventory[i];
 				go.SetImage(weapon.GetDef(e.session).image);
-//				go.transform.position = p.transform.position + new Vector3(-1, -1f);
-				Debug.Log("I is " + i);
 				var listener = new AttackWithWeapon(p, i, this, e);
 				go.SetOnClick(() => e.InstallListener(listener));
 				partyMemberActions.Add(go);
@@ -47,9 +41,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			}
 			{
 				UIButton go = e.CreateUIButton();
-//				go.SetText("Swap");
 				go.SetImage(e.swapSprite);
-//				go.transform.position = p.transform.position + new Vector3(1, -1f);
 				go.SetOnClick(() => e.InstallListener(new Swap(p, this, e)));
 				partyMemberActions.Add(go);
 				Buttons.Add(go.gameObject);
@@ -139,7 +131,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		this.p = p;
 		GetComponent<SpriteRenderer>().sprite = p.GetImage(e.session);
 	}
-		
+
 	protected override int HP() {
 		return 50;
 	}
@@ -163,7 +155,6 @@ public class EncounterPartyMember : EncounterEntityBase {
 		h1.SetPartyMember(p);
 		h2.SetPartyMember(this);
 	}
-
 
 	void OnMouseDown() {
 		e.ClickPartyMember(this);

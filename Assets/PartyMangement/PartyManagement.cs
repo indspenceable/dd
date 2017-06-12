@@ -8,7 +8,8 @@ public class PartyManagement : MonoBehaviour {
 	[SerializeField] List<ManagementPartyInventorySlot> leftSlots;
 	[SerializeField] List<ManagementPartyInventorySlot>rightSlots;
 
-	public int currentPartyMember;
+	[System.NonSerialized]
+	public int currentPartyMember = -1;
 	public void Setup(SessionManager session) {
 		this.session = session;
 		foreach(var l in leftSlots) {
@@ -26,7 +27,11 @@ public class PartyManagement : MonoBehaviour {
 			partyMembers[i].Setup(session, this, i);
 		}
 		RefreshGroupInventorySlots();
-		RefreshPMInventorySlots();
+		if (currentPartyMember > -1) {
+			RefreshPMInventorySlots();
+		} else {
+			Deselect();
+		}
 	}
 
 	public void RefreshGroupInventorySlots() {

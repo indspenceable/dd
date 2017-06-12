@@ -41,6 +41,12 @@ public class Encounter : MonoBehaviour {
 		this.al.InstallUI();
 	}
 
+	public void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			this.al.Cancel();
+		}
+	}
+
 	public interface ActionListener {
 		void PartyMemberClicked(EncounterPartyMember p);
 		void MonsterClicked(EncounterMonster m);

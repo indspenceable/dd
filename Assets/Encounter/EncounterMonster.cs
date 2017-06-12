@@ -15,6 +15,7 @@ public class EncounterMonster : EncounterEntityBase {
 			// Try to take 
 			TakeAction(Attack(e.GetRandomPartyMember(), 3), () => e != null, 7f);
 		}
+		base.Update();
 	}
 
 	protected override int HP() {

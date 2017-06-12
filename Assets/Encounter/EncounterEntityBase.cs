@@ -74,7 +74,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	}
 
 	private UIProgressBar healthBar;
-	void Update() {
+	protected void Update() {
 		if (totalDamage > 0) {
 			if (healthBar == null ) {
 				healthBar = e.CreateProgressBar(transform);
