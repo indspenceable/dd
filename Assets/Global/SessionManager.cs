@@ -34,12 +34,6 @@ public class SessionManager : MonoBehaviour {
 		_state = new GameState();
 		yield return BuildLayout();
 		yield return BuildParty();
-		state.inventory.Add(new Item(0));
-		state.inventory.Add(new Item(1));
-		state.inventory.Add(new Item(1));
-		state.inventory.Add(new Item(0));
-		state.inventory.Add(new Item(3));
-		state.inventory.Add(new Item(2));
 		SwapToManagement();
 		StartCoroutine(CheckSaves());
 	}
@@ -51,7 +45,6 @@ public class SessionManager : MonoBehaviour {
 		stream.Close();
 		SwapToManagement();
 		StartCoroutine(CheckSaves());
-
 	}
 
 	// TODO this needs to go before production! but for the time being, it's a nice
@@ -69,14 +62,10 @@ public class SessionManager : MonoBehaviour {
 			var newState = (GameState)formatter.Deserialize(inputStream);
 			if (!state.Equals(newState)) {
 				Debug.Log("They're not equal!");
-			} else {
-				Debug.Log("All g!");
 			}
-
 			FileStream stream = File.Create(filePath()); //you can call it anything you want
 			formatter.Serialize(stream, state);
 			stream.Close();
-			Debug.Log("Wrote state.");
 			yield return new WaitForSeconds(1f);
 		}
 
@@ -148,12 +137,17 @@ public class SessionManager : MonoBehaviour {
 
 	RoomData BuildRoomData(Coord pos) {
 		var rd = new RoomData(pos);
-		var ec = new RoomContents.Encounter();
-		ec.monsters = new List<int>();
-		for (int i = Random.Range(1, 5); i > 0; i-=1) {
-			ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+		if (Random.Range(0,2) == 0) {
+			var ec = new RoomContents.Encounter();
+			ec.monsters = new List<int>();
+			for (int i = Random.Range(1, 5); i > 0; i-=1) {
+				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+			}
+				rd.contents = ec;
+		} else {
+			var tr = new RoomContents.Treasure();
+			rd.contents = tr;
 		}
-		rd.contents = ec;
 		return rd;
 	}
 
@@ -163,12 +157,18 @@ public class SessionManager : MonoBehaviour {
 		for (int i = 0; i < 3; i += 1) {
 			var partyMember = new PartyMember();
 			partyMember.image = Random.Range(0, partyImages.Count);
-			int k = Random.Range(1, 4);
-			Debug.Log("K is " + k);
-			for (int j = k; j > 0; j -= 1) {
-				partyMember.inventory.Add(new Item(Random.Range(0, itemDefs.Count)));
+			int k = 1;
+			for (int j = 0; j < k; j += 1) {
+				partyMember.inventory.Add(RANDOM_ITEM___());
 			}
 			state.party.Add(partyMember);
 		}
+	}
+
+
+
+
+	public Item RANDOM_ITEM___() {
+		return new Item(Random.Range(0, itemDefs.Count));
 	}
 }

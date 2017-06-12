@@ -9,14 +9,29 @@ public abstract class RoomContents {
 	public class Encounter : RoomContents {
 		public List<int> monsters;
 		public override bool Equals(System.Object obj) {
-			Debug.Log(this);
-			Debug.Log(obj);
 			Encounter o = obj as Encounter;
 			if (o == null) return false;
 			return true;
 		}
 		public override void Install(SessionManager session, int roomIndex) {
 			session.SwapToEncounter(this, roomIndex);
+		}
+	}
+
+	[System.Serializable]
+	public class Treasure : RoomContents {
+		public override bool Equals(System.Object obj) {
+			Treasure o = obj as Treasure;
+			if (o == null) return false;
+			return true;
+		}
+		public override void Install(SessionManager session, int roomIndex) {
+			var item = session.RANDOM_ITEM___();
+			Debug.Log("GOT AN ITEM.");
+			Debug.Log(item);
+			session.state.inventory.Add(item);
+			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
+			session.SwapToMapMode();
 		}
 	}
 }
