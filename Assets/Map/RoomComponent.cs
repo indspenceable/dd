@@ -19,9 +19,10 @@ public class RoomComponent : MonoBehaviour {
 			SetState(manager.layout.rooms[index].state);
 		}
 	}
-	public RoomData.State GetState() {
-		return manager.layout.rooms[index].state;
+	public RoomData GetData() {
+		return manager.layout.rooms[index];
 	}
+
 	public void SetState(RoomData.State s) {
 		if (s == RoomData.State.UNEXPLORED) {
 			sr.color = Color.red;

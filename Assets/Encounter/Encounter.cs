@@ -20,7 +20,7 @@ public class Encounter : MonoBehaviour {
 	public SessionManager session;
 	private int roomIndex;
 
-	public void Setup(SessionManager session, int roomIndex, ContentsEncounter ec) {
+	public void Setup(SessionManager session, int roomIndex, RoomContents.Encounter ec) {
 		this.session = session;
 		this.roomIndex = roomIndex;
 		allHotspots = new List<Hotspot>();

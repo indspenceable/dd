@@ -96,10 +96,10 @@ public class SessionManager : MonoBehaviour {
 		currentMode = dm.gameObject;
 	}
 
-	public void SwapToEncounter(int index) {
+	public void SwapToEncounter(RoomContents.Encounter ec, int index) {
 		KillCurrentMode();
 		Encounter e = Instantiate(encounterPrefab).GetComponent<Encounter>();
-		e.Setup(this, index, (ContentsEncounter)state.layout.rooms[index].contents);
+		e.Setup(this, index, ec);
 		currentMode = e.gameObject;
 	}
 
@@ -148,7 +148,7 @@ public class SessionManager : MonoBehaviour {
 
 	RoomData BuildRoomData(Coord pos) {
 		var rd = new RoomData(pos);
-		var ec = new ContentsEncounter();
+		var ec = new RoomContents.Encounter();
 		ec.monsters = new List<int>();
 		for (int i = Random.Range(1, 5); i > 0; i-=1) {
 			ec.monsters.Add(Random.Range(0, monsterDefs.Count));

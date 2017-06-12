@@ -15,9 +15,12 @@ public class DungeonMap : MonoBehaviour {
 			this.dm = dm;
 		}
 		public void ClickOnRoom(RoomComponent r) {
-			if (r.GetState() == RoomData.State.UNEXPLORED) {
+			if (r.GetData().state == RoomData.State.UNEXPLORED) {
 				// Let's go to a battle!
-				dm.StartEncounter(r);
+				// dm.StartEncounter(r);
+				// 
+				// JK actually lets ask the room contents to do whatever they do
+				r.GetData().contents.Install(dm.session, r.index);
 			} else {
 				// TODO you should be able to go to some other rooms.
 				// But for now, just take you to party management
@@ -29,7 +32,7 @@ public class DungeonMap : MonoBehaviour {
 
 	[SerializeField] GameObject roomPrefab;
 	private EventListener el;
-	private SessionManager session;
+	SessionManager session;
 	public Layout layout {
 		get {
 			return session.state.layout;
@@ -38,11 +41,6 @@ public class DungeonMap : MonoBehaviour {
 		
 	public void RoomClicked(RoomComponent r){
 		el.ClickOnRoom(r);
-	}
-
-	void StartEncounter(RoomComponent r) {
-		//TODO refelct the room itself...
-		session.SwapToEncounter(r.index);
 	}
 
 	public void Setup(SessionManager session) {

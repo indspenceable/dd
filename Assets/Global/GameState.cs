@@ -4,17 +4,20 @@ using UnityEngine;
 
 [System.Serializable]
 public abstract class RoomContents {
-}
-
-[System.Serializable]
-public class ContentsEncounter : RoomContents {
-	public List<int> monsters;
-	public override bool Equals(System.Object obj) {
-		Debug.Log(this);
-		Debug.Log(obj);
-		ContentsEncounter o = obj as ContentsEncounter;
-		if (o == null) return false;
-		return true;
+	public abstract void Install(SessionManager session, int roomIndex);
+	[System.Serializable]
+	public class Encounter : RoomContents {
+		public List<int> monsters;
+		public override bool Equals(System.Object obj) {
+			Debug.Log(this);
+			Debug.Log(obj);
+			Encounter o = obj as Encounter;
+			if (o == null) return false;
+			return true;
+		}
+		public override void Install(SessionManager session, int roomIndex) {
+			session.SwapToEncounter(this, roomIndex);
+		}
 	}
 }
 
