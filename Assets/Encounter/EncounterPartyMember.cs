@@ -28,10 +28,10 @@ public class EncounterPartyMember : EncounterEntityBase {
 			// Display the buttons for actions!
 			//TODO this should go for each item in the inventory
 			var Buttons = new List<GameObject>();
-			for (int i = 0; i < p.p.inventory.Count; i += 1)
+			for (int i = 0; i < p.backingPartyMember.inventory.Count; i += 1)
 			{
 				UIButton go = e.CreateUIButton();
-				var weapon = p.p.inventory[i];
+				var weapon = p.backingPartyMember.inventory[i];
 				go.SetImage(weapon.GetDef(e.session).image);
 				go.SetTooltip(weapon.GetDef(e.session).Tooltip(), e.session);
 				var listener = new AttackWithWeapon(p, i, this, e);
@@ -77,7 +77,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			e.SelectPartyMember(target);
 		}
 		public void MonsterClicked(EncounterMonster m) {
-			var w = p.p.inventory[weapon].GetDef(e.session);
+			var w = p.backingPartyMember.inventory[weapon].GetDef(e.session);
 			p.TakeAction(p.Attack(m, w.damage), () => m != null, w.readyTime);
 			e.InstallListener(null);
 		}
@@ -126,14 +126,18 @@ public class EncounterPartyMember : EncounterEntityBase {
 		throw new System.NotImplementedException("EncounterPartyMember#Destroy not implemented");
 	}
 
-	public void Setup(Encounter e, PartyMember p) {
-		this.e = e;
-		this.p = p;
-		GetComponent<SpriteRenderer>().sprite = p.GetImage(e.session);
+	public void Setup(Encounter encounter, PartyMember p) {
+		this.encounter = encounter;
+		this.backingPartyMember = p;
+		GetComponent<SpriteRenderer>().sprite = p.GetImage(encounter.session);
 	}
 
+	// TODO these stats should be stored in the GameState
 	protected override int HP() {
 		return 50;
+	}
+	protected override int Armor() {
+		return 0;
 	}
 
 	public IEnumerator SwapWith(EncounterPartyMember p) {
@@ -144,7 +148,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		while (dt < duration ) {
 			yield return null;
 
-			dt += e.session.DT();
+			dt += encounter.session.DT();
 			transform.position = Vector3.Lerp(p1, p2, dt/duration);
 			p.transform.position = Vector3.Lerp(p2, p1, dt/duration);
 		}
@@ -156,6 +160,6 @@ public class EncounterPartyMember : EncounterEntityBase {
 	}
 
 	void OnMouseDown() {
-		e.ClickPartyMember(this);
+		encounter.ClickPartyMember(this);
 	}
 }

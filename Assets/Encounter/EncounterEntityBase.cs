@@ -4,12 +4,13 @@ using UnityEngine;
 
 public abstract class EncounterEntityBase : MonoBehaviour {
 	[SerializeField] GameObject SelectedReticle;
-	protected Encounter e;
-	protected PartyMember p;
+	protected Encounter encounter;
+	protected PartyMember backingPartyMember;
 	public Hotspot hotspot;
 	[SerializeField]
 	private int totalDamage = 0;
 	protected abstract int HP();
+	protected abstract int Armor();
 
 	public void MarkSelected(bool amSelected) {
 		this.SelectedReticle.SetActive(amSelected);
@@ -27,14 +28,14 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	}
 	public delegate bool ValidityCheck();
 	public IEnumerator InitiateAction(float duration, IEnumerator action, ValidityCheck valid) {
-		UIProgressBar b = e.CreateProgressBar(transform);
+		UIProgressBar b = encounter.CreateProgressBar(transform);
 		leasedObjects.Add(b.gameObject);
 		b.transform.position = transform.position + new Vector3(0f, 0.5f);
 		float dt = 0f;
 		while (dt < duration) {
 			yield return null;
 			// TODO if our target disappears we should probably cancel this action.
-			dt += e.session.DT();
+			dt += encounter.session.DT();
 			b.SetPct(dt/duration);
 
 
@@ -66,7 +67,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected abstract void Destroy();
 
 	public void TakeDamage(int hitAmount) {
-		this.totalDamage += hitAmount;
+		int reducedhitAmount = Mathf.Max(hitAmount - Armor(), 0);
+		this.totalDamage += reducedhitAmount;
 		if (this.totalDamage >= HP()) {
 			RemoveHealthBar();
 			Destroy();
@@ -77,7 +79,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected void Update() {
 		if (totalDamage > 0) {
 			if (healthBar == null ) {
-				healthBar = e.CreateProgressBar(transform);
+				healthBar = encounter.CreateProgressBar(transform);
 				healthBar.transform.position = transform.position + new Vector3(0,1);
 			}
 			healthBar.SetPct(1f - (totalDamage / (float)HP()));

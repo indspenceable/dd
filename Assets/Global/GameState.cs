@@ -67,6 +67,7 @@ public class Item {
 }
 [System.Serializable] 
 public class PartyMember {
+	public string pcName;
 	public int image;
 	public List<Item> inventory = new List<Item>();
 	// TODO add skills here
@@ -128,20 +129,5 @@ public class GameState {
 		return layout.Equals(o.layout) && 
 			Util.ListEquals(inventory, o.inventory) &&
 			Util.ListEquals(party, o.party);
-	}
-}
-public class Util {
-	public static bool ListEquals<T>(List<T> first, List<T> second) {
-		if (first == null && second == null) return true;
-		if (first == null || second == null) return false;
-
-		if (first.Count != second.Count) return false;
-		for (int i = 0; i < first.Count; i += 1) {
-			if (! first[i].Equals(second[i])) return false;
-		}
-		return true;
-	}
-	public static T Random<T>(List<T> list) {
-		return list[Random.Range(0, list.Count)];
 	}
 }

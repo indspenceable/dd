@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EncounterMonster : EncounterEntityBase {
-	[SerializeField] int hp;
 	private MonsterDefinition def;
 
 	public void Setup(Encounter e, MonsterDefinition def) {
-		this.e = e;
+		this.encounter = e;
 		this.def = def;
 		GetComponent<SpriteRenderer>().sprite = def.image;
 	}
@@ -16,20 +15,23 @@ public class EncounterMonster : EncounterEntityBase {
 		if (this.currentAction == null) {
 			// Try to take 
 			var w = Util.Random(def.weapons);
-			TakeAction(Attack(e.GetRandomPartyMember(), w.damage), () => e != null, w.readyTime);
+			TakeAction(Attack(encounter.GetRandomPartyMember(), w.damage), () => encounter != null, w.readyTime);
 		}
 		base.Update();
 	}
 
 	protected override int HP() {
-		return hp;
+		return def.hp;
+	}
+	protected override int Armor() {
+		return def.armor;
 	}
 
 	void OnMouseDown() {
-		e.ClickMonster(this);
+		encounter.ClickMonster(this);
 	}
 
 	protected override void Destroy() {
-		e.DestroyMonster(this);
+		encounter.DestroyMonster(this);
 	}
 }

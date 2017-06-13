@@ -23,4 +23,9 @@ public class ManagementPartyMember : MonoBehaviour {
 			management.ClickPartyMember(myIndex);
 		}
 	}
+	void OnMouseOver() {
+		if (session.state.party.Count > myIndex){
+			session.ui.ShowToolTip(session.state.party[myIndex].pcName, Input.mousePosition);
+		}
+	}
 }
