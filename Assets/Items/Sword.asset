@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  itemName: Sword
+  description: A sharp blade; very efficient at cutting through monsters.
   image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
   damage: 5
   readyTime: 2

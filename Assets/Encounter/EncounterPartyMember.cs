@@ -33,6 +33,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 				UIButton go = e.CreateUIButton();
 				var weapon = p.p.inventory[i];
 				go.SetImage(weapon.GetDef(e.session).image);
+				go.SetTooltip(weapon.GetDef(e.session).Tooltip(), e.session);
 				var listener = new AttackWithWeapon(p, i, this, e);
 				go.SetOnClick(() => e.InstallListener(listener));
 				partyMemberActions.Add(go);

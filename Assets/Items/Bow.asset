@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
+  itemName: Bow
+  description: 5/5
   image: {fileID: 21300020, guid: 439fafd2740a144968138dbe5010332a, type: 3}
   damage: 5
   readyTime: 5

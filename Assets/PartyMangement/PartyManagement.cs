@@ -46,7 +46,7 @@ public class PartyManagement : MonoBehaviour {
 	}
 	public void RefreshPMInventorySlots() {
 		rightSlots[1].gameObject.SetActive(true);
-		rightSlots[1].gameObject.GetComponent<SpriteRenderer>().sprite = session.state.party[currentPartyMember].GetImage(session);
+		rightSlots[1].gameObject.GetComponent<UnityEngine.UI.Image>().sprite = session.state.party[currentPartyMember].GetImage(session);
 		for (int i = 3; i < rightSlots.Count; i += 1) {
 			rightSlots[i].SetupAsPartyMemberInventorySlot(currentPartyMember, i-3);
 			rightSlots[i].gameObject.SetActive(true);

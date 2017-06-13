@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
+  itemName: Tome of Fireball
+  description: 12/9
   image: {fileID: 21300000, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   damage: 12
   readyTime: 9
