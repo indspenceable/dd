@@ -141,7 +141,7 @@ public class SessionManager : MonoBehaviour {
 		{
 			var ec = new RoomContents.Encounter();
 			ec.monsters = new List<int>();
-			for (int i = Random.Range(1, 5); i > 0; i-=1) {
+			for (int i = Random.Range(1, 6); i > 0; i-=1) {
 				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
 				contents.Add(ec);
 			}
