@@ -7,7 +7,7 @@ public class ItemDefinition : ScriptableObject {
 	public enum TargetMode {
 		ENEMY = 0,
 		FRIENDLY = 1,
-//		SELF = 2,
+//		SELF = 2,>.
 	}
 
 	public string itemName;

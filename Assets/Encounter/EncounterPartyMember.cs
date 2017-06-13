@@ -70,8 +70,6 @@ public class EncounterPartyMember : EncounterEntityBase {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
-			Debug.Log(p);
-			Debug.Log(w);
 			this.item = p.backingPartyMember.inventory[w].GetDef(e.session);
 		}
 

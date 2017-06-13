@@ -15,6 +15,9 @@ public class Util {
 		return true;
 	}
 	public static T Random<T>(List<T> list) {
+		if (list == null ) {
+			Debug.LogError("null List in Util.Random");
+		}
 		return list[Random.Range(0, list.Count)];
 	}
 	// TODO replace this! For dev, shamelessly stolen from: 
