@@ -42,11 +42,13 @@ public class Encounter : MonoBehaviour {
 	}
 
 	public void Update() {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			this.al.Cancel();
-		}
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			session.TogglePause();
+		if (! session.ui.Blocking) {
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				this.al.Cancel();
+			}
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				session.TogglePause();
+			}
 		}
 	}
 
@@ -106,17 +108,20 @@ public class Encounter : MonoBehaviour {
 	}
 
 	private IEnumerator GoToMapScreen(){
-		yield return null;
+		yield return session.ui.textBox.CoroutineShow("With all enemies destroyed, you leave the room.\n\n<space>");
 		session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 		session.SwapToMapMode();
+		session.UnPause();
 	}
 
 	public void ClickPartyMember(EncounterPartyMember p) {
-		al.PartyMemberClicked(p);
+		if (!session.ui.Blocking)
+			al.PartyMemberClicked(p);
 	}
 
 	public void ClickMonster(EncounterMonster m) {
-		al.MonsterClicked(m);
+		if (!session.ui.Blocking)
+			al.MonsterClicked(m);
 	}
 
 	public void SelectPartyMember(EncounterPartyMember p) {

@@ -27,6 +27,10 @@ public class SessionManager : MonoBehaviour {
 		Paused = !Paused;
 		ui.SetPaused(Paused);
 	}
+	public void UnPause() {
+		Paused = false;
+		ui.SetPaused(Paused);
+	}
 	public float DT() {
 		return Paused ? 0f : Time.deltaTime;
 	}

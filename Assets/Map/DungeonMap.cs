@@ -40,7 +40,8 @@ public class DungeonMap : MonoBehaviour {
 	}
 		
 	public void RoomClicked(RoomComponent r){
-		el.ClickOnRoom(r);
+		if (!session.ui.Blocking)
+			el.ClickOnRoom(r);
 	}
 
 	public void Setup(SessionManager session) {

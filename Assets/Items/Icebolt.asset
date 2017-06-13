@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
   m_Name: Icebolt
   m_EditorClassIdentifier: 
+  itemName: Tome of Icebolt
+  description: 8/8 Freezes enemies
   image: {fileID: 21300016, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   damage: 8
   readyTime: 8
