@@ -99,6 +99,7 @@ public class Encounter : MonoBehaviour {
 	}
 
 	public void DestroyMonster(EncounterMonster m) {
+		if (!m.gameObject) { return; }
 		monsters.Remove(m);
 		Destroy(m.gameObject);
 		if (monsters.Count == 0) {
