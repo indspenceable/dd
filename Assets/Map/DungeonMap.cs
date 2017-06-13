@@ -20,7 +20,7 @@ public class DungeonMap : MonoBehaviour {
 				// dm.StartEncounter(r);
 				// 
 				// JK actually lets ask the room contents to do whatever they do
-				r.GetData().contents.Install(dm.session, r.index);
+				dm.session.StartCoroutine(r.GetData().contents.Install(dm.session, r.index));
 			} else {
 				// TODO you should be able to go to some other rooms.
 				// But for now, just take you to party management

@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public abstract class RoomContents {
-	public abstract void Install(SessionManager session, int roomIndex);
+	public abstract IEnumerator Install(SessionManager session, int roomIndex);
 	[System.Serializable]
 	public class Encounter : RoomContents {
 		public List<int> monsters;
@@ -13,7 +13,8 @@ public abstract class RoomContents {
 			if (o == null) return false;
 			return true;
 		}
-		public override void Install(SessionManager session, int roomIndex) {
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
+			yield return session.ui.textBox.CoroutineShow("Monsters! Get ready for a fight.");
 			session.SwapToEncounter(this, roomIndex);
 		}
 	}
@@ -25,11 +26,12 @@ public abstract class RoomContents {
 			if (o == null) return false;
 			return true;
 		}
-		public override void Install(SessionManager session, int roomIndex) {
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			var item = session.RANDOM_ITEM___();
 			session.state.inventory.Add(item);
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
-			session.SwapToMapMode();
+			yield return session.ui.textBox.CoroutineShow("You found an item! : " + item.GetDef(session).itemName);
+//			session.SwapToMapMode();
 		}
 	}
 
@@ -40,9 +42,10 @@ public abstract class RoomContents {
 			if (o == null) return false;
 			return true;
 		}
-		public override void Install(SessionManager session, int roomIndex) {
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
-			session.SwapToMapMode();
+			yield return session.ui.textBox.CoroutineShow("You found an empty room. Oh well!");
+//			session.SwapToMapMode();
 		}
 	}
 }
