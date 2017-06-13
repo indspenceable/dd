@@ -176,8 +176,8 @@ public class SessionManager : MonoBehaviour {
 		state.party = new List<PartyMember>();
 		for (int i = 0; i < 3; i += 1) {
 			var partyMember = new PartyMember();
-			partyMember.hp = 100;
-			partyMember.damage = 30;
+			partyMember.hp = 100*i + 1;
+			partyMember.damage = 0;
 			partyMember.pcName = Util.GenerateName(Random.Range(5, 13));
 			partyMember.image = Random.Range(0, partyImages.Count);
 			int k = 1;

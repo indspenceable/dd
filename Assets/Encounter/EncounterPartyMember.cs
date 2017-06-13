@@ -130,7 +130,9 @@ public class EncounterPartyMember : EncounterEntityBase {
 	}
 
 	protected override void Destroy() {
-		throw new System.NotImplementedException("EncounterPartyMember#Destroy not implemented");
+		Debug.Log(gameObject);
+		Destroy(gameObject);
+		encounter.GetPartyMembers().Remove(this);
 	}
 
 	public void Setup(Encounter encounter, PartyMember p) {
