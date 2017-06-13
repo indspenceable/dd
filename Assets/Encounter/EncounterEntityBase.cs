@@ -7,6 +7,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected Encounter e;
 	protected PartyMember p;
 	public Hotspot hotspot;
+	[SerializeField]
 	private int totalDamage = 0;
 	protected abstract int HP();
 

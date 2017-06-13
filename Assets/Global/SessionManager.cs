@@ -137,17 +137,23 @@ public class SessionManager : MonoBehaviour {
 
 	RoomData BuildRoomData(Coord pos) {
 		var rd = new RoomData(pos);
-		if (Random.Range(0,2) == 0) {
+		var contents = new List<RoomContents>();
+		{
 			var ec = new RoomContents.Encounter();
 			ec.monsters = new List<int>();
 			for (int i = Random.Range(1, 5); i > 0; i-=1) {
 				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+				contents.Add(ec);
 			}
-				rd.contents = ec;
-		} else {
-			var tr = new RoomContents.Treasure();
-			rd.contents = tr;
 		}
+		{
+			var tr = new RoomContents.Treasure();
+			contents.Add(tr);
+		}
+		{
+			contents.Add(new RoomContents.Empty());
+		}
+		rd.contents = Util.Random(contents);
 		return rd;
 	}
 

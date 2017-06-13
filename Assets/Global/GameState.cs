@@ -27,9 +27,20 @@ public abstract class RoomContents {
 		}
 		public override void Install(SessionManager session, int roomIndex) {
 			var item = session.RANDOM_ITEM___();
-			Debug.Log("GOT AN ITEM.");
-			Debug.Log(item);
 			session.state.inventory.Add(item);
+			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
+			session.SwapToMapMode();
+		}
+	}
+
+	[System.Serializable]
+	public class Empty : RoomContents {
+		public override bool Equals(System.Object obj) {
+			Empty o = obj as Empty;
+			if (o == null) return false;
+			return true;
+		}
+		public override void Install(SessionManager session, int roomIndex) {
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 			session.SwapToMapMode();
 		}

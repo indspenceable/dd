@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Dagger
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
-  damage: 6
-  readyTime: 1
+  damage: 1
+  readyTime: 6
