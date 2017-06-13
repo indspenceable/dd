@@ -50,9 +50,9 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		StartCoroutine(action);
 	}
 
-	public IEnumerator Attack(EncounterEntityBase m, int damage) {
+	public IEnumerator UseItem(EncounterEntityBase m, ItemDefinition item) {
 		// TODO animate this
-		m.TakeDamage(damage);
+		m.TakeDamage(item.damage);
 		yield return null;
 	}
 
@@ -67,8 +67,13 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected abstract void Destroy();
 
 	public void TakeDamage(int hitAmount) {
-		int reducedhitAmount = Mathf.Max(hitAmount - Armor(), 0);
-		this.totalDamage += reducedhitAmount;
+		int processedHitAmount = hitAmount;
+		if (hitAmount >= 0) {
+			processedHitAmount = Mathf.Max(hitAmount - Armor(), 0);
+		} else {
+			processedHitAmount = Mathf.Max(hitAmount, -totalDamage);
+		}
+		this.totalDamage += processedHitAmount;
 		if (this.totalDamage >= HP()) {
 			RemoveHealthBar();
 			Destroy();

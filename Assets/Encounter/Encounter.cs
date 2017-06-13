@@ -150,7 +150,11 @@ public class Encounter : MonoBehaviour {
 		party.Add(p);
 	}
 
-	public EncounterPartyMember GetRandomPartyMember() {
-		return Util.Random(party);
+	public List<EncounterPartyMember> GetPartyMembers() {
+		return party;
 	}
+	public List<EncounterMonster> GetMonsters() {
+		return monsters;
+	}
+
 }

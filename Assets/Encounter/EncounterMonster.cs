@@ -14,8 +14,17 @@ public class EncounterMonster : EncounterEntityBase {
 	new void Update() {
 		if (this.currentAction == null) {
 			// Try to take 
-			var w = Util.Random(def.weapons);
-			TakeAction(Attack(encounter.GetRandomPartyMember(), w.damage), () => encounter != null, w.readyTime);
+			var w = Util.Random(def.items);
+			if (w.target == ItemDefinition.TargetMode.ENEMY) {
+				TakeAction(UseItem(Util.Random(encounter.GetPartyMembers()), w), () => encounter != null, w.readyTime);
+			} else if (w.target == ItemDefinition.TargetMode.FRIENDLY) {
+				TakeAction(UseItem(Util.Random(encounter.GetMonsters()), w), () => encounter != null, w.readyTime);
+
+//			} else if 	(w.target == ItemDefinition.TargetMode.SELF) {
+			} else {
+				// Uhhh..... Should never get here.
+				Debug.LogError("Unknown target type. " + w.target);
+			}
 		}
 		base.Update();
 	}

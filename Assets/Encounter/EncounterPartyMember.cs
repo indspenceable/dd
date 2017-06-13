@@ -34,7 +34,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 				var weapon = p.backingPartyMember.inventory[i];
 				go.SetImage(weapon.GetDef(e.session).image);
 				go.SetTooltip(weapon.GetDef(e.session).Tooltip(), e.session);
-				var listener = new AttackWithWeapon(p, i, this, e);
+				var listener = new ApplyItem(p, i, this, e);
 				go.SetOnClick(() => e.InstallListener(listener));
 				partyMemberActions.Add(go);
 				Buttons.Add(go.gameObject);
@@ -60,26 +60,35 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 	}
 
-	public class AttackWithWeapon : Encounter.ActionListener {
+	public class ApplyItem : Encounter.ActionListener {
 		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
-		int weapon;
+		ItemDefinition item;
 
-		public AttackWithWeapon(EncounterPartyMember p, int w, Encounter.ActionListener previous, Encounter e) {
+		public ApplyItem(EncounterPartyMember p, int w, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
-			this.weapon = w;
+			Debug.Log(p);
+			Debug.Log(w);
+			this.item = p.backingPartyMember.inventory[w].GetDef(e.session);
+		}
+
+		private void Act(EncounterEntityBase eeb) {
+			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, item.readyTime);
+			e.InstallListener(null);
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
-			e.SelectPartyMember(target);
+			if (item.target == ItemDefinition.TargetMode.FRIENDLY) {
+				Act(target);
+			}
 		}
-		public void MonsterClicked(EncounterMonster m) {
-			var w = p.backingPartyMember.inventory[weapon].GetDef(e.session);
-			p.TakeAction(p.Attack(m, w.damage), () => m != null, w.readyTime);
-			e.InstallListener(null);
+		public void MonsterClicked(EncounterMonster target) {
+			if (item.target == ItemDefinition.TargetMode.ENEMY) {
+				Act(target);
+			}
 		}
 		public void Cancel() {
 			e.InstallListener(prev);
