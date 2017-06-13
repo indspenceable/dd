@@ -117,7 +117,6 @@ public class Encounter : MonoBehaviour {
 	}
 
 	public void SelectPartyMember(EncounterPartyMember p) {
-		Debug.Log("Selecting a party member!");
 		InstallListener(new EncounterPartyMember.Selected(p, null, this));
 	}
 
@@ -144,6 +143,6 @@ public class Encounter : MonoBehaviour {
 	}
 
 	public EncounterPartyMember GetRandomPartyMember() {
-		return party[Random.Range(0, party.Count)];
+		return Util.Random(party);
 	}
 }

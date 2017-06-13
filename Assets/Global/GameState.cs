@@ -127,4 +127,7 @@ public class Util {
 		}
 		return true;
 	}
+	public static T Random<T>(List<T> list) {
+		return list[Random.Range(0, list.Count)];
+	}
 }

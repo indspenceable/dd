@@ -16,7 +16,6 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
-			Debug.Log("Clicked on another of my peers");
 			e.SelectPartyMember(target);
 		}
 		public void MonsterClicked(EncounterMonster m) {}
