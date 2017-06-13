@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EncounterMonster : EncounterEntityBase {
 	private MonsterDefinition def;
+	private int damage = 0;
 
 	public void Setup(Encounter e, MonsterDefinition def) {
 		this.encounter = e;
@@ -34,6 +35,13 @@ public class EncounterMonster : EncounterEntityBase {
 	}
 	protected override int Armor() {
 		return def.armor;
+	}
+	protected override int Damage() {
+		return damage;
+	}
+	protected override void SetDamage(int damage)
+	{
+		this.damage = damage;
 	}
 
 	void OnMouseDown() {

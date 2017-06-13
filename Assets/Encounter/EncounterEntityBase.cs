@@ -7,8 +7,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected Encounter encounter;
 	protected PartyMember backingPartyMember;
 	public Hotspot hotspot;
-	[SerializeField]
-	private int totalDamage = 0;
+	protected abstract int Damage();
+	protected abstract void SetDamage(int damage);
 	protected abstract int HP();
 	protected abstract int Armor();
 
@@ -76,10 +76,10 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		if (hitAmount >= 0) {
 			processedHitAmount = Mathf.Max(hitAmount - Armor(), 0);
 		} else {
-			processedHitAmount = Mathf.Max(hitAmount, -totalDamage);
+			processedHitAmount = Mathf.Max(hitAmount, -Damage());
 		}
-		this.totalDamage += processedHitAmount;
-		if (this.totalDamage >= HP()) {
+		this.SetDamage(Damage() + processedHitAmount);
+		if (this.Damage() >= HP()) {
 			RemoveHealthBar();
 			Destroy();
 		}
@@ -87,12 +87,12 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	private UIProgressBar healthBar;
 	protected void Update() {
-		if (totalDamage > 0) {
+		if (Damage() > 0) {
 			if (healthBar == null ) {
 				healthBar = encounter.CreateProgressBar(transform);
 				healthBar.transform.position = transform.position + new Vector3(0,1);
 			}
-			healthBar.SetPct(1f - (totalDamage / (float)HP()));
+			healthBar.SetPct(1f - (Damage() / (float)HP()));
 		} else {
 			RemoveHealthBar();
 		}

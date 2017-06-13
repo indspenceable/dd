@@ -69,6 +69,8 @@ public class Item {
 public class PartyMember {
 	public string pcName;
 	public int image;
+	public int hp;
+	public int damage;
 	public List<Item> inventory = new List<Item>();
 	// TODO add skills here
 

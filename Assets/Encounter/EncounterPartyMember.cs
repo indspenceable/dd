@@ -141,8 +141,16 @@ public class EncounterPartyMember : EncounterEntityBase {
 
 	// TODO these stats should be stored in the GameState
 	protected override int HP() {
-		return 50;
+		return backingPartyMember.hp;
 	}
+	protected override int Damage() {
+		return backingPartyMember.damage;
+	}
+	protected override void SetDamage(int damage)
+	{
+		backingPartyMember.damage = damage;
+	}
+
 	protected override int Armor() {
 		return 0;
 	}
