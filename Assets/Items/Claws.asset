@@ -16,3 +16,6 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
   damage: 1
   readyTime: 6
+  target: 0
+  itemActivationEffect: {fileID: 1195996672295582, guid: 757dde25989784d8aa0f4f335fe568c3,
+    type: 2}

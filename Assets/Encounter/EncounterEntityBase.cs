@@ -50,9 +50,14 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		StartCoroutine(action);
 	}
 
-	public IEnumerator UseItem(EncounterEntityBase m, ItemDefinition item) {
+	public IEnumerator UseItem(EncounterEntityBase target, ItemDefinition item) {
 		// TODO animate this
-		m.TakeDamage(item.damage);
+		if (item.itemActivationEffect != null) {
+			var effect = Instantiate(item.itemActivationEffect, transform.position, Quaternion.identity, transform).GetComponent<ItemActivationEffect>();
+			yield return effect.Activate(encounter, this, target);
+			Destroy(effect.gameObject);
+		}
+		target.TakeDamage(item.damage);
 		yield return null;
 	}
 

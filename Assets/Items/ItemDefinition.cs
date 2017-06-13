@@ -16,6 +16,7 @@ public class ItemDefinition : ScriptableObject {
 	public int damage;
 	public float readyTime;
 	public TargetMode target;
+	public GameObject itemActivationEffect;
 
 	public string Tooltip() {
 		return itemName + "\n" + description;
