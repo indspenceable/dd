@@ -45,6 +45,9 @@ public class Encounter : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			this.al.Cancel();
 		}
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			session.TogglePause();
+		}
 	}
 
 	public interface ActionListener {

@@ -143,8 +143,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		while (dt < duration ) {
 			yield return null;
 
-			// TODO make sure we're not paused here.
-			dt += Time.deltaTime;
+			dt += e.session.DT();
 			transform.position = Vector3.Lerp(p1, p2, dt/duration);
 			p.transform.position = Vector3.Lerp(p2, p1, dt/duration);
 		}

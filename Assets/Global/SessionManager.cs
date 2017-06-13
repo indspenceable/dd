@@ -9,6 +9,7 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject encounterPrefab;
 	[SerializeField] GameObject partyManagementPrefab;
 	[SerializeField] GameObject mainMenuPrefab;
+	[SerializeField] UIManager ui;
 	[SerializeField] public List<Sprite> partyImages;
 	[SerializeField] public List<ItemDefinition> itemDefs;
 	[SerializeField] public List<MonsterDefinition> monsterDefs;
@@ -19,6 +20,15 @@ public class SessionManager : MonoBehaviour {
 	private GameState _state;
 	public GameState state {
 		get { return _state; }
+	}
+
+	private bool Paused = false;
+	public void TogglePause() {
+		Paused = !Paused;
+		ui.paused.SetActive(Paused);
+	}
+	public float DT() {
+		return Paused ? 0f : Time.deltaTime;
 	}
 
 	void Start() {

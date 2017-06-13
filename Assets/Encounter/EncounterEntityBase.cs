@@ -33,9 +33,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		float dt = 0f;
 		while (dt < duration) {
 			yield return null;
-			// TODO make sure we check if we're paused here!
 			// TODO if our target disappears we should probably cancel this action.
-			dt += Time.deltaTime;
+			dt += e.session.DT();
 			b.SetPct(dt/duration);
 
 
