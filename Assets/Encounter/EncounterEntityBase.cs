@@ -8,6 +8,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected Encounter encounter;
 	protected PartyMember backingPartyMember;
 	public Hotspot hotspot;
+	protected List<StatusEffectInstance> statusEffects = new List<StatusEffectInstance>();
+
 	protected abstract int Damage();
 	protected abstract void SetDamage(int damage);
 	protected abstract int HP();
@@ -59,8 +61,14 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			yield return effect.Activate(encounter, this, target);
 			Destroy(effect.gameObject);
 		}
+		if (target == null ) yield break;
 		if (RollAccuracy(target.Evasion(), item.accuracy)) {
-			target.TakeDamage(item.damage);
+			if (item.damage != 0) {
+				target.TakeDamage(item.damage);
+			}
+			if (item.effect != null) {
+				target.AddStatusEffect(item.effect);
+			}
 		} else {
 			encounter.session.ui.BounceText("miss", Color.blue, target.transform.position);
 		}
@@ -87,21 +95,36 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	protected abstract void Destroy();
 
+	private List<StatusModifier> AllModifiers() {
+		List<StatusModifier> rtn = new List<StatusModifier>();
+		foreach(var i in Items()) {
+			rtn.Add(i.modifier);
+		}
+		foreach(var e in statusEffects) {
+			rtn.Add(e.myEffect.modifier);
+		}
+		return rtn;
+	}
+
 	private int FullArmor() {
 		// TODO is this too inefficient?
-		return BaseArmor() + Items().Sum(i => i.armorModifier);
+		return BaseArmor() + AllModifiers().Sum(modifier => modifier.armor);
 	}
 
 
 	private float SpeedModifier() {
 		float speed = 1f;
-		foreach(var i in Items()) {
-			speed *= i.speedModifier;
+		foreach(var modifier in AllModifiers()) {
+			speed *= modifier.speed;
 		}
 		return speed;
 	}
 
-	public void TakeDamage(int hitAmount) {
+	void AddStatusEffect(StatusEffect e) {
+		statusEffects.Add(e.BuildInstance());
+	}
+
+	void TakeDamage(int hitAmount) {
 		int processedHitAmount = hitAmount;
 		if (hitAmount >= 0) {
 			processedHitAmount = Mathf.Max(hitAmount - FullArmor(), 0);

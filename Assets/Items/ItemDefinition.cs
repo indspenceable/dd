@@ -22,10 +22,10 @@ public class ItemDefinition : ScriptableObject {
 	public TargetMode target;
 	public GameObject itemActivationEffect;
 	public float accuracy = 1f;
+	public StatusEffect effect;
 
 	[Header("Stats-related things")]
-	public int armorModifier;
-	public float speedModifier = 1f;
+	public StatusModifier modifier;
 
 	public string Tooltip() {
 		return itemName + "\n" + description;
