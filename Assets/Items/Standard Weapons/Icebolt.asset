@@ -14,8 +14,8 @@ MonoBehaviour:
   itemName: Tome of Icebolt
   description: 8/8 Freezes enemies
   image: {fileID: 21300016, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
-  damage: 8
-  readyTime: 8
+  damage: 10
+  readyTime: 12
   target: 0
-  itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
+  itemActivationEffect: {fileID: 1195996672295582, guid: 06319b226bf4343bda1f819bdfdd97b7,
     type: 2}
