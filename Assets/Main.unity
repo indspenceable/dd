@@ -443,6 +443,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b4103ea2008ee45faac34ecd22b23e2d, type: 2}
   - {fileID: 11400000, guid: c09144c7406374da78e9435785e26093, type: 2}
   - {fileID: 11400000, guid: 6f2b6651315a045268dbc70dbdba6c66, type: 2}
+  - {fileID: 11400000, guid: 7bd9c5b57b770488eafb24a01d429058, type: 2}
   monsterDefs:
   - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}
   - {fileID: 11400000, guid: 83709f314c430490b91d7a80040e5150, type: 2}
@@ -455,6 +456,7 @@ MonoBehaviour:
     damage: 0
     inventory:
     - index: 0
+    - index: 5
   - pcName: Theif
     image: 1
     hp: 20

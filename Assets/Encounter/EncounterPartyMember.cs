@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EncounterPartyMember : EncounterEntityBase {
 	public class Selected : Encounter.ActionListener {
@@ -30,14 +31,16 @@ public class EncounterPartyMember : EncounterEntityBase {
 			var Buttons = new List<GameObject>();
 			for (int i = 0; i < p.backingPartyMember.inventory.Count; i += 1)
 			{
-				UIButton go = e.CreateUIButton();
-				var weapon = p.backingPartyMember.inventory[i];
-				go.SetImage(weapon.GetDef(e.session).image);
-				go.SetTooltip(weapon.GetDef(e.session).Tooltip(), e.session);
-				var listener = new ApplyItem(p, i, this, e);
-				go.SetOnClick(() => e.InstallListener(listener));
-				partyMemberActions.Add(go);
-				Buttons.Add(go.gameObject);
+				var weapon = p.backingPartyMember.inventory[i].GetDef(e.session);
+				if (weapon.usable) {
+					UIButton go = e.CreateUIButton();
+					go.SetImage(weapon.image);
+					go.SetTooltip(weapon.Tooltip(), e.session);
+					var listener = new ApplyItem(p, i, this, e);
+					go.SetOnClick(() => e.InstallListener(listener));
+					partyMemberActions.Add(go);
+					Buttons.Add(go.gameObject);
+				}
 			}
 			{
 				UIButton go = e.CreateUIButton();
@@ -157,8 +160,13 @@ public class EncounterPartyMember : EncounterEntityBase {
 		return 0f;
 	}
 
-	protected override int Armor() {
+	protected override int BaseArmor() {
 		return 0;
+	}
+
+	protected override List<ItemDefinition> Items() {
+		// TODO is this really wasteful? Also does that matter?
+		return backingPartyMember.inventory.Select(i => i.GetDef(encounter.session)).ToList();
 	}
 
 	public IEnumerator SwapWith(EncounterPartyMember p) {

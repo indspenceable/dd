@@ -35,7 +35,7 @@ public class EncounterMonster : EncounterEntityBase {
 	protected override int HP() {
 		return def.hp;
 	}
-	protected override int Armor() {
+	protected override int BaseArmor() {
 		return def.armor;
 	}
 	protected override int Damage() {
@@ -44,9 +44,11 @@ public class EncounterMonster : EncounterEntityBase {
 	protected override float Evasion() {
 		return def.evasion;
 	}
-	protected override void SetDamage(int damage)
-	{
+	protected override void SetDamage(int damage) {
 		this.damage = damage;
+	}
+	protected override List<ItemDefinition> Items() {
+		return def.items;
 	}
 
 	void OnMouseDown() {

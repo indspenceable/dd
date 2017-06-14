@@ -13,11 +13,18 @@ public class ItemDefinition : ScriptableObject {
 	public string itemName;
 	public string description;
 	public Sprite image;
+
+
+	[Header("Mid-Encounter activation")]
+	public bool usable = true;
 	public int damage;
 	public float readyTime;
 	public TargetMode target;
 	public GameObject itemActivationEffect;
 	public float accuracy = 1f;
+
+	[Header("Stats-related things")]
+	public int armorModifier;
 
 	public string Tooltip() {
 		return itemName + "\n" + description;

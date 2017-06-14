@@ -10,7 +10,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected abstract int Damage();
 	protected abstract void SetDamage(int damage);
 	protected abstract int HP();
-	protected abstract int Armor();
+	protected abstract List<ItemDefinition> Items();
+	protected abstract int BaseArmor();
 	protected abstract float Evasion();
 
 	public void MarkSelected(bool amSelected) {
@@ -86,10 +87,18 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	protected abstract void Destroy();
 
+	public int FullArmor() {
+		int rtn = BaseArmor();
+		foreach(var i in Items()) {
+			rtn += i.armorModifier;
+		}
+		return rtn;
+	}
+
 	public void TakeDamage(int hitAmount) {
 		int processedHitAmount = hitAmount;
 		if (hitAmount >= 0) {
-			processedHitAmount = Mathf.Max(hitAmount - Armor(), 0);
+			processedHitAmount = Mathf.Max(hitAmount - FullArmor(), 0);
 		} else {
 			processedHitAmount = Mathf.Max(hitAmount, -Damage());
 		}
