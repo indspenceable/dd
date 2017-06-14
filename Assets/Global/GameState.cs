@@ -80,7 +80,11 @@ public class PartyMember {
 	public override bool Equals(System.Object obj) {
 		PartyMember o = obj as PartyMember;
 		if (o == null) return false;
-		return Util.ListEquals(inventory, o.inventory) && image == o.image;
+		return Util.ListEquals(inventory, o.inventory) && 
+			image == o.image &&
+			hp == o.hp &&
+			damage == o.damage &&
+			pcName == o.pcName;
 	}
 }
 
@@ -125,11 +129,13 @@ public class GameState {
 	public Layout layout;
 	public List<Item> inventory = new List<Item>();
 	public List<PartyMember> party = new List<PartyMember>();
+	public List<PartyMember> graveyard = new List<PartyMember>();
 	public override bool Equals(System.Object obj) {
 		GameState o = obj as GameState;
 		if (o == null) return false;
 		return layout.Equals(o.layout) && 
 			Util.ListEquals(inventory, o.inventory) &&
-			Util.ListEquals(party, o.party);
+			Util.ListEquals(party, o.party) &&
+			Util.ListEquals(graveyard, o.graveyard);
 	}
 }

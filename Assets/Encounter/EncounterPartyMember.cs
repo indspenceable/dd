@@ -130,9 +130,10 @@ public class EncounterPartyMember : EncounterEntityBase {
 	}
 
 	protected override void Destroy() {
-		Debug.Log(gameObject);
-		Destroy(gameObject);
 		encounter.GetPartyMembers().Remove(this);
+		encounter.session.state.party.Remove(backingPartyMember);
+		encounter.session.state.graveyard.Add(backingPartyMember);
+		Destroy(gameObject);
 	}
 
 	public void Setup(Encounter encounter, PartyMember p) {
