@@ -14,7 +14,7 @@ public abstract class RoomContents {
 			return true;
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
-			yield return session.ui.textBox.CoroutineShow("Monsters! Get ready for a fight.");
+			yield return session.ui.TextBox("Monsters! Get ready for a fight.");
 			session.SwapToEncounter(this, roomIndex);
 		}
 	}
@@ -30,7 +30,7 @@ public abstract class RoomContents {
 			var item = session.RANDOM_ITEM___();
 			session.state.inventory.Add(item);
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
-			yield return session.ui.textBox.CoroutineShow("You found an item! : " + item.GetDef(session).itemName);
+			yield return session.ui.TextBox("You found an item! : " + item.GetDef(session).itemName);
 //			session.SwapToMapMode();
 		}
 	}
@@ -44,7 +44,7 @@ public abstract class RoomContents {
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
-			yield return session.ui.textBox.CoroutineShow("You found an empty room. Oh well!");
+			yield return session.ui.TextBox("You found an empty room. Oh well!");
 //			session.SwapToMapMode();
 		}
 	}

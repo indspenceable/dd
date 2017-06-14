@@ -78,6 +78,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		} else {
 			processedHitAmount = Mathf.Max(hitAmount, -Damage());
 		}
+		Color c = hitAmount > 0 ? Color.red : hitAmount < 0 ? Color.green : Color.grey;
+		encounter.session.ui.BounceText("" + processedHitAmount, c, transform.position);
 		this.SetDamage(Damage() + processedHitAmount);
 		if (this.Damage() >= HP()) {
 			RemoveHealthBar();

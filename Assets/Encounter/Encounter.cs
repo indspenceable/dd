@@ -109,7 +109,7 @@ public class Encounter : MonoBehaviour {
 	}
 
 	private IEnumerator GoToMapScreen(){
-		yield return session.ui.textBox.CoroutineShow("With all enemies destroyed, you leave the room.\n\n<space>");
+		yield return session.ui.TextBox("With all enemies destroyed, you leave the room.\n\n<space>");
 		session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 		session.SwapToMapMode();
 		session.UnPause();
