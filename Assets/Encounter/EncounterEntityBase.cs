@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public abstract class EncounterEntityBase : MonoBehaviour {
 	[SerializeField] GameObject SelectedReticle;
@@ -37,9 +38,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		while (dt < duration) {
 			yield return null;
 			// TODO if our target disappears we should probably cancel this action.
-			dt += encounter.session.DT();
+			dt += encounter.session.DT() * (1/SpeedModifier());
 			b.SetPct(dt/duration);
-
 
 			if (!valid()) {
 				CleanupLeasedObjects();
@@ -87,12 +87,18 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	protected abstract void Destroy();
 
-	public int FullArmor() {
-		int rtn = BaseArmor();
+	private int FullArmor() {
+		// TODO is this too inefficient?
+		return BaseArmor() + Items().Sum(i => i.armorModifier);
+	}
+
+
+	private float SpeedModifier() {
+		float speed = 1f;
 		foreach(var i in Items()) {
-			rtn += i.armorModifier;
+			speed *= i.speedModifier;
 		}
-		return rtn;
+		return speed;
 	}
 
 	public void TakeDamage(int hitAmount) {

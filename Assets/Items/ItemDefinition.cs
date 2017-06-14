@@ -25,6 +25,7 @@ public class ItemDefinition : ScriptableObject {
 
 	[Header("Stats-related things")]
 	public int armorModifier;
+	public float speedModifier = 1f;
 
 	public string Tooltip() {
 		return itemName + "\n" + description;

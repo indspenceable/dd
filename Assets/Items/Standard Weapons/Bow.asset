@@ -14,9 +14,12 @@ MonoBehaviour:
   itemName: Bow
   description: 3/3
   image: {fileID: 21300020, guid: 439fafd2740a144968138dbe5010332a, type: 3}
+  usable: 1
   damage: 4
   readyTime: 3
   target: 0
   itemActivationEffect: {fileID: 1195996672295582, guid: 757dde25989784d8aa0f4f335fe568c3,
     type: 2}
   accuracy: 0.95
+  armorModifier: 0
+  speedModifier: 1

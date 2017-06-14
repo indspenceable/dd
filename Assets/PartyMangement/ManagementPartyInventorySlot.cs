@@ -16,7 +16,6 @@ public class ManagementPartyInventorySlot : MonoBehaviour {
 		this.tt_string = null;
 	}
 
-
 	public void SetupAsGroupInventorySlot(int myIndex){
 		if (session.state.inventory.Count <= myIndex) {
 			GetComponent<Image>().enabled = false;

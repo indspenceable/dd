@@ -21,3 +21,4 @@ MonoBehaviour:
   itemActivationEffect: {fileID: 0}
   accuracy: 1
   armorModifier: 2
+  speedModifier: 1

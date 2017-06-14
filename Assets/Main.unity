@@ -444,6 +444,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c09144c7406374da78e9435785e26093, type: 2}
   - {fileID: 11400000, guid: 6f2b6651315a045268dbc70dbdba6c66, type: 2}
   - {fileID: 11400000, guid: 7bd9c5b57b770488eafb24a01d429058, type: 2}
+  - {fileID: 11400000, guid: 29d5f8fcf4daf4b1facc40df699d6137, type: 2}
   monsterDefs:
   - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}
   - {fileID: 11400000, guid: 83709f314c430490b91d7a80040e5150, type: 2}
@@ -463,12 +464,14 @@ MonoBehaviour:
     damage: 0
     inventory:
     - index: 1
+    - index: 6
   - pcName: Wizard
     image: 2
     hp: 20
     damage: 0
     inventory:
     - index: 2
+    - index: 4
 --- !u!4 &771138791
 Transform:
   m_ObjectHideFlags: 0

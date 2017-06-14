@@ -9,17 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
-  m_Name: Sword
+  m_Name: Ring Of Speed
   m_EditorClassIdentifier: 
-  itemName: Sword
-  description: A sharp blade; very efficient at cutting through monsters.
-  image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
-  usable: 1
-  damage: 8
-  readyTime: 6
+  itemName: Ring of Speed
+  description: 10% faster charge
+  image: {fileID: 21300018, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
+  usable: 0
+  damage: 0
+  readyTime: 0
   target: 0
-  itemActivationEffect: {fileID: 1195996672295582, guid: 757dde25989784d8aa0f4f335fe568c3,
-    type: 2}
-  accuracy: 0.9
+  itemActivationEffect: {fileID: 0}
+  accuracy: 1
   armorModifier: 0
-  speedModifier: 1
+  speedModifier: 0.9
