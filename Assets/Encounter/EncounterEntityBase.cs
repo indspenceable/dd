@@ -11,6 +11,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected abstract void SetDamage(int damage);
 	protected abstract int HP();
 	protected abstract int Armor();
+	protected abstract float Evasion();
 
 	public void MarkSelected(bool amSelected) {
 		this.SelectedReticle.SetActive(amSelected);
@@ -57,8 +58,22 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			yield return effect.Activate(encounter, this, target);
 			Destroy(effect.gameObject);
 		}
-		target.TakeDamage(item.damage);
+		if (RollAccuracy(target.Evasion(), item.accuracy)) {
+			target.TakeDamage(item.damage);
+		} else {
+			encounter.session.ui.BounceText("miss", Color.blue, target.transform.position);
+		}
 		yield return null;
+	}
+	protected bool RollAccuracy(float evasion, float itemAccuracy) {
+		float roll=Random.Range(0f, 1f);
+//		Debug.Log("Roll is " + roll);
+//		Debug.Log("Evasion is " + evasion);
+//		Debug.Log("itemAccuracy is " + itemAccuracy);
+//		Debug.Log("LHS is " + roll);
+//		Debug.Log("RHS is " + (1-((1-evasion)*itemAccuracy)));
+//		Debug.Log("Result " + (roll > 1-((1-evasion)*itemAccuracy)));
+		return roll > 1-((1-evasion)*itemAccuracy);
 	}
 
 	private void CleanupLeasedObjects() {
@@ -79,11 +94,14 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			processedHitAmount = Mathf.Max(hitAmount, -Damage());
 		}
 		Color c = hitAmount > 0 ? Color.red : hitAmount < 0 ? Color.green : Color.grey;
-		encounter.session.ui.BounceText("" + Mathf.Abs(processedHitAmount), c, transform.position);
-		this.SetDamage(Damage() + processedHitAmount);
-		if (this.Damage() >= HP()) {
-			RemoveHealthBar();
-			Destroy();
+		// TODO there is a race condition here. Id unno why it triggers on this line particularly though...
+		if (gameObject != null ) {
+			encounter.session.ui.BounceText("" + Mathf.Abs(processedHitAmount), c, transform.position);
+			this.SetDamage(Damage() + processedHitAmount);
+			if (this.Damage() >= HP()) {
+				RemoveHealthBar();
+				Destroy();
+			}
 		}
 	}
 

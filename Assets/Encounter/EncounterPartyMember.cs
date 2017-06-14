@@ -153,6 +153,9 @@ public class EncounterPartyMember : EncounterEntityBase {
 	{
 		backingPartyMember.damage = damage;
 	}
+	protected override float Evasion() {
+		return 0f;
+	}
 
 	protected override int Armor() {
 		return 0;

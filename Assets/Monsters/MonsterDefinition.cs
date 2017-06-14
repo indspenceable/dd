@@ -8,5 +8,7 @@ public class MonsterDefinition : ScriptableObject {
 	public List<ItemDefinition> items;
 	public int hp;
 	public int armor;
+	public float evasion;
+	public int difficulty;
 }
 

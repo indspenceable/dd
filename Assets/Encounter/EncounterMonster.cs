@@ -41,6 +41,9 @@ public class EncounterMonster : EncounterEntityBase {
 	protected override int Damage() {
 		return damage;
 	}
+	protected override float Evasion() {
+		return def.evasion;
+	}
 	protected override void SetDamage(int damage)
 	{
 		this.damage = damage;

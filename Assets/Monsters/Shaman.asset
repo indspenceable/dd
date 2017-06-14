@@ -15,5 +15,7 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: cff4c16c7640f4b90bdf4ac8dff6ad13, type: 2}
   - {fileID: 11400000, guid: b4103ea2008ee45faac34ecd22b23e2d, type: 2}
-  hp: 20
+  hp: 10
   armor: 0
+  evasion: 0
+  difficulty: 4

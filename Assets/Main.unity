@@ -447,6 +447,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}
   - {fileID: 11400000, guid: 83709f314c430490b91d7a80040e5150, type: 2}
   - {fileID: 11400000, guid: f0100514fbf354337b7b629c2bdf2ef9, type: 2}
+  - {fileID: 11400000, guid: 7cdddbcb5245e4ec18df266e028e62b2, type: 2}
   startingParty:
   - pcName: Fighter
     image: 0
@@ -456,13 +457,13 @@ MonoBehaviour:
     - index: 0
   - pcName: Theif
     image: 1
-    hp: 15
+    hp: 20
     damage: 0
     inventory:
     - index: 1
   - pcName: Wizard
     image: 2
-    hp: 10
+    hp: 20
     damage: 0
     inventory:
     - index: 2
