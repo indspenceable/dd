@@ -440,14 +440,33 @@ MonoBehaviour:
   - {fileID: 21300108, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
   - {fileID: 21300074, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
   itemDefs:
+  - {fileID: 11400000, guid: fcf5189ef36434ef5a0eb2545a33d817, type: 2}
   - {fileID: 11400000, guid: 352bf221067174f57a34dd06cfc9e3c2, type: 2}
+  - {fileID: 11400000, guid: b4103ea2008ee45faac34ecd22b23e2d, type: 2}
   - {fileID: 11400000, guid: c09144c7406374da78e9435785e26093, type: 2}
   - {fileID: 11400000, guid: 6f2b6651315a045268dbc70dbdba6c66, type: 2}
-  - {fileID: 11400000, guid: fcf5189ef36434ef5a0eb2545a33d817, type: 2}
-  - {fileID: 11400000, guid: b4103ea2008ee45faac34ecd22b23e2d, type: 2}
   monsterDefs:
   - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}
   - {fileID: 11400000, guid: 83709f314c430490b91d7a80040e5150, type: 2}
+  startingParty:
+  - pcName: Fighter
+    image: 0
+    hp: 20
+    damage: 0
+    inventory:
+    - index: 0
+  - pcName: Theif
+    image: 1
+    hp: 15
+    damage: 0
+    inventory:
+    - index: 1
+  - pcName: Wizard
+    image: 2
+    hp: 10
+    damage: 0
+    inventory:
+    - index: 2
 --- !u!4 &771138791
 Transform:
   m_ObjectHideFlags: 0

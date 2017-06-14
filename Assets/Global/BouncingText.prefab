@@ -72,7 +72,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  duration: 0.75
+  duration: 0.6
   amplification: 0.5
 --- !u!114 &114367687685601768
 MonoBehaviour:
