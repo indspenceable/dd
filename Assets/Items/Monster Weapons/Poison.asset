@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: 
   description: 
-  image: {fileID: 0}
+  image: {fileID: 21300040, guid: 439fafd2740a144968138dbe5010332a, type: 3}
   usable: 1
   damage: 0
   readyTime: 7
@@ -23,6 +23,7 @@ MonoBehaviour:
   armorPierce: 0
   neverMiss: 0
   effect: {fileID: 0}
+  numberOfCharges: -1
   modifier:
     armor: 0
     speed: 1

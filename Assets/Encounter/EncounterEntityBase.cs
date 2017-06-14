@@ -13,7 +13,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected abstract int Damage();
 	protected abstract void SetDamage(int damage);
 	protected abstract int HP();
-	protected abstract List<ItemDefinition> Items();
+	protected abstract List<Item> Items();
 	protected abstract int BaseArmor();
 	protected abstract float Evasion();
 
@@ -54,26 +54,36 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		StartCoroutine(action);
 	}
 
-	public IEnumerator UseItem(EncounterEntityBase target, ItemDefinition item) {
-		// TODO animate this
-		if (item.itemActivationEffect != null) {
-			var effect = Instantiate(item.itemActivationEffect, transform.position, Quaternion.identity, transform).GetComponent<ItemActivationEffect>();
+	public IEnumerator UseItem(EncounterEntityBase target, Item item) {
+		ItemDefinition itemDefinition = item.GetDef(encounter.session);
+		if (itemDefinition.itemActivationEffect != null) {
+			var effect = Instantiate(itemDefinition.itemActivationEffect, transform.position, Quaternion.identity, transform).GetComponent<ItemActivationEffect>();
 			yield return effect.Activate(encounter, this, target);
 			Destroy(effect.gameObject);
 		}
 		if (target == null ) yield break;
-		if (item.neverMiss || RollAccuracy(target.Evasion(), item.accuracy)) {
-			if (item.damage != 0) {
-				target.TakeDamage(item.damage, item.armorPierce);
+		if (itemDefinition.neverMiss || RollAccuracy(target.Evasion(), itemDefinition.accuracy)) {
+			if (itemDefinition.damage != 0) {
+				target.TakeDamage(itemDefinition.damage, itemDefinition.armorPierce);
 			}
-			if (item.effect != null) {
-				target.AddStatusEffect(item.effect);
+			if (itemDefinition.effect != null) {
+				target.AddStatusEffect(itemDefinition.effect);
 			}
 		} else {
 			encounter.session.ui.BounceText("miss", Color.blue, target.transform.position);
 		}
+		if (itemDefinition.numberOfCharges != -1) {
+			UseCharge(item);
+		}
 		yield return null;
 	}
+	private void UseCharge(Item i) {
+		i.chargesUsed += 1;
+		if (i.chargesUsed >= i.GetDef(encounter.session).numberOfCharges) {
+			Items().Remove(i);
+		}
+	}
+
 	protected bool RollAccuracy(float evasion, float itemAccuracy) {
 		float roll=Random.Range(0f, 1f);
 //		Debug.Log("Roll is " + roll);
@@ -98,7 +108,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	private List<StatusModifier> AllModifiers() {
 		List<StatusModifier> rtn = new List<StatusModifier>();
 		foreach(var i in Items()) {
-			rtn.Add(i.modifier);
+			rtn.Add(i.GetDef(encounter.session).modifier);
 		}
 		foreach(var e in statusEffects) {
 			rtn.Add(e.myEffect.modifier);

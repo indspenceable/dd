@@ -5,23 +5,29 @@ using UnityEngine;
 public class EncounterMonster : EncounterEntityBase {
 	private MonsterDefinition def;
 	private int damage = 0;
+	private List<Item> items = new List<Item>();
 
 	public void Setup(Encounter e, MonsterDefinition def) {
 		this.encounter = e;
 		this.def = def;
 		GetComponent<SpriteRenderer>().sprite = def.image;
+		foreach(var id in def.items) {
+			Debug.Log(id);
+			items.Add(new Item(e.session.itemDefs.IndexOf(id)));
+		}
 	}
 
 	new void Update() {
 		if (this.currentAction == null) {
 			// Try to take 
-			var w = Util.Random(def.items);
+			var i = Util.Random(items);
+			var w = i.GetDef(encounter.session);
 			if (w.target == ItemDefinition.TargetMode.ENEMY) {
 				var target = Util.Random(encounter.GetPartyMembers());
-				TakeAction(UseItem(target, w), () => encounter != null && target != null, w.readyTime);
+				TakeAction(UseItem(target, i), () => encounter != null && target != null, w.readyTime);
 			} else if (w.target == ItemDefinition.TargetMode.FRIENDLY) {
 				var target = Util.Random(encounter.GetMonsters());
-				TakeAction(UseItem(target, w), () => encounter != null && target != null, w.readyTime);
+				TakeAction(UseItem(target, i), () => encounter != null && target != null, w.readyTime);
 
 //			} else if 	(w.target == ItemDefinition.TargetMode.SELF) {
 			} else {
@@ -47,8 +53,8 @@ public class EncounterMonster : EncounterEntityBase {
 	protected override void SetDamage(int damage) {
 		this.damage = damage;
 	}
-	protected override List<ItemDefinition> Items() {
-		return def.items;
+	protected override List<Item> Items() {
+		return items;
 	}
 
 	void OnMouseDown() {

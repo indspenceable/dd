@@ -14,7 +14,6 @@ public class ItemDefinition : ScriptableObject {
 	public string description;
 	public Sprite image;
 
-
 	[Header("Mid-Encounter activation")]
 	public bool usable = true;
 	public int damage;
@@ -25,6 +24,7 @@ public class ItemDefinition : ScriptableObject {
 	public bool armorPierce;
 	public bool neverMiss;
 	public StatusEffect effect;
+	public int numberOfCharges = -1;
 
 	[Header("Stats-related things")]
 	public StatusModifier modifier;

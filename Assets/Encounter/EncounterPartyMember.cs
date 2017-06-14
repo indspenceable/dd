@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class EncounterPartyMember : EncounterEntityBase {
 	public class Selected : Encounter.ActionListener {
@@ -69,27 +68,29 @@ public class EncounterPartyMember : EncounterEntityBase {
 		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
-		ItemDefinition item;
+		Item item;
+		ItemDefinition itemDef;
 
 		public ApplyItem(EncounterPartyMember p, int w, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
-			this.item = p.backingPartyMember.inventory[w].GetDef(e.session);
+			this.item = p.backingPartyMember.inventory[w];
+			this.itemDef = item.GetDef(e.session);
 		}
 
 		private void Act(EncounterEntityBase eeb) {
-			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, item.readyTime);
+			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, itemDef.readyTime);
 			e.InstallListener(null);
 		}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
-			if (item.target == ItemDefinition.TargetMode.FRIENDLY) {
+			if (itemDef.target == ItemDefinition.TargetMode.FRIENDLY) {
 				Act(target);
 			}
 		}
 		public void MonsterClicked(EncounterMonster target) {
-			if (item.target == ItemDefinition.TargetMode.ENEMY) {
+			if (itemDef.target == ItemDefinition.TargetMode.ENEMY) {
 				Act(target);
 			}
 		}
@@ -166,9 +167,9 @@ public class EncounterPartyMember : EncounterEntityBase {
 		return 0;
 	}
 
-	protected override List<ItemDefinition> Items() {
+	protected override List<Item> Items() {
 		// TODO is this really wasteful? Also does that matter?
-		return backingPartyMember.inventory.Select(i => i.GetDef(encounter.session)).ToList();
+		return backingPartyMember.inventory;
 	}
 
 	public IEnumerator SwapWith(EncounterPartyMember p) {

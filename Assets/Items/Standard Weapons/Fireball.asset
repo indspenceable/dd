@@ -21,5 +21,10 @@ MonoBehaviour:
   itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
     type: 2}
   accuracy: 1
-  armorModifier: 0
-  speedModifier: 1
+  armorPierce: 1
+  neverMiss: 1
+  effect: {fileID: 0}
+  numberOfCharges: -1
+  modifier:
+    armor: 0
+    speed: 1

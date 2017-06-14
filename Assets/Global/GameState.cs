@@ -94,6 +94,7 @@ public abstract class RoomContents {
 [System.Serializable] 
 public class Item {
 	public int index;
+	public int chargesUsed;
 	public Item(int index) {
 		this.index = index;
 	}
@@ -103,7 +104,7 @@ public class Item {
 	public override bool Equals(System.Object obj) {
 		Item o = obj as Item;
 		if (o == null) return false;
-		return o.index == index;
+		return o.index == index && chargesUsed == o.chargesUsed;
 	}
 }
 [System.Serializable] 
