@@ -48,6 +48,25 @@ public abstract class RoomContents {
 //			session.SwapToMapMode();
 		}
 	}
+
+	[System.Serializable]
+	public class NewPartyMember : RoomContents {
+		public override bool Equals(System.Object obj) {
+			NewPartyMember o = obj as NewPartyMember;
+			if (o == null) return false;
+			return true;
+		}
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
+			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
+			if (session.state.party.Count >= 5) {
+				yield return session.ui.TextBox("You found a new party member! Unfortunately, your party is full.");
+			} else {
+				var partyMember = session.RANDOM_PARTY_MEMBER___();
+				session.state.party.Add(partyMember);
+				yield return session.ui.TextBox("You found a new party member! Welcome, " + partyMember.pcName + "!");
+			}
+		}
+	}
 }
 
 [System.Serializable] 

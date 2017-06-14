@@ -169,30 +169,30 @@ public class SessionManager : MonoBehaviour {
 		{
 			contents.Add(new RoomContents.Empty());
 		}
+		{
+			contents.Add(new RoomContents.NewPartyMember());
+		}
 		rd.contents = Util.Random(contents);
 		return rd;
 	}
 
 	public IEnumerator BuildParty() {
 		yield return null;
-//		state.party = new List<PartyMember>();
-//		for (int i = 0; i < 3; i += 1) {
-//			var partyMember = new PartyMember();
-//			partyMember.hp = 100*i + 1;
-//			partyMember.damage = 0;
-//			partyMember.pcName = Util.GenerateName(Random.Range(5, 13));
-//			partyMember.image = Random.Range(0, partyImages.Count);
-//			int k = 1;
-//			for (int j = 0; j < k; j += 1) {
-//				partyMember.inventory.Add(RANDOM_ITEM___());
-//			}
-//			state.party.Add(partyMember);
-//		}
 		state.party = new List<PartyMember>(startingParty);
 	}
 
-
-
+	public PartyMember RANDOM_PARTY_MEMBER___() {
+		var partyMember = new PartyMember();
+		partyMember.hp = 20;
+		partyMember.damage = 0;
+		partyMember.pcName = Util.GenerateName(Random.Range(5, 13));
+		partyMember.image = Random.Range(0, partyImages.Count);
+		int k = 1;
+		for (int j = 0; j < k; j += 1) {
+			partyMember.inventory.Add(RANDOM_ITEM___());
+		}
+		return partyMember;
+	}
 
 	public Item RANDOM_ITEM___() {
 		return new Item(Random.Range(0, itemDefs.Count));
