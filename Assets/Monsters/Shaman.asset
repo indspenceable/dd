@@ -13,9 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300128, guid: 7ffc859612ddc4f8c837b2edc0945379, type: 3}
   items:
-  - {fileID: 11400000, guid: cff4c16c7640f4b90bdf4ac8dff6ad13, type: 2}
+  - {fileID: 11400000, guid: d6e7bd2db362a46288029ecab3e720cd, type: 2}
   - {fileID: 11400000, guid: b4103ea2008ee45faac34ecd22b23e2d, type: 2}
-  hp: 10
+  hp: 15
   armor: 0
   evasion: 0
   difficulty: 4

@@ -9,12 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
-  m_Name: Pixie
+  m_Name: Spider
   m_EditorClassIdentifier: 
-  image: {fileID: 21300040, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
+  image: {fileID: 21300050, guid: fcaf097dce11242598c1a64967160016, type: 3}
   items:
-  - {fileID: 11400000, guid: dcdcc6d6c5b9f4c4aabf38054a716b85, type: 2}
-  hp: 10
+  - {fileID: 11400000, guid: d6e7bd2db362a46288029ecab3e720cd, type: 2}
+  - {fileID: 11400000, guid: b24e994d752a84b73ad8d59924487ead, type: 2}
+  - {fileID: 11400000, guid: 2894a4900faa74bfd8189b806911b0f6, type: 2}
+  hp: 5
   armor: 0
-  evasion: 0.3
-  difficulty: 3
+  evasion: 0
+  difficulty: 0

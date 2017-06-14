@@ -34,7 +34,7 @@ public class SessionManager : MonoBehaviour {
 		ui.SetPaused(Paused);
 	}
 	public float DT() {
-		return Paused ? 0f : Time.deltaTime;
+		return (Paused||ui.Blocking) ? 0f : Time.deltaTime;
 	}
 
 	void Start() {
