@@ -15,4 +15,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   modifier:
     armor: 0
-    speed: 20
+    speed: 0.5

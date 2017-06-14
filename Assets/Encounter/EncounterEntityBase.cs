@@ -62,9 +62,9 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			Destroy(effect.gameObject);
 		}
 		if (target == null ) yield break;
-		if (RollAccuracy(target.Evasion(), item.accuracy)) {
+		if (item.neverMiss || RollAccuracy(target.Evasion(), item.accuracy)) {
 			if (item.damage != 0) {
-				target.TakeDamage(item.damage);
+				target.TakeDamage(item.damage, item.armorPierce);
 			}
 			if (item.effect != null) {
 				target.AddStatusEffect(item.effect);
@@ -124,13 +124,14 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		statusEffects.Add(e.BuildInstance());
 	}
 
-	void TakeDamage(int hitAmount) {
+	void TakeDamage(int hitAmount, bool ignoreArmor) {
 		int processedHitAmount = hitAmount;
 		if (hitAmount >= 0) {
-			processedHitAmount = Mathf.Max(hitAmount - FullArmor(), 0);
-		} else {
+			int armor = ignoreArmor ? 0 : FullArmor();
+			processedHitAmount = Mathf.Max(hitAmount - armor, 0);
+		} else if (hitAmount < 0) {
 			processedHitAmount = Mathf.Max(hitAmount, -Damage());
-		}
+		} // if it's 0, then no amount of vulnerability will make it deal damage.
 		Color c = hitAmount > 0 ? Color.red : hitAmount < 0 ? Color.green : Color.grey;
 		// TODO there is a race condition here. Id unno why it triggers on this line particularly though...
 		if (gameObject != null ) {

@@ -22,6 +22,8 @@ public class ItemDefinition : ScriptableObject {
 	public TargetMode target;
 	public GameObject itemActivationEffect;
 	public float accuracy = 1f;
+	public bool armorPierce;
+	public bool neverMiss;
 	public StatusEffect effect;
 
 	[Header("Stats-related things")]

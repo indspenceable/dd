@@ -50,7 +50,9 @@ public class EncounterPartyMember : EncounterEntityBase {
 				Buttons.Add(go.gameObject);
 			}
 			for(int i = 0; i <Buttons.Count; i+=1) {
-				float theta = (180 + Mathf.Lerp(0f, 180f, (i+1)/(float)(Buttons.Count+1)));
+				int START_DEGREES = 270;
+				int END_DEGREES = 360;
+				float theta = (START_DEGREES + Mathf.Lerp(0f, END_DEGREES, (i+1)/(float)(Buttons.Count+1)));
 				float thetaRad = Mathf.Deg2Rad * theta;
 				Buttons[i].transform.position = p.transform.position + new Vector3(Mathf.Cos(thetaRad), Mathf.Sin(thetaRad))*1.5f;
 			}
