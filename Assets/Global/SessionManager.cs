@@ -9,6 +9,7 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] GameObject encounterPrefab;
 	[SerializeField] GameObject partyManagementPrefab;
 	[SerializeField] GameObject mainMenuPrefab;
+	[SerializeField] GameObject shopPrefab;
 	[SerializeField] public UIManager ui;
 	[SerializeField] public List<Sprite> partyImages;
 	[SerializeField] public List<ItemDefinition> itemDefs;
@@ -109,7 +110,7 @@ public class SessionManager : MonoBehaviour {
 
 	public void SwapToManagement() {
 		KillCurrentMode();
-		PartyManagement pm = Instantiate(partyManagementPrefab).GetComponent<PartyManagement>();
+		Management pm = Instantiate(partyManagementPrefab).GetComponent<Management>();
 		pm.Setup(this);
 		currentMode = pm.gameObject;
 	}
@@ -118,6 +119,13 @@ public class SessionManager : MonoBehaviour {
 		KillCurrentMode();
 		MainMenu mm = Instantiate(mainMenuPrefab).GetComponent<MainMenu>();
 		mm.Setup(this);
+		currentMode = mm.gameObject;
+	}
+
+	public void SwapToShopMode(List<Item> items) {
+		KillCurrentMode();
+		ManagementShop mm = Instantiate(shopPrefab).GetComponent<ManagementShop>();
+		mm.Setup(this, items);
 		currentMode = mm.gameObject;
 	}
 
@@ -172,6 +180,10 @@ public class SessionManager : MonoBehaviour {
 		{
 			contents.Add(new RoomContents.NewPartyMember());
 		}
+		{
+			contents.Add(new RoomContents.Shop(this));
+		}
+
 		rd.contents = Util.Random(contents);
 		return rd;
 	}

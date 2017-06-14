@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartyManagement : MonoBehaviour {
+public class Management : MonoBehaviour {
 	private SessionManager session;
 	[SerializeField] List<ManagementPartyMember> partyMembers;
 	[SerializeField] List<ManagementPartyInventorySlot> leftSlots;

@@ -8,9 +8,9 @@ using UnityEngine.EventSystems;
 public class ManagementPartyInventorySlot : MonoBehaviour {
 	private UnityAction action;
 	private SessionManager session;
-	private PartyManagement management;
+	private Management management;
 	private string tt_string;
-	public void Setup(SessionManager session, PartyManagement management) {
+	public void Setup(SessionManager session, Management management) {
 		this.session = session;
 		this.management = management;
 		this.tt_string = null;

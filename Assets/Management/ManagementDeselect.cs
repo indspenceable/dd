@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ManagementDeselect : MonoBehaviour {
-	[SerializeField] PartyManagement pm;
+	[SerializeField] Management pm;
 	void OnMouseDown() {
 		pm.Deselect();
 	}

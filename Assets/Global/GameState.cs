@@ -31,7 +31,6 @@ public abstract class RoomContents {
 			session.state.inventory.Add(item);
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 			yield return session.ui.TextBox("You found an item! : " + item.GetDef(session).itemName);
-//			session.SwapToMapMode();
 		}
 	}
 
@@ -45,7 +44,6 @@ public abstract class RoomContents {
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 			yield return session.ui.TextBox("You found an empty room. Oh well!");
-//			session.SwapToMapMode();
 		}
 	}
 
@@ -65,6 +63,30 @@ public abstract class RoomContents {
 				session.state.party.Add(partyMember);
 				yield return session.ui.TextBox("You found a new party member! Welcome, " + partyMember.pcName + "!");
 			}
+		}
+	}
+
+	[System.Serializable]
+	public class Shop : RoomContents {
+		private List<Item> items = new List<Item>();
+		public Shop(SessionManager session) {
+			int itemCount = Random.Range(2, 6);
+			for (int i = 0; i < itemCount; i+=1) {
+				items.Add(session.RANDOM_ITEM___());
+			}
+		}
+		public override bool Equals(System.Object obj) {
+			Shop o = obj as Shop;
+			if (o == null) return false;
+			return Util.ListEquals(items, o.items);
+		}
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
+			yield return null;
+			if (session.state.layout.rooms[roomIndex].state != RoomData.State.CLEARED) {
+//				yield return session.ui.TextBox("You Found a shop in the ruins");
+			}
+			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
+			session.SwapToShopMode(items);
 		}
 	}
 }

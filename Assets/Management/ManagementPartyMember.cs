@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ManagementPartyMember : MonoBehaviour {
 	private SessionManager session;
-	private PartyManagement management;
+	private Management management;
 	private int myIndex;
 
-	public void Setup(SessionManager session, PartyManagement management, int myIndex){
+	public void Setup(SessionManager session, Management management, int myIndex){
 		this.session = session;
 		this.management = management;
 		this.myIndex = myIndex;
