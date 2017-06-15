@@ -14,14 +14,18 @@ MonoBehaviour:
   itemName: 
   description: 
   image: {fileID: 21300096, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
-  usable: 1
-  damage: 0
-  readyTime: 3
+  usableInbattle: 1
   target: 0
+  accuracy: 1
+  neverMiss: 0
+  armorPierce: 0
+  readyTime: 3
   itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
     type: 2}
-  accuracy: 1
-  effect: {fileID: 11400000, guid: 5b6c05c7aafdf47a7939b8b2501c4690, type: 2}
+  activationEffect:
+    damage: 0
+    effect: {fileID: 11400000, guid: 5b6c05c7aafdf47a7939b8b2501c4690, type: 2}
+  numberOfCharges: -1
   modifier:
     armor: 0
     speed: 1

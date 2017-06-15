@@ -14,16 +14,17 @@ MonoBehaviour:
   itemName: Broadsword
   description: 1/6
   image: {fileID: 21300040, guid: 439fafd2740a144968138dbe5010332a, type: 3}
-  usable: 1
-  damage: 8
-  readyTime: 12
+  usableInbattle: 1
   target: 0
+  accuracy: 1
+  neverMiss: 0
+  armorPierce: 0
+  readyTime: 12
   itemActivationEffect: {fileID: 1195996672295582, guid: 757dde25989784d8aa0f4f335fe568c3,
     type: 2}
-  accuracy: 1
-  armorPierce: 0
-  neverMiss: 0
-  effect: {fileID: 0}
+  activationEffect:
+    damage: 8
+    effect: {fileID: 0}
   numberOfCharges: -1
   modifier:
     armor: 0

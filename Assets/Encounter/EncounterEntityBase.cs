@@ -50,12 +50,20 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		}
 		yield return null;
 		CleanupLeasedObjects();
-
 		StartCoroutine(action);
+		foreach(var se in statusEffects) {
+			if (se.myEffect.triggerMode == StatusEffect.TriggerMode.ROUNDS) {
+				Debug.Log("TRIGGERING STATUS EFFECT: " + se.myEffect);
+				se.Trigger(this);
+				yield return new WaitForSeconds(0.25f);
+			}
+		}
+		statusEffects.RemoveAll(se => se.remainingTriggers == 0);
 	}
 
 	public IEnumerator UseItem(EncounterEntityBase target, Item item) {
 		ItemDefinition itemDefinition = item.GetDef(encounter.session);
+		var ae = itemDefinition.activationEffect;
 		if (itemDefinition.itemActivationEffect != null) {
 			var effect = Instantiate(itemDefinition.itemActivationEffect, transform.position, Quaternion.identity, transform).GetComponent<ItemActivationEffect>();
 			yield return effect.Activate(encounter, this, target);
@@ -63,11 +71,11 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		}
 		if (target == null ) yield break;
 		if (itemDefinition.neverMiss || RollAccuracy(target.Evasion(), itemDefinition.accuracy)) {
-			if (itemDefinition.damage != 0) {
-				target.TakeDamage(itemDefinition.damage, itemDefinition.armorPierce);
+			if (ae.damage != 0) {
+				target.TakeDamage(ae.damage, itemDefinition.armorPierce);
 			}
-			if (itemDefinition.effect != null) {
-				target.AddStatusEffect(itemDefinition.effect);
+			if (ae.effect != null) {
+				target.AddStatusEffect(ae.effect);
 			}
 		} else {
 			encounter.session.ui.BounceText("miss", Color.blue, target.transform.position);
@@ -134,7 +142,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		statusEffects.Add(e.BuildInstance());
 	}
 
-	void TakeDamage(int hitAmount, bool ignoreArmor) {
+	public void TakeDamage(int hitAmount, bool ignoreArmor) {
 		int processedHitAmount = hitAmount;
 		if (hitAmount >= 0) {
 			int armor = ignoreArmor ? 0 : FullArmor();
@@ -142,7 +150,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		} else if (hitAmount < 0) {
 			processedHitAmount = Mathf.Max(hitAmount, -Damage());
 		} // if it's 0, then no amount of vulnerability will make it deal damage.
-		Color c = hitAmount > 0 ? Color.red : hitAmount < 0 ? Color.green : Color.grey;
+		Color c = hitAmount > 0 ? Color.red : (hitAmount < 0 ? Color.green : Color.grey);
 		// TODO there is a race condition here. Id unno why it triggers on this line particularly though...
 		if (gameObject != null ) {
 			encounter.session.ui.BounceText("" + Mathf.Abs(processedHitAmount), c, transform.position);

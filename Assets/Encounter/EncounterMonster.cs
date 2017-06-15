@@ -12,7 +12,6 @@ public class EncounterMonster : EncounterEntityBase {
 		this.def = def;
 		GetComponent<SpriteRenderer>().sprite = def.image;
 		foreach(var id in def.items) {
-			Debug.Log(id);
 			items.Add(new Item(e.session.itemDefs.IndexOf(id)));
 		}
 	}

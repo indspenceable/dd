@@ -7,7 +7,6 @@ public class ItemDefinition : ScriptableObject {
 	public enum TargetMode {
 		ENEMY = 0,
 		FRIENDLY = 1,
-//		SELF = 2,>.
 	}
 
 	public string itemName;
@@ -15,15 +14,14 @@ public class ItemDefinition : ScriptableObject {
 	public Sprite image;
 
 	[Header("Mid-Encounter activation")]
-	public bool usable = true;
-	public int damage;
-	public float readyTime;
+	public bool usableInbattle = true;
 	public TargetMode target;
-	public GameObject itemActivationEffect;
 	public float accuracy = 1f;
-	public bool armorPierce;
 	public bool neverMiss;
-	public StatusEffect effect;
+	public bool armorPierce;
+	public float readyTime;
+	public GameObject itemActivationEffect;
+	public ActivationEffect activationEffect;
 	public int numberOfCharges = -1;
 
 	[Header("Stats-related things")]

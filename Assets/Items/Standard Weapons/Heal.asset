@@ -14,12 +14,18 @@ MonoBehaviour:
   itemName: Tome Of Healing
   description: 10 / -5 Heals your friends!
   image: {fileID: 21300028, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
-  usable: 1
-  damage: -5
-  readyTime: 10
+  usableInbattle: 1
   target: 1
+  accuracy: 1
+  neverMiss: 0
+  armorPierce: 0
+  readyTime: 10
   itemActivationEffect: {fileID: 1195996672295582, guid: e3a3b20a330334e6d9f1e75f3059362d,
     type: 2}
-  accuracy: 1
-  armorModifier: 0
-  speedModifier: 1
+  activationEffect:
+    damage: -5
+    effect: {fileID: 0}
+  numberOfCharges: -1
+  modifier:
+    armor: 0
+    speed: 1

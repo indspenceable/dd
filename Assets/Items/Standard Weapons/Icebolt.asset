@@ -14,16 +14,17 @@ MonoBehaviour:
   itemName: Tome of Icebolt
   description: Weak, slow ice attack.
   image: {fileID: 21300016, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
-  usable: 1
-  damage: 4
-  readyTime: 8
+  usableInbattle: 1
   target: 0
+  accuracy: 1
+  neverMiss: 1
+  armorPierce: 0
+  readyTime: 8
   itemActivationEffect: {fileID: 1195996672295582, guid: 06319b226bf4343bda1f819bdfdd97b7,
     type: 2}
-  accuracy: 1
-  armorPierce: 1
-  neverMiss: 1
-  effect: {fileID: 0}
+  activationEffect:
+    damage: 4
+    effect: {fileID: 0}
   numberOfCharges: -1
   modifier:
     armor: 0

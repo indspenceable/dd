@@ -31,7 +31,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			for (int i = 0; i < p.backingPartyMember.inventory.Count; i += 1)
 			{
 				var weapon = p.backingPartyMember.inventory[i].GetDef(e.session);
-				if (weapon.usable) {
+				if (weapon.usableInbattle) {
 					UIButton go = e.CreateUIButton();
 					go.SetImage(weapon.image);
 					go.SetTooltip(weapon.Tooltip(), e.session);

@@ -11,18 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: Poison Fangs
   description: 
   image: {fileID: 21300040, guid: 439fafd2740a144968138dbe5010332a, type: 3}
-  usable: 1
-  damage: 0
-  readyTime: 7
+  usableInbattle: 1
   target: 0
-  itemActivationEffect: {fileID: 0}
   accuracy: 1
-  armorPierce: 0
   neverMiss: 0
-  effect: {fileID: 0}
+  armorPierce: 0
+  readyTime: 7
+  itemActivationEffect: {fileID: 0}
+  activationEffect:
+    damage: 1
+    effect: {fileID: 11400000, guid: 882494f1d59254d5b8d10e6ab5706c74, type: 2}
   numberOfCharges: -1
   modifier:
     armor: 0

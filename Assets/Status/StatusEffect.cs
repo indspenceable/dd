@@ -8,22 +8,41 @@ public class StatusModifier {
 	public float speed = 1f;
 }
 
+[System.Serializable]
+public class ActivationEffect {
+	public int damage;
+	public StatusEffect effect;
+}
+
 [CreateAssetMenu(fileName = "Status", menuName = "Status", order = 1)]
 public class StatusEffect : ScriptableObject{
+	public enum TriggerMode {
+		NEVER,
+		ROUNDS,
+		TIME,
+	}
+
 	public string effectName;
 	public Sprite icon;
-	float duration = 10f;
 	public StatusModifier modifier;
+	public TriggerMode triggerMode;
+	public int numberOfTriggers = 0;
+	public float timeBetweenTriggers;
+	public ActivationEffect activationEffect;
+
 	public StatusEffectInstance BuildInstance() {
-		return new StatusEffectInstance(this, duration);
+		return new StatusEffectInstance(this, numberOfTriggers);
 	}
 }
 
 public class StatusEffectInstance {
-	public StatusEffectInstance(StatusEffect se, float duration) {
+	public StatusEffectInstance(StatusEffect se, int numberOfTriggers) {
 		this.myEffect = se;
-		this.remainingDuration = duration;
+		this.remainingTriggers = numberOfTriggers;
+	}
+	public void Trigger(EncounterEntityBase target) {
+		target.TakeDamage(myEffect.activationEffect.damage, true);
 	}
 	public StatusEffect myEffect;
-	public float remainingDuration;
+	public int remainingTriggers;
 }

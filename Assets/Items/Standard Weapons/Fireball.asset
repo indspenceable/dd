@@ -14,16 +14,17 @@ MonoBehaviour:
   itemName: Tome of Fireball
   description: 12/9
   image: {fileID: 21300000, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
-  usable: 1
-  damage: 15
-  readyTime: 12
+  usableInbattle: 1
   target: 0
+  accuracy: 1
+  neverMiss: 1
+  armorPierce: 0
+  readyTime: 12
   itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
     type: 2}
-  accuracy: 1
-  armorPierce: 1
-  neverMiss: 1
-  effect: {fileID: 0}
+  activationEffect:
+    damage: 15
+    effect: {fileID: 0}
   numberOfCharges: -1
   modifier:
     armor: 0
