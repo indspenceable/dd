@@ -16,3 +16,9 @@ MonoBehaviour:
   modifier:
     armor: 0
     speed: 0.75
+  triggerMode: 1
+  numberOfTriggers: 3
+  timeBetweenTriggers: 0
+  activationEffect:
+    damage: 0
+    effect: {fileID: 0}

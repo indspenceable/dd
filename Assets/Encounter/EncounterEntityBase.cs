@@ -53,9 +53,9 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		StartCoroutine(action);
 		foreach(var se in statusEffects) {
 			if (se.myEffect.triggerMode == StatusEffect.TriggerMode.ROUNDS) {
-				Debug.Log("TRIGGERING STATUS EFFECT: " + se.myEffect);
 				se.Trigger(this);
-				yield return new WaitForSeconds(0.25f);
+				Debug.Log("RT: " + se.remainingTriggers);
+				Debug.Log(this.SpeedModifier());
 			}
 		}
 		statusEffects.RemoveAll(se => se.remainingTriggers == 0);
