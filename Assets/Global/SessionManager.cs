@@ -5,16 +5,28 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class SessionManager : MonoBehaviour {
+	[Header("Prefabs")]
 	[SerializeField] GameObject mapPrefab;
 	[SerializeField] GameObject encounterPrefab;
 	[SerializeField] GameObject partyManagementPrefab;
 	[SerializeField] GameObject mainMenuPrefab;
 	[SerializeField] GameObject shopPrefab;
+	[Header("Heirarchy GameObjects")]
 	[SerializeField] public UIManager ui;
+	[Header("Content Data")]
 	[SerializeField] public List<Sprite> partyImages;
 	[SerializeField] public List<ItemDefinition> itemDefs;
 	[SerializeField] public List<MonsterDefinition> monsterDefs;
 	[SerializeField] public List<PartyMember> startingParty;
+
+	[System.Serializable]
+	public struct RoomIcons {
+		public Sprite Unexplored;
+		public Sprite Empty;
+		public Sprite ShopIcon;
+	}
+	[Header("Map Icons")]
+	public RoomIcons roomIcons;
 
 	private GameObject currentMode;
 

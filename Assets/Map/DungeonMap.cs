@@ -15,9 +15,9 @@ public class DungeonMap : MonoBehaviour {
 			this.dm = dm;
 		}
 		public void ClickOnRoom(RoomComponent r) {
-			if (r.GetData().state == RoomData.State.UNEXPLORED) { 
+//			if (r.GetData().state == RoomData.State.UNEXPLORED) { 
 				dm.session.StartCoroutine(r.GetData().contents.Install(dm.session, r.index));
-			}
+//			}
 		}
 	}
 
@@ -29,7 +29,7 @@ public class DungeonMap : MonoBehaviour {
 	[SerializeField] GameObject roomPrefab;
 	[SerializeField] GameObject hallwayPrefab;
 	private EventListener el;
-	SessionManager session;
+	public SessionManager session;
 	public Layout layout {
 		get {
 			return session.state.layout;
@@ -74,6 +74,7 @@ public class DungeonMap : MonoBehaviour {
 		for (int i = 0; i < layout.rooms.Count; i+=1) {
 			if (CanReach(i)) {
 				RoomComponent r = Instantiate(roomPrefab, layout.rooms[i].ToVec(), Quaternion.identity, transform).GetComponent<RoomComponent>();
+				Debug.Log(r);
 				r.Setup(this, i);
 			}
 		}

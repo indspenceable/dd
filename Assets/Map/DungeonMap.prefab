@@ -113,9 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5567bb982c85c4803ae9ef140bd65f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomPrefab: {fileID: 1478303607262170, guid: e1e73888969924ba5a3fafc9fdf3b67a, type: 2}
+  roomPrefab: {fileID: 1208168395110540, guid: e1e73888969924ba5a3fafc9fdf3b67a, type: 2}
   hallwayPrefab: {fileID: 1390625296193198, guid: ce2158950d3384efeaf5fbad8a610f23,
     type: 2}
+  session: {fileID: 0}
 --- !u!114 &114841315207003152
 MonoBehaviour:
   m_ObjectHideFlags: 1

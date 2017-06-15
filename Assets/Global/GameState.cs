@@ -5,6 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public abstract class RoomContents {
 	public abstract IEnumerator Install(SessionManager session, int roomIndex);
+	public virtual Sprite ExploredSprite(SessionManager session) {
+//		return session.roomIcons.Empty;
+		return null;
+	}
+	public virtual Sprite UnexploredSprite(SessionManager session) {
+		return session.roomIcons.Unexplored;
+	}
 
 	[System.Serializable]
 	public class Encounter : RoomContents {
@@ -93,6 +100,14 @@ public abstract class RoomContents {
 			}
 			session.state.layout.rooms[roomIndex].Clear(false);
 			session.SwapToShopMode(items);
+		}
+		public override Sprite ExploredSprite(SessionManager session)
+		{
+			return session.roomIcons.ShopIcon;
+		}
+		public override Sprite UnexploredSprite(SessionManager session)
+		{
+			return session.roomIcons.ShopIcon;
 		}
 	}
 }
