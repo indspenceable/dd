@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974db10718d99496898c0fccbdd7d8f4, type: 3}
   m_Name: Haste
   m_EditorClassIdentifier: 
-  effectName: 
+  effectName: Haste
   icon: {fileID: 0}
   modifier:
     armor: 0

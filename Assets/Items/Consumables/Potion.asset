@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Healing Potion
   description: Heals 10 HP. 3 Charges.
-  image: {fileID: 21300074, guid: fcaf097dce11242598c1a64967160016, type: 3}
+  image: {fileID: 21300000, guid: 3dd0390f4b2dc49738664f4be078a490, type: 3}
+  isLoot: 1
   usableInbattle: 1
   target: 1
   accuracy: 1

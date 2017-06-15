@@ -207,6 +207,7 @@ public class SessionManager : MonoBehaviour {
 	}
 
 	public Item RANDOM_ITEM___() {
-		return new Item(Random.Range(0, itemDefs.Count));
+		var def = Util.Random(itemDefs.FindAll(id => id.isLoot));
+		return new Item(itemDefs.IndexOf(def));
 	}
 }

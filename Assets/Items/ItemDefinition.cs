@@ -12,6 +12,7 @@ public class ItemDefinition : ScriptableObject {
 	public string itemName;
 	public string description;
 	public Sprite image;
+	public bool isLoot;
 
 	[Header("Mid-Encounter activation")]
 	public bool usableInbattle = true;

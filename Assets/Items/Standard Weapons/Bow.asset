@@ -14,6 +14,7 @@ MonoBehaviour:
   itemName: Bow
   description: 3/3
   image: {fileID: 21300020, guid: 439fafd2740a144968138dbe5010332a, type: 3}
+  isLoot: 1
   usableInbattle: 1
   target: 0
   accuracy: 0.95
