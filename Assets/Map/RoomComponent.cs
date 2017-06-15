@@ -25,7 +25,11 @@ public class RoomComponent : MonoBehaviour {
 
 	public void SetState(RoomData.State s) {
 		if (s == RoomData.State.UNEXPLORED) {
-			sr.color = Color.red;
+			if (manager.layout.rooms[index].contents as RoomContents.Shop != null) {
+				sr.color = Color.blue;
+			} else {
+				sr.color = Color.red;
+			}
 		} else if (s == RoomData.State.IN_PROGRESS) {
 			sr.color = Color.magenta;
 		} else {

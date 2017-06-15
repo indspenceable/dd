@@ -113,6 +113,10 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	protected abstract void Destroy();
 
+	public bool StillHasItem(Item i ) {
+		return Items().Contains(i);
+	}
+
 	private List<StatusModifier> AllModifiers() {
 		List<StatusModifier> rtn = new List<StatusModifier>();
 		foreach(var i in Items()) {

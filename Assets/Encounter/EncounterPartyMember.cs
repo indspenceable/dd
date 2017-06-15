@@ -8,13 +8,19 @@ public class EncounterPartyMember : EncounterEntityBase {
 		private Encounter e;
 		Encounter.ActionListener prev;
 		private List<UIButton> partyMemberActions;
+		int invCount;
 
 		public Selected(EncounterPartyMember p, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
+			this.invCount = p.backingPartyMember.inventory.Count;
 		}
-
+		public void Update() {
+			if (p.backingPartyMember.inventory.Count != invCount) {
+				e.InstallListener(null);
+			}
+		}
 		public void PartyMemberClicked(EncounterPartyMember target) {
 			e.SelectPartyMember(target);
 		}
@@ -78,6 +84,11 @@ public class EncounterPartyMember : EncounterEntityBase {
 			this.item = p.backingPartyMember.inventory[w];
 			this.itemDef = item.GetDef(e.session);
 		}
+		public void Update() {
+			if (! p.StillHasItem(item)) {
+				e.InstallListener(null);
+			}
+		}
 
 		private void Act(EncounterEntityBase eeb) {
 			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, itemDef.readyTime);
@@ -115,6 +126,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 			this.e = e;
 			this.prev = previous;
 		}
+		public void Update() {}
 
 		public void PartyMemberClicked(EncounterPartyMember target) {
 			p.TakeAction(p.SwapWith(target), () => target != null, 3f);

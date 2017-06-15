@@ -9,23 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
-  m_Name: Fireball
+  m_Name: Potion
   m_EditorClassIdentifier: 
-  itemName: Tome of Fireball
-  description: 12/9
-  image: {fileID: 21300000, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
+  itemName: Healing Potion
+  description: Heals 10 HP. 3 Charges.
+  image: {fileID: 21300074, guid: fcaf097dce11242598c1a64967160016, type: 3}
   usableInbattle: 1
-  target: 0
+  target: 1
   accuracy: 1
-  neverMiss: 1
-  armorPierce: 1
-  readyTime: 12
-  itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
+  neverMiss: 0
+  armorPierce: 0
+  readyTime: 2
+  itemActivationEffect: {fileID: 1195996672295582, guid: e3a3b20a330334e6d9f1e75f3059362d,
     type: 2}
   activationEffect:
-    damage: 15
+    damage: -10
     effect: {fileID: 0}
-  numberOfCharges: -1
+  numberOfCharges: 3
   modifier:
     armor: 0
     speed: 1

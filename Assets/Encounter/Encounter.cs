@@ -49,6 +49,8 @@ public class Encounter : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.Space)) {
 				session.TogglePause();
 			}
+
+			this.al.Update();
 		}
 	}
 
@@ -58,6 +60,7 @@ public class Encounter : MonoBehaviour {
 		void Cancel();
 		void InstallUI();
 		void UninstallUI();
+		void Update();
 	}
 	class NoOp : ActionListener {
 		public void PartyMemberClicked(EncounterPartyMember p){}
@@ -65,6 +68,7 @@ public class Encounter : MonoBehaviour {
 		public void Cancel(){}
 		public void InstallUI(){}
 		public void UninstallUI(){}
+		public void Update() {}
 	}
 	private ActionListener al = null;
 	class EncounterEventListener : ActionListener {
@@ -83,6 +87,7 @@ public class Encounter : MonoBehaviour {
 		}
 		public void InstallUI(){}
 		public void UninstallUI(){}
+		public void Update() {}
 	}
 
 	public void InstallListener(ActionListener al) {
