@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Ring of Defense
   description: +10 HP
-  image: {fileID: 21300000, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
+  image: {fileID: 21300048, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
   isLoot: 1
   usableInbattle: 0
   target: 0
@@ -29,3 +29,4 @@ MonoBehaviour:
   modifier:
     armor: 1
     speed: 1
+    hp: 0

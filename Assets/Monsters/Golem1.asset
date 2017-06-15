@@ -9,13 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
-  m_Name: Pixie
+  m_Name: Golem1
   m_EditorClassIdentifier: 
-  monsterName: Pixie
-  image: {fileID: 21300040, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
+  monsterName: Minor Golem
+  image: {fileID: 21300070, guid: a72211e1c833246d49b9b2825b388f1d, type: 3}
   items:
-  - {fileID: 11400000, guid: dcdcc6d6c5b9f4c4aabf38054a716b85, type: 2}
-  hp: 10
-  armor: 0
-  evasion: 0.3
-  difficulty: 2
+  - {fileID: 11400000, guid: fef8a2fa21c6c4466a6d46b9d920f965, type: 2}
+  - {fileID: 11400000, guid: 2894a4900faa74bfd8189b806911b0f6, type: 2}
+  hp: 20
+  armor: 4
+  evasion: -0.2
+  difficulty: 3
