@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class RoomContents {
 	public abstract IEnumerator Install(SessionManager session, int roomIndex);
+
 	[System.Serializable]
 	public class Encounter : RoomContents {
 		public List<int> monsters;
@@ -29,7 +30,7 @@ public abstract class RoomContents {
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			var item = session.RANDOM_ITEM___();
 			session.state.inventory.Add(item);
-			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
+			session.state.layout.rooms[roomIndex].Clear(true);
 			yield return session.ui.TextBox("You found an item! : " + item.GetDef(session).itemName);
 			session.SwapToMapMode();
 		}
@@ -43,8 +44,10 @@ public abstract class RoomContents {
 			return true;
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
-			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
-			yield return session.ui.TextBox("You found an empty room. Oh well!");
+			if (session.state.layout.rooms[roomIndex].state == RoomData.State.UNEXPLORED) {
+				session.state.layout.rooms[roomIndex].Clear(true);
+				yield return session.ui.TextBox("Empty room. Carry on.");
+			}
 			session.SwapToMapMode();
 		}
 	}
@@ -57,7 +60,6 @@ public abstract class RoomContents {
 			return true;
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
-			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 			if (session.state.party.Count >= 5) {
 				yield return session.ui.TextBox("You found a new party member! Unfortunately, your party is full.");
 			} else {
@@ -65,6 +67,7 @@ public abstract class RoomContents {
 				session.state.party.Add(partyMember);
 				yield return session.ui.TextBox("You found a new party member! Welcome, " + partyMember.pcName + "!");
 			}
+			session.state.layout.rooms[roomIndex].Clear(true);
 			session.SwapToMapMode();
 		}
 	}
@@ -88,7 +91,7 @@ public abstract class RoomContents {
 			if (session.state.layout.rooms[roomIndex].state != RoomData.State.CLEARED) {
 //				yield return session.ui.TextBox("You Found a shop in the ruins");
 			}
-			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
+			session.state.layout.rooms[roomIndex].Clear(false);
 			session.SwapToShopMode(items);
 		}
 	}
@@ -149,6 +152,12 @@ public class RoomData {
 	public RoomContents contents;
 	public Vector3 ToVec() {
 		return pos.ToVec() - new Vector3(4.5f, 4.5f);
+	}
+	public void Clear(bool emptyContents) {
+		this.state = State.CLEARED;
+		if (emptyContents) {
+			this.contents = new RoomContents.Empty();
+		}
 	}
 	public override bool Equals(System.Object obj) {
 		RoomData o = obj as RoomData;

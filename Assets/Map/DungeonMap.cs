@@ -15,18 +15,14 @@ public class DungeonMap : MonoBehaviour {
 			this.dm = dm;
 		}
 		public void ClickOnRoom(RoomComponent r) {
-			if (r.GetData().state == RoomData.State.UNEXPLORED) {
-				// Let's go to a battle!
-				// dm.StartEncounter(r);
-				// 
-				// JK actually lets ask the room contents to do whatever they do
+			if (r.GetData().state == RoomData.State.UNEXPLORED) { 
 				dm.session.StartCoroutine(r.GetData().contents.Install(dm.session, r.index));
-			} else {
-				// TODO you should be able to go to some other rooms.
-				// But for now, just take you to party management
-				dm.session.SwapToManagement();
 			}
 		}
+	}
+
+	public void GoToManagement() {
+		session.SwapToManagement();
 	}
 
 

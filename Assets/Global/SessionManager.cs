@@ -132,8 +132,7 @@ public class SessionManager : MonoBehaviour {
 	private IEnumerator BuildLayout() {
 		Layout layout = new Layout();
 		layout.rooms.Add(new RoomData(new Coord(5,5)));
-		layout.rooms[0].state = RoomData.State.CLEARED;
-		layout.rooms[0].contents = new RoomContents.Empty();
+		layout.rooms[0].Clear(true);
 		yield return null;
 		int requiredRoomCount = 37;
 		while (layout.rooms.Count < requiredRoomCount) {
