@@ -12,7 +12,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	protected abstract int Damage();
 	protected abstract void SetDamage(int damage);
-	protected abstract int HP();
+	protected abstract int BaseHP();
 	protected abstract List<Item> Items();
 	protected abstract int BaseArmor();
 	protected abstract float Evasion();
@@ -150,6 +150,10 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		statusEffects.Add(e.BuildInstance());
 	}
 
+	private int TotalHP() {
+		return Mathf.Max(BaseHP() + AllModifiers().Sum(modifier => modifier.hp), 1);
+	}
+
 	public void TakeDamage(int hitAmount, bool ignoreArmor) {
 		int processedHitAmount = hitAmount;
 		if (hitAmount >= 0) {
@@ -163,7 +167,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		if (gameObject != null ) {
 			encounter.session.ui.BounceText("" + Mathf.Abs(processedHitAmount), c, transform.position);
 			this.SetDamage(Damage() + processedHitAmount);
-			if (this.Damage() >= HP()) {
+			if (this.Damage() >= TotalHP()) {
 				RemoveHealthBar();
 				Destroy();
 			}
@@ -177,7 +181,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 				healthBar = encounter.CreateProgressBar(transform);
 				healthBar.transform.position = transform.position + new Vector3(0,1);
 			}
-			healthBar.SetPct(1f - (Damage() / (float)HP()));
+			healthBar.SetPct(1f - (Damage() / (float)TotalHP()));
 		} else {
 			RemoveHealthBar();
 		}

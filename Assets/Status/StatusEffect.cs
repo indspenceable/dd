@@ -6,6 +6,7 @@ using UnityEngine;
 public class StatusModifier {
 	public int armor = 0;
 	public float speed = 1f;
+	public int hp = 0;
 }
 
 [System.Serializable]

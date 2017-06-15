@@ -37,7 +37,7 @@ public class EncounterMonster : EncounterEntityBase {
 		base.Update();
 	}
 
-	protected override int HP() {
+	protected override int BaseHP() {
 		return def.hp;
 	}
 	protected override int BaseArmor() {

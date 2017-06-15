@@ -26,17 +26,21 @@ public class UIManager : MonoBehaviour {
 	public void ShowToolTip(string text, Vector2 pos) {
 		toolTip.SetText(text);
 		toolTip.gameObject.SetActive(true);
-		toolTip.GetComponent<RectTransform>().anchoredPosition = pos;
+
+		toolTip.rectTransform.anchoredPosition = pos;
 
 		Vector3[] v = new Vector3[4];
-		toolTip.GetComponent<RectTransform>().GetWorldCorners (v);
+		toolTip.rectTransform.GetWorldCorners (v);
 
 		float maxX = Mathf.Max (v [0].x, v [1].x, v [2].x, v [3].x);
 		float maxY = Mathf.Max (v [0].y, v [1].y, v [2].y, v [3].y);
 
 
 		if (maxX > Screen.width){
-			toolTip.GetComponent<RectTransform>().anchoredPosition = pos - toolTip.GetComponent<RectTransform>().rect.size;
+			toolTip.rectTransform.anchoredPosition = pos - new Vector2(toolTip.rectTransform.rect.size.x, 0);
+		}
+		if (maxY > Screen.height) {
+			toolTip.rectTransform.anchoredPosition = pos - new Vector2(0, toolTip.rectTransform.rect.size.y);
 		}
 		TT_Shown_This_Frame = true;
 	}
