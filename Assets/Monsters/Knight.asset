@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
+  monsterName: Goblin Knight
   image: {fileID: 21300064, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
   items:
   - {fileID: 11400000, guid: b9f82cb41a0204d43ae487cc5ec932b2, type: 2}

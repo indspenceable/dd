@@ -55,6 +55,9 @@ public class EncounterMonster : EncounterEntityBase {
 	protected override List<Item> Items() {
 		return items;
 	}
+	protected override string Tooltip() {
+		return def.monsterName;
+	}
 
 	void OnMouseDown() {
 		encounter.ClickMonster(this);

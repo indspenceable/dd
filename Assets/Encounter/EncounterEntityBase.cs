@@ -189,4 +189,9 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			healthBar = null;
 		}
 	}
+
+	protected abstract string Tooltip();
+	void OnMouseOver() {
+		encounter.session.ui.ShowToolTip(Tooltip(), Input.mousePosition);
+	}
 }

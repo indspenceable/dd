@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
   m_Name: Flea
   m_EditorClassIdentifier: 
+  monsterName: Flea
   image: {fileID: 21300026, guid: fcaf097dce11242598c1a64967160016, type: 3}
   items:
   - {fileID: 11400000, guid: fef8a2fa21c6c4466a6d46b9d920f965, type: 2}

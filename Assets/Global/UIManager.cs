@@ -27,6 +27,17 @@ public class UIManager : MonoBehaviour {
 		toolTip.SetText(text);
 		toolTip.gameObject.SetActive(true);
 		toolTip.GetComponent<RectTransform>().anchoredPosition = pos;
+
+		Vector3[] v = new Vector3[4];
+		toolTip.GetComponent<RectTransform>().GetWorldCorners (v);
+
+		float maxX = Mathf.Max (v [0].x, v [1].x, v [2].x, v [3].x);
+		float maxY = Mathf.Max (v [0].y, v [1].y, v [2].y, v [3].y);
+
+
+		if (maxX > Screen.width){
+			toolTip.GetComponent<RectTransform>().anchoredPosition = pos - toolTip.GetComponent<RectTransform>().rect.size;
+		}
 		TT_Shown_This_Frame = true;
 	}
 	public void BounceText(string text, Color c, Vector3 pos) {

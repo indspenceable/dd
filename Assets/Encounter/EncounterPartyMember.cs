@@ -178,6 +178,9 @@ public class EncounterPartyMember : EncounterEntityBase {
 	protected override int BaseArmor() {
 		return 0;
 	}
+	protected override string Tooltip() {
+		return backingPartyMember.pcName	;
+	}
 
 	protected override List<Item> Items() {
 		// TODO is this really wasteful? Also does that matter?

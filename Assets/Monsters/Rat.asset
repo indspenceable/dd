@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
   m_Name: Rat
   m_EditorClassIdentifier: 
+  monsterName: Rat
   image: {fileID: 21300020, guid: 2c4fc8c834dde4617960f11a019694df, type: 3}
   items:
   - {fileID: 11400000, guid: fef8a2fa21c6c4466a6d46b9d920f965, type: 2}

@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
   m_Name: Pixie
   m_EditorClassIdentifier: 
+  monsterName: Pixie
   image: {fileID: 21300040, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
   items:
   - {fileID: 11400000, guid: dcdcc6d6c5b9f4c4aabf38054a716b85, type: 2}

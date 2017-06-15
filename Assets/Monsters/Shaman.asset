@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
   m_Name: Shaman
   m_EditorClassIdentifier: 
+  monsterName: Shaman
   image: {fileID: 21300128, guid: 7ffc859612ddc4f8c837b2edc0945379, type: 3}
   items:
   - {fileID: 11400000, guid: d6e7bd2db362a46288029ecab3e720cd, type: 2}
