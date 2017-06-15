@@ -61,6 +61,15 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		statusEffects.RemoveAll(se => se.remainingTriggers == 0);
 	}
 
+	public void ApplyActivationEffect(ActivationEffect ae, bool armorPierce) {
+		if (ae.damage != 0) {
+			TakeDamage(ae.damage, armorPierce);
+		}
+		if (ae.effect != null) {
+			AddStatusEffect(ae.effect);
+		}
+	}
+
 	public IEnumerator UseItem(EncounterEntityBase target, Item item) {
 		ItemDefinition itemDefinition = item.GetDef(encounter.session);
 		var ae = itemDefinition.activationEffect;
@@ -71,12 +80,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		}
 		if (target == null ) yield break;
 		if (itemDefinition.neverMiss || RollAccuracy(target.Evasion(), itemDefinition.accuracy)) {
-			if (ae.damage != 0) {
-				target.TakeDamage(ae.damage, itemDefinition.armorPierce);
-			}
-			if (ae.effect != null) {
-				target.AddStatusEffect(ae.effect);
-			}
+			target.ApplyActivationEffect(ae, itemDefinition.armorPierce);
 		} else {
 			encounter.session.ui.BounceText("miss", Color.blue, target.transform.position);
 		}

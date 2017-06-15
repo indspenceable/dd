@@ -41,9 +41,7 @@ public class StatusEffectInstance {
 		this.remainingTriggers = numberOfTriggers;
 	}
 	public void Trigger(EncounterEntityBase target) {
-		if (myEffect.activationEffect.damage != 0) {
-			target.TakeDamage(myEffect.activationEffect.damage, true);
-		}
+		target.ApplyActivationEffect(myEffect.activationEffect, true);
 		remainingTriggers -= 1;
 	}
 	public StatusEffect myEffect;
