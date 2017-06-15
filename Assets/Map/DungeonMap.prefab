@@ -52,3 +52,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 1478303607262170, guid: e1e73888969924ba5a3fafc9fdf3b67a, type: 2}
+  hallwayPrefab: {fileID: 1390625296193198, guid: ce2158950d3384efeaf5fbad8a610f23,
+    type: 2}

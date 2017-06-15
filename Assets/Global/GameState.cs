@@ -31,6 +31,7 @@ public abstract class RoomContents {
 			session.state.inventory.Add(item);
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 			yield return session.ui.TextBox("You found an item! : " + item.GetDef(session).itemName);
+			session.SwapToMapMode();
 		}
 	}
 
@@ -44,6 +45,7 @@ public abstract class RoomContents {
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 			yield return session.ui.TextBox("You found an empty room. Oh well!");
+			session.SwapToMapMode();
 		}
 	}
 
@@ -63,6 +65,7 @@ public abstract class RoomContents {
 				session.state.party.Add(partyMember);
 				yield return session.ui.TextBox("You found a new party member! Welcome, " + partyMember.pcName + "!");
 			}
+			session.SwapToMapMode();
 		}
 	}
 

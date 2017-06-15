@@ -466,6 +466,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f0100514fbf354337b7b629c2bdf2ef9, type: 2}
   - {fileID: 11400000, guid: 7fad0f4f2891c47a786b70a3a244517d, type: 2}
   - {fileID: 11400000, guid: 7cdddbcb5245e4ec18df266e028e62b2, type: 2}
+  - {fileID: 11400000, guid: e768544824e1047dca11d83f11938cea, type: 2}
   startingParty:
   - pcName: Fighter
     image: 0

@@ -10,9 +10,8 @@ public class RoomComponent : MonoBehaviour {
 	public void Setup(DungeonMap manager, int index) {
 		this.manager = manager;
 		this.index = index;
-	}
-	void Start() {
-		sr = GetComponent<SpriteRenderer>();
+		this.sr = GetComponent<SpriteRenderer>();
+		Update();
 	}
 	void Update() {
 		if (manager != null) {

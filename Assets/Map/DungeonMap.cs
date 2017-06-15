@@ -31,6 +31,7 @@ public class DungeonMap : MonoBehaviour {
 
 
 	[SerializeField] GameObject roomPrefab;
+	[SerializeField] GameObject hallwayPrefab;
 	private EventListener el;
 	SessionManager session;
 	public Layout layout {
@@ -40,8 +41,25 @@ public class DungeonMap : MonoBehaviour {
 	}
 		
 	public void RoomClicked(RoomComponent r){
-		if (!session.ui.Blocking)
+		if (!session.ui.Blocking && CanReach(r.index))
 			el.ClickOnRoom(r);
+	}
+
+
+	private bool Check(int index) {
+		return layout.rooms[index].state == RoomData.State.CLEARED;
+	}
+	public bool CanReach(int index) {
+		if (Check(index)) {
+			return true;
+		}
+		foreach(var pair in layout.doors) {
+			if ((pair.x == index && Check(pair.y)) ||
+				(pair.y == index && Check(pair.x))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void Setup(SessionManager session) {
@@ -58,8 +76,17 @@ public class DungeonMap : MonoBehaviour {
 
 	private void BuildGameObjects() {
 		for (int i = 0; i < layout.rooms.Count; i+=1) {
-			RoomComponent r = Instantiate(roomPrefab, layout.rooms[i].ToVec(), Quaternion.identity, transform).GetComponent<RoomComponent>();
-			r.Setup(this, i);
+			if (CanReach(i)) {
+				RoomComponent r = Instantiate(roomPrefab, layout.rooms[i].ToVec(), Quaternion.identity, transform).GetComponent<RoomComponent>();
+				r.Setup(this, i);
+			}
+		}
+		foreach(var i in layout.doors) {
+			if (CanReach(i.x) || CanReach(i.y)) {
+				var v1 = layout.rooms[i.x].ToVec()/2f;
+				var v2 = layout.rooms[i.y].ToVec()/2f;
+				Instantiate(hallwayPrefab, v1+v2, Quaternion.identity, transform);
+			}
 		}
 		// Build some doors, Man!
 	}
