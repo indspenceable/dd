@@ -18,4 +18,4 @@ MonoBehaviour:
   hp: 15
   armor: 0
   evasion: 0.05
-  difficulty: 2
+  difficulty: 5

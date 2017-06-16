@@ -30,6 +30,7 @@ public class Encounter : MonoBehaviour {
 		for (int i = 0; i < ec.monsters.Count; i+=1){
 			BuildMonster(monsterHotspots[i], session.monsterDefs[ec.monsters[i]]);
 		}
+		Debug.Log("Ended up with : " + monsters.Count);
 		for (int i = 0; i < session.state.party.Count; i+=1) {
 			BuildPartyMember(playerHotspots[i], session.state.party[i]);
 		}
@@ -146,6 +147,7 @@ public class Encounter : MonoBehaviour {
 		hotspot.SetMonster(m);
 		m.Setup(this, def);
 		monsters.Add(m);
+		Debug.Log("Done!");
 	}
 
 	private void BuildPartyMember(Hotspot hotspot, PartyMember pm) {

@@ -199,29 +199,36 @@ public class SessionManager : MonoBehaviour {
 		var ec = new RoomContents.Encounter();
 		ec.monsters = new List<int>();
 		int NumberOfMonsters = Random.Range(1,6);
+		int remainingDifficulty;
 		while (2 * NumberOfMonsters > desiredDifficulty) {
 			NumberOfMonsters -= 1;
 		}
 		if (NumberOfMonsters == 0) {
-			// errr......
 			Debug.LogError("Trying to build an encounter with zero monsters.");
 		}
-			
+		remainingDifficulty = desiredDifficulty - NumberOfMonsters;
 		int[] monsterDifficulty = new int[NumberOfMonsters];
 
 		for (int i = 0; i < NumberOfMonsters; i += 1) {
-			monsterDifficulty[i] = (desiredDifficulty / NumberOfMonsters + Random.Range(-2,3));
+			monsterDifficulty[i] = ((remainingDifficulty / NumberOfMonsters) + Random.Range(-2,3));
 			if (monsterDifficulty[i] < 1) {
 				monsterDifficulty[i] = 1;
 			}
 		}
-		Debug.Log("Made an encounter with " + NumberOfMonsters);
+		string str = "";
+		int sum = 0;
 		foreach (var i in monsterDifficulty) {
-			Debug.Log(" )" + i);
+			str = str + " " + i;
+			sum += i;
 		}
+
+//		Debug.Log("Made an encounter with " + NumberOfMonsters + "     " + str);
+//		Debug.Log("Total difficulty: " + (NumberOfMonsters + sum));
+
 		for (int i = 0; i < NumberOfMonsters; i += 1) {
-			ec.monsters.Add(Random.Range(0, monsterDefs.Count));
-		}	
+			ec.monsters.Add(RandomMonsterDefByDifficulty(monsterDifficulty[i]));
+		}
+
 		return ec;
 
 	}
@@ -241,7 +248,7 @@ public class SessionManager : MonoBehaviour {
 			rtn.Add(new RoomContents.NewPartyMember());
 		}
 		for (int i = 0; i < 18; i += 1) {
-			rtn.Add(BuildEncounter(10));
+			rtn.Add(BuildEncounter(12));
 		}
 		while (rtn.Count<desiredCount) {
 			rtn.Add(new RoomContents.Empty());
