@@ -28,6 +28,11 @@ public class Util {
 			list[rand] = val;
 		}
 	}
+	public static List<T> Shuffled<T>(List<T> list) {
+		List<T> dup = new List<T>(list);
+		Shuffle(dup);
+		return dup;
+	}
 
 	// TODO replace this! For dev, shamelessly stolen from: 
 	// https://scratch.mit.edu/discuss/topic/103440/?page=1#post-899736

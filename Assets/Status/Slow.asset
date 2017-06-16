@@ -15,7 +15,8 @@ MonoBehaviour:
   icon: {fileID: 0}
   modifier:
     armor: 0
-    speed: 0.5
+    speed: 2
+    hp: 0
   triggerMode: 1
   numberOfTriggers: 3
   timeBetweenTriggers: 0

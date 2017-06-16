@@ -181,10 +181,45 @@ public class SessionManager : MonoBehaviour {
 		state.floors.Add(layout);
 	}
 
-	RoomContents.Encounter BuildEncounter()  {
+	int RandomMonsterDefByDifficulty(int desiredDifficulty) {
+		int currentDifficulty = desiredDifficulty;
+		while (currentDifficulty>0) {
+			List<MonsterDefinition> defs = monsterDefs.FindAll(m => m.difficulty == currentDifficulty);
+			if (defs.Count > 0) {
+				Util.Shuffle(defs);
+				return monsterDefs.IndexOf(defs[0]);
+			}
+			currentDifficulty-=1;
+		}
+		Debug.LogError("Unable to find a monster with difficulty of " +desiredDifficulty);
+		return 0;
+	}
+
+	RoomContents.Encounter BuildEncounter(int desiredDifficulty)  {
 		var ec = new RoomContents.Encounter();
 		ec.monsters = new List<int>();
-		for (int ii = Random.Range(1, 6); ii > 0; ii-=1) {
+		int NumberOfMonsters = Random.Range(1,6);
+		while (2 * NumberOfMonsters > desiredDifficulty) {
+			NumberOfMonsters -= 1;
+		}
+		if (NumberOfMonsters == 0) {
+			// errr......
+			Debug.LogError("Trying to build an encounter with zero monsters.");
+		}
+			
+		int[] monsterDifficulty = new int[NumberOfMonsters];
+
+		for (int i = 0; i < NumberOfMonsters; i += 1) {
+			monsterDifficulty[i] = (desiredDifficulty / NumberOfMonsters + Random.Range(-2,3));
+			if (monsterDifficulty[i] < 1) {
+				monsterDifficulty[i] = 1;
+			}
+		}
+		Debug.Log("Made an encounter with " + NumberOfMonsters);
+		foreach (var i in monsterDifficulty) {
+			Debug.Log(" )" + i);
+		}
+		for (int i = 0; i < NumberOfMonsters; i += 1) {
 			ec.monsters.Add(Random.Range(0, monsterDefs.Count));
 		}	
 		return ec;
@@ -206,7 +241,7 @@ public class SessionManager : MonoBehaviour {
 			rtn.Add(new RoomContents.NewPartyMember());
 		}
 		for (int i = 0; i < 18; i += 1) {
-			rtn.Add(BuildEncounter());
+			rtn.Add(BuildEncounter(10));
 		}
 		while (rtn.Count<desiredCount) {
 			rtn.Add(new RoomContents.Empty());

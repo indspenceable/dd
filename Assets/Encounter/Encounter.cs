@@ -27,10 +27,8 @@ public class Encounter : MonoBehaviour {
 		allHotspots.AddRange(monsterHotspots);
 		allHotspots.AddRange(playerHotspots);
 
-
 		for (int i = 0; i < ec.monsters.Count; i+=1){
 			BuildMonster(monsterHotspots[i], session.monsterDefs[ec.monsters[i]]);
-			i+= 1;
 		}
 		for (int i = 0; i < session.state.party.Count; i+=1) {
 			BuildPartyMember(playerHotspots[i], session.state.party[i]);
