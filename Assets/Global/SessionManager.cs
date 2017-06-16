@@ -142,6 +142,10 @@ public class SessionManager : MonoBehaviour {
 		currentMode = mm.gameObject;
 	}
 
+	public RoomData GetRoom(int roomIndex) {
+		return state.layout.rooms[roomIndex];
+	}
+
 	public IEnumerator BuildAndAddLayout() {
 		Layout layout = new Layout();
 		layout.rooms.Add(new RoomData(new Coord(5,5)));

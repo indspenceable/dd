@@ -36,7 +36,7 @@ public abstract class RoomContents {
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			var item = session.RANDOM_ITEM___();
 			session.state.inventory.Add(item);
-			session.state.layout.rooms[roomIndex].Clear(true);
+			session.GetRoom(roomIndex).Clear(true);
 			yield return session.ui.TextBox("You found an item! : " + item.GetDef(session).itemName);
 			session.SwapToMapMode();
 		}
@@ -50,8 +50,8 @@ public abstract class RoomContents {
 			return true;
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
-			if (session.state.layout.rooms[roomIndex].state == RoomData.State.UNEXPLORED) {
-				session.state.layout.rooms[roomIndex].Clear(true);
+			if (session.GetRoom(roomIndex).state == RoomData.State.UNEXPLORED) {
+				session.GetRoom(roomIndex).Clear(true);
 				yield return session.ui.TextBox("Empty room. Carry on.");
 			}
 			session.SwapToMapMode();
@@ -94,9 +94,6 @@ public abstract class RoomContents {
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
 			yield return null;
-			if (session.state.layout.rooms[roomIndex].state != RoomData.State.CLEARED) {
-//				yield return session.ui.TextBox("You Found a shop in the ruins");
-			}
 			session.state.layout.rooms[roomIndex].Clear(false);
 			session.SwapToShopMode(items);
 		}
@@ -118,13 +115,14 @@ public abstract class RoomContents {
 			return true;
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
-			yield return session.BuildAndAddLayout();
-			yield return session.ui.TextBox("You enter the wormhole, and appear in a new dungeon...");
+			if (session.GetRoom(roomIndex).state == RoomData.State.UNEXPLORED) {
+				yield return session.ui.TextBox("You found a wormhole to a new floor!\n\nRevisist this location to travel through it.");
+				session.GetRoom(roomIndex).Clear(false);
+			} else {
+				yield return session.ui.TextBox("You travel through the wormhole and find yourself on a new floor of the dungeon...");
+				yield return session.BuildAndAddLayout();
+			}
 			session.SwapToMapMode();
-		}
-		public override Sprite ExploredSprite(SessionManager session)
-		{
-			return session.roomIcons.NextFloorIcon;
 		}
 		public override Sprite UnexploredSprite(SessionManager session)
 		{
