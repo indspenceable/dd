@@ -74,7 +74,6 @@ public class DungeonMap : MonoBehaviour {
 		for (int i = 0; i < layout.rooms.Count; i+=1) {
 			if (CanReach(i)) {
 				RoomComponent r = Instantiate(roomPrefab, layout.rooms[i].ToVec(), Quaternion.identity, transform).GetComponent<RoomComponent>();
-				Debug.Log(r);
 				r.Setup(this, i);
 			}
 		}

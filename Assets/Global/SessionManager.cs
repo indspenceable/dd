@@ -148,6 +148,10 @@ public class SessionManager : MonoBehaviour {
 		layout.rooms[0].Clear(true);
 		yield return null;
 		int requiredRoomCount = 37;
+
+		List<RoomContents> contents = BuildRoomContents(requiredRoomCount);
+
+
 		while (layout.rooms.Count < requiredRoomCount) {
 			Coord pos = new Coord(Random.Range(0, 10), Random.Range(0, 10));
 			var adjacentRooms = layout.rooms.FindAll(r => r.pos.DistanceTo(pos) == 1);
@@ -164,43 +168,43 @@ public class SessionManager : MonoBehaviour {
 				foreach(var c in newConnections) {
 					layout.doors.Add(new Coord(c, layout.rooms.Count));
 				}
-				layout.rooms.Add(BuildRoomData(pos));
-//				Debug.Log("" + layout.rooms.Count*100f / requiredRoomCount + "% (" + layout.rooms.Count + "/" + requiredRoomCount + ")");
+				RoomData roomData = new RoomData(pos);
+				roomData.contents = contents[contents.Count-1];
+				contents.RemoveAt(contents.Count-1);
+				layout.rooms.Add(roomData);
 			}
 		}
 		state.floors.Add(layout);
 	}
 
-	RoomData BuildRoomData(Coord pos) {
-		var rd = new RoomData(pos);
-		var contents = new List<RoomContents>();
-		{
-//			var ec = new RoomContents.Encounter();
-//			ec.monsters = new List<int>();
-//			for (int i = Random.Range(1, 6); i > 0; i-=1) {
-//				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
-//				contents.Add(ec);
-//			}
+	List<RoomContents> BuildRoomContents(int desiredCount) {
+		var rtn = new List<RoomContents>();
+		for (int i = 0; i < 1; i += 1) {
+			rtn.Add(new RoomContents.NextFloor());
 		}
-		{
-			var tr = new RoomContents.Treasure();
-			contents.Add(tr);
+		for (int i = 0; i < 3; i += 1) {
+			rtn.Add(new RoomContents.Shop(this));
 		}
-		{
-			contents.Add(new RoomContents.Empty());
+		for (int i = 0; i < 5; i += 1) {
+			rtn.Add(new RoomContents.Treasure());
 		}
-		{
-			contents.Add(new RoomContents.NewPartyMember());
+		for (int i = 0; i < 2; i += 1) {
+			rtn.Add(new RoomContents.NewPartyMember());
 		}
-		{
-			contents.Add(new RoomContents.Shop(this));
+		for (int i = 0; i < 18; i += 1) {
+			var ec = new RoomContents.Encounter();
+			ec.monsters = new List<int>();
+			for (int ii = Random.Range(1, 6); ii > 0; ii-=1) {
+				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+				rtn.Add(ec);
+			}	
 		}
-		{
-			contents.Add(new RoomContents.NextFloor());
+		while (rtn.Count<desiredCount) {
+			rtn.Add(new RoomContents.Empty());
 		}
 
-		rd.contents = Util.Random(contents);
-		return rd;
+		Util.Shuffle(rtn);
+		return rtn;
 	}
 
 	public IEnumerator BuildParty() {

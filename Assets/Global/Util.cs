@@ -20,6 +20,15 @@ public class Util {
 		}
 		return list[Random.Range(0, list.Count)];
 	}
+	public static void Shuffle<T>(List<T> list) {
+		for (int i = list.Count-1; i> 0; i-=1) {
+			T val = list[i];
+			int rand = Random.Range(0, i);
+			list[i] = list[rand];
+			list[rand] = val;
+		}
+	}
+
 	// TODO replace this! For dev, shamelessly stolen from: 
 	// https://scratch.mit.edu/discuss/topic/103440/?page=1#post-899736
 	public static string GenerateName(int length)
