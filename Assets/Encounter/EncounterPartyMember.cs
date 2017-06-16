@@ -91,7 +91,8 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 
 		private void Act(EncounterEntityBase eeb) {
-			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, itemDef.readyTime);
+			var i = (itemDef.numberOfCharges == -1) ? item : null;
+			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, itemDef.readyTime, i, eeb);
 			e.InstallListener(null);
 		}
 

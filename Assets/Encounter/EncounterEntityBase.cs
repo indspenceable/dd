@@ -23,16 +23,16 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	private List<GameObject> leasedObjects;
 	protected Coroutine currentAction;
-	public void TakeAction(IEnumerator action, ValidityCheck valid, float time) {
+	public void TakeAction(IEnumerator action, ValidityCheck valid, float time, Item i = null, EncounterEntityBase target = null) {
 		if (currentAction != null) {
 			StopCoroutine(currentAction);
 			CleanupLeasedObjects();
 		}
 		leasedObjects = new List<GameObject>();
-		currentAction = StartCoroutine(InitiateAction(time, action, valid));
+		currentAction = StartCoroutine(InitiateAction(time, action, valid, i, target));
 	}
 	public delegate bool ValidityCheck();
-	public IEnumerator InitiateAction(float duration, IEnumerator action, ValidityCheck valid) {
+	public IEnumerator InitiateAction(float duration, IEnumerator action, ValidityCheck valid, Item autoAttackItem = null, EncounterEntityBase autoAttackTarget = null) {
 		UIProgressBar b = encounter.CreateProgressBar(transform);
 		leasedObjects.Add(b.gameObject);
 		b.transform.position = transform.position + new Vector3(0f, 0.5f);
@@ -51,6 +51,13 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 		yield return null;
 		CleanupLeasedObjects();
 		StartCoroutine(action);
+		DealWithStatusEffects();
+		if (autoAttackItem != null && autoAttackTarget != null) {
+			TakeAction(UseItem(autoAttackTarget, autoAttackItem), valid, autoAttackItem.GetDef(encounter.session).readyTime, autoAttackItem, autoAttackTarget);
+		}
+	}
+
+	private void DealWithStatusEffects() {
 		foreach(var se in statusEffects) {
 			if (se.myEffect.triggerMode == StatusEffect.TriggerMode.ROUNDS) {
 				se.Trigger(this);

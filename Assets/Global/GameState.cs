@@ -124,7 +124,7 @@ public abstract class RoomContents {
 			}
 			session.SwapToMapMode();
 		}
-		public override Sprite UnexploredSprite(SessionManager session)
+		public override Sprite ExploredSprite(SessionManager session)
 		{
 			return session.roomIcons.NextFloorIcon;
 		}
