@@ -177,6 +177,16 @@ public class SessionManager : MonoBehaviour {
 		state.floors.Add(layout);
 	}
 
+	RoomContents.Encounter BuildEncounter()  {
+		var ec = new RoomContents.Encounter();
+		ec.monsters = new List<int>();
+		for (int ii = Random.Range(1, 6); ii > 0; ii-=1) {
+			ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+		}	
+		return ec;
+
+	}
+
 	List<RoomContents> BuildRoomContents(int desiredCount) {
 		var rtn = new List<RoomContents>();
 		for (int i = 0; i < 1; i += 1) {
@@ -192,12 +202,7 @@ public class SessionManager : MonoBehaviour {
 			rtn.Add(new RoomContents.NewPartyMember());
 		}
 		for (int i = 0; i < 18; i += 1) {
-			var ec = new RoomContents.Encounter();
-			ec.monsters = new List<int>();
-			for (int ii = Random.Range(1, 6); ii > 0; ii-=1) {
-				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
-				rtn.Add(ec);
-			}	
+			rtn.Add(BuildEncounter());
 		}
 		while (rtn.Count<desiredCount) {
 			rtn.Add(new RoomContents.Empty());
