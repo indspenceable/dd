@@ -22,8 +22,9 @@ public class SessionManager : MonoBehaviour {
 	[System.Serializable]
 	public struct RoomIcons {
 		public Sprite Unexplored;
-		public Sprite Empty;
+//		public Sprite Empty;
 		public Sprite ShopIcon;
+		public Sprite NextFloorIcon;
 	}
 	[Header("Map Icons")]
 	public RoomIcons roomIcons;
@@ -60,7 +61,7 @@ public class SessionManager : MonoBehaviour {
 	public IEnumerator DoGameStart() {
 		KillCurrentMode();
 		_state = new GameState();
-		yield return BuildLayout();
+		yield return BuildAndAddLayout();
 		yield return BuildParty();
 		SwapToManagement();
 		StartCoroutine(CheckSaves());
@@ -141,7 +142,7 @@ public class SessionManager : MonoBehaviour {
 		currentMode = mm.gameObject;
 	}
 
-	private IEnumerator BuildLayout() {
+	public IEnumerator BuildAndAddLayout() {
 		Layout layout = new Layout();
 		layout.rooms.Add(new RoomData(new Coord(5,5)));
 		layout.rooms[0].Clear(true);
@@ -167,19 +168,19 @@ public class SessionManager : MonoBehaviour {
 //				Debug.Log("" + layout.rooms.Count*100f / requiredRoomCount + "% (" + layout.rooms.Count + "/" + requiredRoomCount + ")");
 			}
 		}
-		state.layout = layout;
+		state.floors.Add(layout);
 	}
 
 	RoomData BuildRoomData(Coord pos) {
 		var rd = new RoomData(pos);
 		var contents = new List<RoomContents>();
 		{
-			var ec = new RoomContents.Encounter();
-			ec.monsters = new List<int>();
-			for (int i = Random.Range(1, 6); i > 0; i-=1) {
-				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
-				contents.Add(ec);
-			}
+//			var ec = new RoomContents.Encounter();
+//			ec.monsters = new List<int>();
+//			for (int i = Random.Range(1, 6); i > 0; i-=1) {
+//				ec.monsters.Add(Random.Range(0, monsterDefs.Count));
+//				contents.Add(ec);
+//			}
 		}
 		{
 			var tr = new RoomContents.Treasure();
@@ -193,6 +194,9 @@ public class SessionManager : MonoBehaviour {
 		}
 		{
 			contents.Add(new RoomContents.Shop(this));
+		}
+		{
+			contents.Add(new RoomContents.NextFloor());
 		}
 
 		rd.contents = Util.Random(contents);

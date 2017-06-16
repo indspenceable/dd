@@ -6,7 +6,6 @@ using UnityEngine;
 public abstract class RoomContents {
 	public abstract IEnumerator Install(SessionManager session, int roomIndex);
 	public virtual Sprite ExploredSprite(SessionManager session) {
-//		return session.roomIcons.Empty;
 		return null;
 	}
 	public virtual Sprite UnexploredSprite(SessionManager session) {
@@ -110,6 +109,28 @@ public abstract class RoomContents {
 			return session.roomIcons.ShopIcon;
 		}
 	}
+
+	[System.Serializable]
+	public class NextFloor : RoomContents {
+		public override bool Equals(System.Object obj) {
+			NextFloor o = obj as NextFloor;
+			if (o == null) return false;
+			return true;
+		}
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
+			yield return session.BuildAndAddLayout();
+			yield return session.ui.TextBox("You enter the wormhole, and appear in a new dungeon...");
+			session.SwapToMapMode();
+		}
+		public override Sprite ExploredSprite(SessionManager session)
+		{
+			return session.roomIcons.NextFloorIcon;
+		}
+		public override Sprite UnexploredSprite(SessionManager session)
+		{
+			return session.roomIcons.NextFloorIcon;
+		}
+	}
 }
 
 [System.Serializable] 
@@ -195,7 +216,12 @@ public class Layout {
 
 [System.Serializable]
 public class GameState {
-	public Layout layout;
+	public Layout layout {
+		get {
+			return floors[floors.Count -1];
+		}
+	}
+	public List<Layout> floors = new List<Layout>();
 	public List<Item> inventory = new List<Item>();
 	public List<PartyMember> party = new List<PartyMember>();
 	public List<PartyMember> graveyard = new List<PartyMember>();
