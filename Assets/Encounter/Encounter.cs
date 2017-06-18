@@ -19,6 +19,7 @@ public class Encounter : MonoBehaviour {
 	[HideInInspector]
 	public SessionManager session;
 	private int roomIndex;
+	private int reward;
 
 	public void Setup(SessionManager session, int roomIndex, RoomContents.Encounter ec) {
 		this.session = session;
@@ -26,7 +27,9 @@ public class Encounter : MonoBehaviour {
 		allHotspots = new List<Hotspot>();
 		allHotspots.AddRange(monsterHotspots);
 		allHotspots.AddRange(playerHotspots);
-
+		reward = ec.Difficulty(session) * 10;
+		Util.Shuffle(monsterHotspots);
+		Util.Shuffle(playerHotspots);
 		for (int i = 0; i < ec.monsters.Count; i+=1){
 			BuildMonster(monsterHotspots[i], session.monsterDefs[ec.monsters[i]]);
 		}
@@ -106,13 +109,15 @@ public class Encounter : MonoBehaviour {
 		monsters.Remove(m);
 		Destroy(m.gameObject);
 		if (monsters.Count == 0) {
+			// you win!
 			InstallListener(new NoOp());
 			StartCoroutine(GoToMapScreen());
 		}
 	}
 
 	private IEnumerator GoToMapScreen(){
-		yield return session.ui.TextBox("With all enemies destroyed, you leave the room.\n\n<space>");
+		yield return session.ui.TextBox("You recover " + reward + " gold from the fallen monsters.\n\n<space>");
+		session.state.money += reward;
 		session.state.layout.rooms[roomIndex].state = RoomData.State.CLEARED;
 		session.state.layout.rooms[roomIndex].contents = new RoomContents.Empty();
 		session.SwapToMapMode();

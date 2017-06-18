@@ -15,6 +15,13 @@ public abstract class RoomContents {
 	[System.Serializable]
 	public class Encounter : RoomContents {
 		public List<int> monsters;
+		public int Difficulty(SessionManager session) {
+			int total = 0;
+			foreach(int i in monsters){
+				total += session.monsterDefs[i].difficulty;
+			}
+			return total;
+		}
 		public override bool Equals(System.Object obj) {
 			Encounter o = obj as Encounter;
 			if (o == null) return false;

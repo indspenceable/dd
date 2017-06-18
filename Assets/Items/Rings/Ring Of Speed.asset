@@ -15,6 +15,7 @@ MonoBehaviour:
   description: 10% faster charge
   image: {fileID: 21300018, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
   isLoot: 1
+  cost: 750
   usableInbattle: 0
   target: 0
   accuracy: 1
@@ -29,3 +30,4 @@ MonoBehaviour:
   modifier:
     armor: 0
     speed: 0.9
+    hp: 0
