@@ -15,6 +15,7 @@ MonoBehaviour:
   description: Applies Haste for the targets next 3 actions
   image: {fileID: 21300100, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   isLoot: 1
+  cost: 600
   usableInbattle: 1
   target: 1
   accuracy: 1
@@ -30,3 +31,4 @@ MonoBehaviour:
   modifier:
     armor: 0
     speed: 1
+    hp: 0

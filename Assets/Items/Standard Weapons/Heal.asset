@@ -15,12 +15,13 @@ MonoBehaviour:
   description: 10 / -5 Heals your friends!
   image: {fileID: 21300028, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   isLoot: 1
+  cost: 1000
   usableInbattle: 1
   target: 1
   accuracy: 1
   neverMiss: 0
   armorPierce: 0
-  readyTime: 10
+  readyTime: 3
   itemActivationEffect: {fileID: 1195996672295582, guid: e3a3b20a330334e6d9f1e75f3059362d,
     type: 2}
   activationEffect:
@@ -30,3 +31,4 @@ MonoBehaviour:
   modifier:
     armor: 0
     speed: 1
+    hp: 0

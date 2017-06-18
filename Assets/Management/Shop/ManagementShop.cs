@@ -27,7 +27,8 @@ public class ManagementShop : MonoBehaviour {
 			if (i < session.state.inventory.Count) {
 				var item = session.state.inventory[i];
 				var def = item.GetDef(session);
-				partyInventorySlots[i].Set(def.Tooltip(), def.image, () => {
+				partyInventorySlots[i].Set(def.Tooltip(ItemDefinition.ToolTipOptions.INCLUDE_SELL_COST), def.image, () => {
+					session.state.money += def.SellCost();
 					session.state.inventory.Remove(item);
 					shopInventory.Add(item);
 					RefreshView();
@@ -40,10 +41,14 @@ public class ManagementShop : MonoBehaviour {
 			if (i < shopInventory.Count) {
 				var item = shopInventory[i];
 				var def = item.GetDef(session);
-				shopInventorySlots[i].Set(def.Tooltip(), def.image, () => {
-					shopInventory.Remove(item);
-					session.state.inventory.Add(item);
-					RefreshView();
+				var cost = def.cost;
+				shopInventorySlots[i].Set(def.Tooltip(ItemDefinition.ToolTipOptions.INCLUDE_BUY_COST), def.image, () => {
+					if (session.state.money > cost) {
+						session.state.money -= cost;
+						shopInventory.Remove(item);
+						session.state.inventory.Add(item);
+						RefreshView();
+					}
 				});
 			} else {
 				shopInventorySlots[i].Clear();

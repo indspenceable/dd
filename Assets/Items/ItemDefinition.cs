@@ -13,6 +13,10 @@ public class ItemDefinition : ScriptableObject {
 	public string description;
 	public Sprite image;
 	public bool isLoot;
+	public int cost;
+	public int SellCost() {
+		return cost/2;
+	}
 
 	[Header("Mid-Encounter activation")]
 	public bool usableInbattle = true;
@@ -28,7 +32,20 @@ public class ItemDefinition : ScriptableObject {
 	[Header("Stats-related things")]
 	public StatusModifier modifier;
 
-	public string Tooltip() {
-		return itemName + "\n" + description;
+
+	public enum ToolTipOptions {
+		INCLUDE_BUY_COST,
+		INCLUDE_SELL_COST
+	}
+	public string Tooltip(params ToolTipOptions[] opts) {
+		List<ToolTipOptions> optsList = new List<ToolTipOptions>();
+		string rtn = itemName;
+		if (optsList.Contains(ToolTipOptions.INCLUDE_BUY_COST)) {
+			rtn = rtn + " ($" + cost + ")";
+		}
+		if (optsList.Contains(ToolTipOptions.INCLUDE_SELL_COST)) {
+			rtn = rtn + " ($" + cost + ")";
+		}
+		return rtn + "\n"+ description;
 	}
 }

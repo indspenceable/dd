@@ -15,6 +15,7 @@ MonoBehaviour:
   description: Applies Slow for the targets next 3 actions
   image: {fileID: 21300096, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   isLoot: 1
+  cost: 600
   usableInbattle: 1
   target: 0
   accuracy: 1
