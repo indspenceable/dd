@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Name: Poison
   m_EditorClassIdentifier: 
   effectName: Poison
-  icon: {fileID: 21300052, guid: 439fafd2740a144968138dbe5010332a, type: 3}
+  icon: {fileID: 21300092, guid: 9996c481f50434168b84c05c480d7c81, type: 3}
+  isBuff: 0
   modifier:
     armor: 0
     speed: 1
+    hp: 0
   triggerMode: 1
   numberOfTriggers: 10
   timeBetweenTriggers: 0

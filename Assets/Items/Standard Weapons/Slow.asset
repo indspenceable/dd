@@ -18,8 +18,8 @@ MonoBehaviour:
   usableInbattle: 1
   target: 0
   accuracy: 1
-  neverMiss: 0
-  armorPierce: 0
+  neverMiss: 1
+  armorPierce: 1
   readyTime: 3
   itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
     type: 2}
@@ -30,3 +30,4 @@ MonoBehaviour:
   modifier:
     armor: 0
     speed: 1
+    hp: 0

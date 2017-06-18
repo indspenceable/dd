@@ -5,6 +5,7 @@ using System.Linq;
 
 public abstract class EncounterEntityBase : MonoBehaviour {
 	[SerializeField] GameObject SelectedReticle;
+	[SerializeField] protected StatusEffectIndicator statusIndicator;
 	protected Encounter encounter;
 	protected PartyMember backingPartyMember;
 	public Hotspot hotspot;
@@ -59,10 +60,8 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 
 	private void DealWithStatusEffects() {
 		foreach(var se in statusEffects) {
-			if (se.myEffect.triggerMode == StatusEffect.TriggerMode.ROUNDS) {
+			if (se.definition.triggerMode == StatusEffect.TriggerMode.ROUNDS) {
 				se.Trigger(this);
-				Debug.Log("RT: " + se.remainingTriggers);
-				Debug.Log(this.SpeedModifier());
 			}
 		}
 		statusEffects.RemoveAll(se => se.remainingTriggers == 0);
@@ -134,7 +133,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 			rtn.Add(i.GetDef(encounter.session).modifier);
 		}
 		foreach(var e in statusEffects) {
-			rtn.Add(e.myEffect.modifier);
+			rtn.Add(e.definition.modifier);
 		}
 		return rtn;
 	}

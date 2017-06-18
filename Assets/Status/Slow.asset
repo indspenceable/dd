@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: Slow
   m_EditorClassIdentifier: 
   effectName: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300124, guid: b1545ec7d3c524a178104ae194e945e9, type: 3}
+  isBuff: 0
   modifier:
     armor: 0
     speed: 2

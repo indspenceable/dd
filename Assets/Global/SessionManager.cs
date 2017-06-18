@@ -90,7 +90,7 @@ public class SessionManager : MonoBehaviour {
 			var inputStream = new MemoryStream(data, 0, data.Length);
 			var newState = (GameState)formatter.Deserialize(inputStream);
 			if (!state.Equals(newState)) {
-				Debug.Log("They're not equal!");
+				Debug.LogError("They're not equal!");
 			}
 			FileStream stream = File.Create(filePath()); //you can call it anything you want
 			formatter.Serialize(stream, state);

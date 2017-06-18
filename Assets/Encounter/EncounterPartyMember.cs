@@ -159,6 +159,7 @@ public class EncounterPartyMember : EncounterEntityBase {
 		this.encounter = encounter;
 		this.backingPartyMember = p;
 		GetComponent<SpriteRenderer>().sprite = p.GetImage(encounter.session);
+		this.statusIndicator.statuses = statusEffects;
 	}
 
 	// TODO these stats should be stored in the GameState

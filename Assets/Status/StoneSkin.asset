@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Name: StoneSkin
   m_EditorClassIdentifier: 
   effectName: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300182, guid: ec1b5925fa97f4316b4089663a4dc961, type: 3}
+  isBuff: 1
   modifier:
     armor: 1
     speed: 1
+    hp: 0
+  triggerMode: 0
+  numberOfTriggers: 0
+  timeBetweenTriggers: 0
+  activationEffect:
+    damage: 0
+    effect: {fileID: 0}

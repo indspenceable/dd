@@ -25,6 +25,7 @@ public class StatusEffect : ScriptableObject{
 
 	public string effectName;
 	public Sprite icon;
+	public bool isBuff;
 	public StatusModifier modifier;
 	public TriggerMode triggerMode;
 	public int numberOfTriggers = 0;
@@ -38,13 +39,13 @@ public class StatusEffect : ScriptableObject{
 
 public class StatusEffectInstance {
 	public StatusEffectInstance(StatusEffect se, int numberOfTriggers) {
-		this.myEffect = se;
+		this.definition = se;
 		this.remainingTriggers = numberOfTriggers;
 	}
 	public void Trigger(EncounterEntityBase target) {
-		target.ApplyActivationEffect(myEffect.activationEffect, true);
+		target.ApplyActivationEffect(definition.activationEffect, true);
 		remainingTriggers -= 1;
 	}
-	public StatusEffect myEffect;
+	public StatusEffect definition;
 	public int remainingTriggers;
 }

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Name: Haste
   m_EditorClassIdentifier: 
   effectName: Haste
-  icon: {fileID: 0}
+  icon: {fileID: 21300094, guid: b1545ec7d3c524a178104ae194e945e9, type: 3}
+  isBuff: 1
   modifier:
     armor: 0
     speed: 0.75
+    hp: 0
   triggerMode: 1
   numberOfTriggers: 3
   timeBetweenTriggers: 0
