@@ -61,6 +61,7 @@ public class SessionManager : MonoBehaviour {
 	public IEnumerator DoGameStart() {
 		KillCurrentMode();
 		_state = new GameState();
+		_state.money = 1000;
 		yield return BuildAndAddLayout();
 		yield return BuildParty();
 		SwapToManagement();
@@ -76,11 +77,13 @@ public class SessionManager : MonoBehaviour {
 		StartCoroutine(CheckSaves());
 	}
 
-	// TODO this needs to go before production! but for the time being, it's a nice
-	// safety net :)
 	private string filePath() {
 		return Application.persistentDataPath + "/dd.gd";
 	}
+
+	// TODO this needs to go before production! but for the time being, it's a nice
+	// safety net :)
+
 	private IEnumerator CheckSaves() {
 		var formatter = new BinaryFormatter();
 		while (true) {
@@ -104,6 +107,15 @@ public class SessionManager : MonoBehaviour {
 		if (currentMode != null) {
 			Destroy(currentMode);
 			currentMode = null;
+		}
+	}
+
+	void Update() {
+		if (state != null ) {
+			ui.SetActive(true);
+			ui.SetMoney(state.money);
+		} else {
+			ui.SetActive(false);
 		}
 	}
 

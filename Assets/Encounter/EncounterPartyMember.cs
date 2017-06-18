@@ -18,7 +18,8 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 		public void Update() {
 			if (p.backingPartyMember.inventory.Count != invCount) {
-				e.InstallListener(null);
+				UninstallUI();
+				InstallUI();
 			}
 		}
 		public void PartyMemberClicked(EncounterPartyMember target) {
@@ -86,13 +87,13 @@ public class EncounterPartyMember : EncounterEntityBase {
 		}
 		public void Update() {
 			if (! p.StillHasItem(item)) {
-				e.InstallListener(null);
+				e.InstallListener(this.prev);
 			}
 		}
 
 		private void Act(EncounterEntityBase eeb) {
-			var i = (itemDef.numberOfCharges == -1) ? item : null;
-			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, itemDef.readyTime, i, eeb);
+			var autoAttackItem = (itemDef.numberOfCharges == -1) ? item : null;
+			p.TakeAction(p.UseItem(eeb, item), () => eeb != null, itemDef.readyTime, autoAttackItem, eeb);
 			e.InstallListener(null);
 		}
 

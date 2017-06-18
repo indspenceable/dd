@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour {
 	[SerializeField] GameObject paused;
 	[SerializeField] Tooltip toolTip;
 	[SerializeField] TextBox textBox;
+	[SerializeField] MoneyDisplay money;
 	[SerializeField] GameObject bouncingTextPrefab;
 	[SerializeField] Canvas OverlayCanvas;
 	[SerializeField] Canvas GameWorldCanvas;
@@ -20,6 +21,14 @@ public class UIManager : MonoBehaviour {
 	}
 	public IEnumerator TextBox(string s) {
 		yield return textBox.CoroutineShow(s);
+	}
+
+	public void SetActive(bool active) {
+		money.gameObject.SetActive(active);
+	}
+
+	public void SetMoney(int money) {
+		this.money.Set(money);
 	}
 
 	bool TT_Shown_This_Frame = false;

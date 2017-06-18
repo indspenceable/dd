@@ -223,12 +223,14 @@ public class GameState {
 	public List<Item> inventory = new List<Item>();
 	public List<PartyMember> party = new List<PartyMember>();
 	public List<PartyMember> graveyard = new List<PartyMember>();
+	public int money;
 	public override bool Equals(System.Object obj) {
 		GameState o = obj as GameState;
 		if (o == null) return false;
 		return layout.Equals(o.layout) && 
 			Util.ListEquals(inventory, o.inventory) &&
 			Util.ListEquals(party, o.party) &&
-			Util.ListEquals(graveyard, o.graveyard);
+			Util.ListEquals(graveyard, o.graveyard) &&
+			money == o.money;
 	}
 }
