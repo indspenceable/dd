@@ -540,6 +540,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2894a4900faa74bfd8189b806911b0f6, type: 2}
   - {fileID: 11400000, guid: 20880175add6c426092383bcd8cfdb47, type: 2}
   - {fileID: 11400000, guid: a492e1c85bae14ea4ac0d1938aad0996, type: 2}
+  - {fileID: 11400000, guid: cf9bbb64ed4974483aeac2fc29244f78, type: 2}
   monsterDefs:
   - {fileID: 11400000, guid: 3d39a1abb0530463e98dee131c73163a, type: 2}
   - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}

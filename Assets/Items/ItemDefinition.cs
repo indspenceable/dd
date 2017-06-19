@@ -38,13 +38,13 @@ public class ItemDefinition : ScriptableObject {
 		INCLUDE_SELL_COST
 	}
 	public string Tooltip(params ToolTipOptions[] opts) {
-		List<ToolTipOptions> optsList = new List<ToolTipOptions>();
+		List<ToolTipOptions> optsList = new List<ToolTipOptions>(opts);
 		string rtn = itemName;
 		if (optsList.Contains(ToolTipOptions.INCLUDE_BUY_COST)) {
 			rtn = rtn + " ($" + cost + ")";
 		}
 		if (optsList.Contains(ToolTipOptions.INCLUDE_SELL_COST)) {
-			rtn = rtn + " ($" + cost + ")";
+			rtn = rtn + " ($" + SellCost() + ")";
 		}
 		return rtn + "\n"+ description;
 	}

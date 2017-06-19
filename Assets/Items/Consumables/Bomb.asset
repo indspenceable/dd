@@ -9,23 +9,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
-  m_Name: Potion
+  m_Name: Bomb
   m_EditorClassIdentifier: 
-  itemName: Healing Potion
-  description: Heals 10 HP. 3 Charges.
-  image: {fileID: 21300000, guid: 3dd0390f4b2dc49738664f4be078a490, type: 3}
+  itemName: Bombs
+  description: Deals 10 unavoidable damage. 3 Charges.
+  image: {fileID: 21300054, guid: a72211e1c833246d49b9b2825b388f1d, type: 3}
   isLoot: 1
-  cost: 300
+  cost: 400
   usableInbattle: 1
-  target: 1
+  target: 0
   accuracy: 1
-  neverMiss: 0
+  neverMiss: 1
   armorPierce: 0
   readyTime: 2
-  itemActivationEffect: {fileID: 1195996672295582, guid: e3a3b20a330334e6d9f1e75f3059362d,
+  itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
     type: 2}
   activationEffect:
-    damage: -10
+    damage: 10
     effect: {fileID: 0}
   numberOfCharges: 3
   modifier:
