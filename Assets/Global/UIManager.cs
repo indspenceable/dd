@@ -19,8 +19,8 @@ public class UIManager : MonoBehaviour {
 	public void SetPaused(bool p) {
 		paused.gameObject.SetActive(p);
 	}
-	public IEnumerator TextBox(string s) {
-		yield return textBox.CoroutineShow(s);
+	public IEnumerator TextBox(string s, params TextBox.TextboxChoice[] choices) {
+		yield return textBox.Show(s, choices);
 	}
 
 	public void SetActive(bool active) {
