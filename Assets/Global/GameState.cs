@@ -9,8 +9,8 @@ public abstract class RoomContents {
 		return null;
 	}
 	public virtual Sprite UnexploredSprite(SessionManager session) {
-		return ExploredSprite(session);
-//		return session.roomIcons.Unexplored;
+//		return ExploredSprite(session);
+		return session.roomIcons.Unexplored;
 	}
 
 	[System.Serializable]

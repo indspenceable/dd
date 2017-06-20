@@ -285,7 +285,11 @@ public class SessionManager : MonoBehaviour {
 		partyMember.hp = 20;
 		partyMember.damage = 0;
 		partyMember.pcName = Util.GenerateName(Random.Range(5, 13));
-		partyMember.image = Random.Range(0, partyImages.Count);
+		int image = Random.Range(0, partyImages.Count);
+		while (state.party.Find(pm => pm.image == image) != null) {
+			image = Random.Range(0, partyImages.Count);
+		}
+		partyMember.image = image;
 		int k = 1;
 		for (int j = 0; j < k; j += 1) {
 			partyMember.inventory.Add(RANDOM_ITEM___());
