@@ -11,6 +11,8 @@ public class ItemDefinition : ScriptableObject {
 
 	public string itemName;
 	public string description;
+	public string blessingName;
+	public string blessingDescription;
 	public Sprite image;
 	public bool isLoot;
 	public bool isBlessing;

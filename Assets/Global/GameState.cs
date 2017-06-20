@@ -9,7 +9,8 @@ public abstract class RoomContents {
 		return null;
 	}
 	public virtual Sprite UnexploredSprite(SessionManager session) {
-		return session.roomIcons.Unexplored;
+		return ExploredSprite(session);
+//		return session.roomIcons.Unexplored;
 	}
 
 	[System.Serializable]
@@ -157,9 +158,9 @@ public abstract class RoomContents {
 			}
 			if (choices.Count > 0) {
 				choices.Add(new TextBox.Choice("Do not bless anyone.", MoveOn(session, roomIndex)));
-				yield return session.ui.TextBox("You find a small alter to a god, offering a blessing of " + blessing.GetDef(session).itemName + ". Who would you like to bless?", choices.ToArray());
+				yield return session.ui.TextBox("You find a small alter to a god, offering " + blessing.GetDef(session).blessingDescription + ". Who would you like to bless?", choices.ToArray());
 			} else {
-				yield return session.ui.TextBox("You find a small alter to a god, offering a blessing of " + blessing.GetDef(session).itemName + ". However, none of your characters can receive another blessing at this piont. You move onwithout blessing anyone.");
+				yield return session.ui.TextBox("You find a small alter to a god, offering " + blessing.GetDef(session).blessingDescription + ". However, none of your characters can receive another blessing at this piont. You move onwithout blessing anyone.");
 				session.GetRoom(roomIndex).Clear(false);
 			}
 		}
@@ -169,7 +170,7 @@ public abstract class RoomContents {
 			session.SwapToMapMode();
 		}
 		private IEnumerator Bless(SessionManager session, int roomIndex, PartyMember pm) {
-			yield return session.ui.TextBox(pm.pcName + " receives the blessing and is perminantly imbued with power.");
+			yield return session.ui.TextBox(pm.pcName + " receives " + blessing.GetDef(session).blessingName + " and is perminantly imbued with power.");
 			pm.blessings.Add(blessing);
 			session.GetRoom(roomIndex).Clear(true);
 			session.SwapToMapMode();
