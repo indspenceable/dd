@@ -14,7 +14,7 @@ public abstract class EncounterEntityBase : MonoBehaviour {
 	protected abstract int Damage();
 	protected abstract void SetDamage(int damage);
 	protected abstract int BaseHP();
-	protected abstract List<Item> Items();
+	public abstract List<Item> Items();
 	protected abstract int BaseArmor();
 	protected abstract float Evasion();
 

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Name: Ring Of Speed
   m_EditorClassIdentifier: 
   itemName: Ring of Speed
-  description: 10% faster charge
+  description: 20% faster charge
   image: {fileID: 21300018, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
   isLoot: 1
+  isBlessing: 1
   cost: 750
   usableInbattle: 0
   target: 0
@@ -29,5 +30,5 @@ MonoBehaviour:
   numberOfCharges: -1
   modifier:
     armor: 0
-    speed: 0.9
+    speed: 0.8
     hp: 0

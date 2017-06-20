@@ -52,7 +52,7 @@ public class EncounterMonster : EncounterEntityBase {
 	protected override void SetDamage(int damage) {
 		this.damage = damage;
 	}
-	protected override List<Item> Items() {
+	public override List<Item> Items() {
 		return items;
 	}
 	protected override string Tooltip() {

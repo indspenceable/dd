@@ -136,6 +136,49 @@ public abstract class RoomContents {
 			return session.roomIcons.NextFloorIcon;
 		}
 	}
+
+	[System.Serializable]
+	public class MinorBlessing : RoomContents {
+		public Item blessing;
+		public MinorBlessing(Item blessing) 
+		{
+			this.blessing = blessing;
+		}
+
+		public override bool Equals(System.Object obj) {
+			MinorBlessing o = obj as MinorBlessing;
+			if (o == null) return false;
+			return true;
+		}
+		public override IEnumerator Install(SessionManager session, int roomIndex) {
+			var choices = new List<TextBox.Choice>();
+			foreach(var pm in session.state.party.FindAll(pm => pm.CanAcceptBlessing())) {
+				choices.Add(new TextBox.Choice("Bless " + pm.pcName, Bless(session, roomIndex, pm)));
+			}
+			if (choices.Count > 0) {
+				choices.Add(new TextBox.Choice("Do not bless anyone.", MoveOn(session, roomIndex)));
+				yield return session.ui.TextBox("You find a small alter to a god, offering a blessing of " + blessing.GetDef(session).itemName + ". Who would you like to bless?", choices.ToArray());
+			} else {
+				yield return session.ui.TextBox("You find a small alter to a god, offering a blessing of " + blessing.GetDef(session).itemName + ". However, none of your characters can receive another blessing at this piont. You move onwithout blessing anyone.");
+				session.GetRoom(roomIndex).Clear(false);
+			}
+		}
+		private IEnumerator MoveOn(SessionManager session, int roomIndex) {
+			yield return session.ui.TextBox("You move on without blessing anyone.");
+			session.GetRoom(roomIndex).Clear(false);
+			session.SwapToMapMode();
+		}
+		private IEnumerator Bless(SessionManager session, int roomIndex, PartyMember pm) {
+			yield return session.ui.TextBox(pm.pcName + " receives the blessing and is perminantly imbued with power.");
+			pm.blessings.Add(blessing);
+			session.GetRoom(roomIndex).Clear(true);
+			session.SwapToMapMode();
+		}
+		public override Sprite ExploredSprite(SessionManager session)
+		{
+			return session.roomIcons.AltarIcon;
+		}
+	}
 }
 
 [System.Serializable] 
@@ -162,6 +205,7 @@ public class PartyMember {
 	public int damage;
 	public List<Item> inventory = new List<Item>();
 	// TODO add skills here
+	public List<Item> blessings = new List<Item>();
 
 	public Sprite GetImage(SessionManager session) {
 		return session.partyImages[image];
@@ -174,6 +218,9 @@ public class PartyMember {
 			hp == o.hp &&
 			damage == o.damage &&
 			pcName == o.pcName;
+	}
+	public bool CanAcceptBlessing()  {
+		return blessings.Count < 3;
 	}
 }
 

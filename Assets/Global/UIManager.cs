@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour {
 	public void SetPaused(bool p) {
 		paused.gameObject.SetActive(p);
 	}
-	public IEnumerator TextBox(string s, params TextBox.TextboxChoice[] choices) {
+	public IEnumerator TextBox(string s, params TextBox.Choice[] choices) {
 		yield return textBox.Show(s, choices);
 	}
 

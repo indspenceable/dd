@@ -15,6 +15,7 @@ MonoBehaviour:
   description: A sharp blade; very efficient at cutting through monsters.
   image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
   isLoot: 1
+  isBlessing: 0
   cost: 300
   usableInbattle: 1
   target: 0

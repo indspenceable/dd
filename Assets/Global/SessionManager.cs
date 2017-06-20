@@ -25,6 +25,7 @@ public class SessionManager : MonoBehaviour {
 //		public Sprite Empty;
 		public Sprite ShopIcon;
 		public Sprite NextFloorIcon;
+		public Sprite AltarIcon;
 	}
 	[Header("Map Icons")]
 	public RoomIcons roomIcons;
@@ -260,6 +261,9 @@ public class SessionManager : MonoBehaviour {
 		for (int i = 0; i < 2; i += 1) {
 			rtn.Add(new RoomContents.NewPartyMember());
 		}
+		for (int i = 0; i < 3; i += 1) {
+		rtn.Add(new RoomContents.MinorBlessing(RANDOM_BLESSING___()));
+		}
 		for (int i = 0; i < 18; i += 1) {
 			rtn.Add(BuildEncounter(difficulty));
 		}
@@ -291,6 +295,11 @@ public class SessionManager : MonoBehaviour {
 
 	public Item RANDOM_ITEM___() {
 		var def = Util.Random(itemDefs.FindAll(id => id.isLoot));
+		return new Item(itemDefs.IndexOf(def));
+	}
+
+	public Item RANDOM_BLESSING___() {
+		var def = Util.Random(itemDefs.FindAll(id => id.isBlessing));
 		return new Item(itemDefs.IndexOf(def));
 	}
 }

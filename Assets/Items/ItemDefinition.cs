@@ -13,6 +13,7 @@ public class ItemDefinition : ScriptableObject {
 	public string description;
 	public Sprite image;
 	public bool isLoot;
+	public bool isBlessing;
 	public int cost;
 	public int SellCost() {
 		return cost/2;

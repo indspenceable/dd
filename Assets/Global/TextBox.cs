@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class TextBox : MonoBehaviour {
 	[SerializeField] Text text;
 	[SerializeField] GameObject container;
-	private static List<KeyCode> KEYCODES = new List<KeyCode>{KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4};
+	private static List<KeyCode> KEYCODES = new List<KeyCode>{KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6};
 
 	public bool blocking {
 		get;
 		private set;
 	}
 
-	public struct TextboxChoice {
+	public struct Choice {
 		public string s;
 		public IEnumerator cb;
-		public TextboxChoice(string s, IEnumerator cb) {
+		public Choice(string s, IEnumerator cb) {
 			this.s = s;
 			this.cb = cb;
 		}
@@ -33,8 +33,8 @@ public class TextBox : MonoBehaviour {
 		blocking = false;
 	}
 
-	public IEnumerator Show(string s, params TextboxChoice[] choicesArray) {
-		var choices = new List<TextboxChoice>(choicesArray);
+	public IEnumerator Show(string s, params Choice[] choicesArray) {
+		var choices = new List<Choice>(choicesArray);
 
 		IEnumerator finalChoice = null;
 		if (choices.Count > 0) {

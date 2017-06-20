@@ -558,6 +558,7 @@ MonoBehaviour:
     inventory:
     - index: 0
       chargesUsed: 0
+    blessings: []
   - pcName: Theif
     image: 1
     hp: 20
@@ -565,6 +566,7 @@ MonoBehaviour:
     inventory:
     - index: 1
       chargesUsed: 0
+    blessings: []
   - pcName: Wizard
     image: 2
     hp: 20
@@ -572,10 +574,12 @@ MonoBehaviour:
     inventory:
     - index: 4
       chargesUsed: 0
+    blessings: []
   roomIcons:
     Unexplored: {fileID: 21300000, guid: b1545ec7d3c524a178104ae194e945e9, type: 3}
     ShopIcon: {fileID: 21300032, guid: 140d1356817c042b0b68b3c919805dd9, type: 3}
     NextFloorIcon: {fileID: 21300034, guid: a72211e1c833246d49b9b2825b388f1d, type: 3}
+    AltarIcon: {fileID: 21300086, guid: a72211e1c833246d49b9b2825b388f1d, type: 3}
 --- !u!4 &771138791
 Transform:
   m_ObjectHideFlags: 0

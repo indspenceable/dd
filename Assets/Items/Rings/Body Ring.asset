@@ -11,10 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
   m_Name: Body Ring
   m_EditorClassIdentifier: 
-  itemName: Ring of Defense
+  itemName: Body Ring
   description: +10 HP
   image: {fileID: 21300048, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
   isLoot: 1
+  isBlessing: 1
   cost: 750
   usableInbattle: 0
   target: 0
@@ -30,4 +31,4 @@ MonoBehaviour:
   modifier:
     armor: 1
     speed: 1
-    hp: 0
+    hp: 10

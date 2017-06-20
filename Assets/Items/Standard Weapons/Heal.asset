@@ -15,6 +15,7 @@ MonoBehaviour:
   description: 10 / -5 Heals your friends!
   image: {fileID: 21300028, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   isLoot: 1
+  isBlessing: 0
   cost: 1000
   usableInbattle: 1
   target: 1

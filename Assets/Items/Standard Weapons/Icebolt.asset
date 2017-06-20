@@ -15,6 +15,7 @@ MonoBehaviour:
   description: Weak, slow ice attack.
   image: {fileID: 21300016, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   isLoot: 1
+  isBlessing: 0
   cost: 400
   usableInbattle: 1
   target: 0

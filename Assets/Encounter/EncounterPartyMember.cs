@@ -7,17 +7,21 @@ public class EncounterPartyMember : EncounterEntityBase {
 		private EncounterPartyMember p;
 		private Encounter e;
 		Encounter.ActionListener prev;
+		private List<Item> items;
 		private List<UIButton> partyMemberActions;
 		int invCount;
 
+		private int currentInvCount() {
+			return p.Items().Count;
+		}
 		public Selected(EncounterPartyMember p, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
-			this.invCount = p.backingPartyMember.inventory.Count;
+			this.invCount = currentInvCount();
 		}
 		public void Update() {
-			if (p.backingPartyMember.inventory.Count != invCount) {
+			if (currentInvCount() != invCount) {
 				UninstallUI();
 				InstallUI();
 			}
@@ -35,14 +39,15 @@ public class EncounterPartyMember : EncounterEntityBase {
 			// Display the buttons for actions!
 			//TODO this should go for each item in the inventory
 			var Buttons = new List<GameObject>();
-			for (int i = 0; i < p.backingPartyMember.inventory.Count; i += 1)
+			items = p.Items();
+			for (int i = 0; i < items.Count; i += 1)
 			{
-				var weapon = p.backingPartyMember.inventory[i].GetDef(e.session);
+				var weapon = items[i].GetDef(e.session);
 				if (weapon.usableInbattle) {
 					UIButton go = e.CreateUIButton();
 					go.SetImage(weapon.image);
 					go.SetTooltip(weapon.Tooltip(), e.session);
-					var listener = new ApplyItem(p, i, this, e);
+					var listener = new ApplyItem(p, items[i], this, e);
 					go.SetOnClick(() => e.InstallListener(listener));
 					partyMemberActions.Add(go);
 					Buttons.Add(go.gameObject);
@@ -78,11 +83,11 @@ public class EncounterPartyMember : EncounterEntityBase {
 		Item item;
 		ItemDefinition itemDef;
 
-		public ApplyItem(EncounterPartyMember p, int w, Encounter.ActionListener previous, Encounter e) {
+		public ApplyItem(EncounterPartyMember p, Item i, Encounter.ActionListener previous, Encounter e) {
 			this.p = p;
 			this.e = e;
 			this.prev = previous;
-			this.item = p.backingPartyMember.inventory[w];
+			this.item = i;
 			this.itemDef = item.GetDef(e.session);
 		}
 		public void Update() {
@@ -185,9 +190,11 @@ public class EncounterPartyMember : EncounterEntityBase {
 		return backingPartyMember.pcName	;
 	}
 
-	protected override List<Item> Items() {
-		// TODO is this really wasteful? Also does that matter?
-		return backingPartyMember.inventory;
+	public override List<Item> Items() {
+		var rtn = new List<Item>();
+		rtn.AddRange(backingPartyMember.inventory);
+		rtn.AddRange(backingPartyMember.blessings);
+		return rtn;
 	}
 
 	public IEnumerator SwapWith(EncounterPartyMember p) {
