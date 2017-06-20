@@ -165,7 +165,8 @@ public class SessionManager : MonoBehaviour {
 		yield return null;
 		int requiredRoomCount = 37;
 
-		List<RoomContents> contents = BuildRoomContents(requiredRoomCount);
+		int difficulty = (state.floors.Count * 7) + 5;
+		List<RoomContents> contents = BuildRoomContents(requiredRoomCount, difficulty);
 
 
 		while (layout.rooms.Count < requiredRoomCount) {
@@ -245,7 +246,7 @@ public class SessionManager : MonoBehaviour {
 
 	}
 
-	List<RoomContents> BuildRoomContents(int desiredCount) {
+	List<RoomContents> BuildRoomContents(int desiredCount, int difficulty) {
 		var rtn = new List<RoomContents>();
 		for (int i = 0; i < 1; i += 1) {
 			rtn.Add(new RoomContents.NextFloor());
@@ -260,7 +261,7 @@ public class SessionManager : MonoBehaviour {
 			rtn.Add(new RoomContents.NewPartyMember());
 		}
 		for (int i = 0; i < 18; i += 1) {
-			rtn.Add(BuildEncounter(12));
+			rtn.Add(BuildEncounter(difficulty));
 		}
 		while (rtn.Count<desiredCount) {
 			rtn.Add(new RoomContents.Empty());
