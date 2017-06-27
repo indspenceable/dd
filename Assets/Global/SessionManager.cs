@@ -18,6 +18,7 @@ public class SessionManager : MonoBehaviour {
 	[SerializeField] public List<ItemDefinition> itemDefs;
 	[SerializeField] public List<MonsterDefinition> monsterDefs;
 	[SerializeField] public List<PartyMember> startingParty;
+	[SerializeField] public List<Zone> zones;
 
 	[System.Serializable]
 	public struct RoomIcons {
@@ -63,7 +64,7 @@ public class SessionManager : MonoBehaviour {
 		KillCurrentMode();
 		_state = new GameState();
 		_state.money = 1000;
-		yield return BuildAndAddLayout();
+		yield return BuildAndAddLayout(zones[0]);
 		yield return BuildParty();
 		SwapToManagement();
 		StartCoroutine(CheckSaves());
@@ -159,15 +160,16 @@ public class SessionManager : MonoBehaviour {
 		return state.layout.rooms[roomIndex];
 	}
 
-	public IEnumerator BuildAndAddLayout() {
+	public IEnumerator BuildAndAddLayout(Zone z) {
 		Layout layout = new Layout();
 		layout.rooms.Add(new RoomData(new Coord(5,5)));
 		layout.rooms[0].Clear(true);
+		layout.Zone = zones.IndexOf(z);
 		yield return null;
 		int requiredRoomCount = 37;
 
 		int difficulty = (state.floors.Count * 7) + 5;
-		List<RoomContents> contents = BuildRoomContents(requiredRoomCount, difficulty);
+		List<RoomContents> contents = BuildRoomContents(z, requiredRoomCount, difficulty);
 
 
 		while (layout.rooms.Count < requiredRoomCount) {
@@ -195,10 +197,10 @@ public class SessionManager : MonoBehaviour {
 		state.floors.Add(layout);
 	}
 
-	int RandomMonsterDefByDifficulty(int desiredDifficulty) {
+	int RandomMonsterDefByDifficulty(Zone z, int desiredDifficulty) {
 		int currentDifficulty = desiredDifficulty;
 		while (currentDifficulty>0) {
-			List<MonsterDefinition> defs = monsterDefs.FindAll(m => m.difficulty == currentDifficulty);
+			List<MonsterDefinition> defs = z.monsterDefs.FindAll(m => m.difficulty == currentDifficulty);
 			if (defs.Count > 0) {
 				Util.Shuffle(defs);
 				return monsterDefs.IndexOf(defs[0]);
@@ -209,7 +211,7 @@ public class SessionManager : MonoBehaviour {
 		return 0;
 	}
 
-	RoomContents.Encounter BuildEncounter(int desiredDifficulty)  {
+	RoomContents.Encounter BuildEncounter(Zone z, int desiredDifficulty)  {
 		var ec = new RoomContents.Encounter();
 		ec.monsters = new List<int>();
 		int NumberOfMonsters = Random.Range(1,6);
@@ -240,17 +242,17 @@ public class SessionManager : MonoBehaviour {
 //		Debug.Log("Total difficulty: " + (NumberOfMonsters + sum));
 
 		for (int i = 0; i < NumberOfMonsters; i += 1) {
-			ec.monsters.Add(RandomMonsterDefByDifficulty(monsterDifficulty[i]));
+			ec.monsters.Add(RandomMonsterDefByDifficulty(z, monsterDifficulty[i]));
 		}
 
 		return ec;
 
 	}
 
-	List<RoomContents> BuildRoomContents(int desiredCount, int difficulty) {
+	List<RoomContents> BuildRoomContents(Zone z, int desiredCount, int difficulty) {
 		var rtn = new List<RoomContents>();
-		for (int i = 0; i < 1; i += 1) {
-			rtn.Add(new RoomContents.NextFloor());
+		for (int i = 0; i < 2; i += 1) {
+			rtn.Add(new RoomContents.NextFloor(Random.Range(0, zones.Count)));
 		}
 		for (int i = 0; i < 3; i += 1) {
 			rtn.Add(new RoomContents.Shop(this));
@@ -264,9 +266,9 @@ public class SessionManager : MonoBehaviour {
 		for (int i = 0; i < 3; i += 1) {
 		rtn.Add(new RoomContents.MinorBlessing(RANDOM_BLESSING___()));
 		}
-		for (int i = 0; i < 18; i += 1) {
-			rtn.Add(BuildEncounter(difficulty));
-		}
+//		for (int i = 0; i < 18; i += 1) {
+//			rtn.Add(BuildEncounter(z, difficulty));
+//		}
 		while (rtn.Count<desiredCount) {
 			rtn.Add(new RoomContents.Empty());
 		}

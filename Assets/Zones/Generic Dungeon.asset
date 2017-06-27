@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d321571d37349dabc8ab0b1c43a01d, type: 3}
+  m_Name: Generic Dungeon
+  m_EditorClassIdentifier: 
+  monsterDefs:
+  - {fileID: 11400000, guid: 7fad0f4f2891c47a786b70a3a244517d, type: 2}
+  - {fileID: 11400000, guid: 2a0b09f1484824fdbbba936964f13291, type: 2}
+  - {fileID: 11400000, guid: e768544824e1047dca11d83f11938cea, type: 2}
+  - {fileID: 11400000, guid: 83709f314c430490b91d7a80040e5150, type: 2}
+  - {fileID: 11400000, guid: 7cdddbcb5245e4ec18df266e028e62b2, type: 2}
+  - {fileID: 11400000, guid: 38eb0d5f1a3324031a0379c30ecc377f, type: 2}
+  - {fileID: 11400000, guid: f0100514fbf354337b7b629c2bdf2ef9, type: 2}
+  - {fileID: 11400000, guid: 7fad0f4f2891c47a786b70a3a244517d, type: 2}
+  description: a gross cave

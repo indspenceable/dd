@@ -117,19 +117,27 @@ public abstract class RoomContents {
 
 	[System.Serializable]
 	public class NextFloor : RoomContents {
+		public int z;
+		public NextFloor(int z) {
+			this.z = z;
+		}
 		public override bool Equals(System.Object obj) {
 			NextFloor o = obj as NextFloor;
 			if (o == null) return false;
 			return true;
 		}
 		public override IEnumerator Install(SessionManager session, int roomIndex) {
-			if (session.GetRoom(roomIndex).state == RoomData.State.UNEXPLORED) {
-				yield return session.ui.TextBox("You found a wormhole to a new floor!\n\nRevisist this location to travel through it.");
-				session.GetRoom(roomIndex).Clear(false);
-			} else {
-				yield return session.ui.TextBox("You travel through the wormhole and find yourself on a new floor of the dungeon...");
-				yield return session.BuildAndAddLayout();
-			}
+			yield return session.ui.TextBox("It's an exit to the next floor of the dungeon. Peering through, you can see it leads to " + session.zones[z].description + ". Proceed?",
+				new TextBox.Choice("Continue", Descend(session)),
+				new TextBox.Choice("Not yet", Nothing()));
+		}
+		public IEnumerator Nothing()  {
+			yield return null;
+		}
+
+		public IEnumerator Descend(SessionManager session) {
+			yield return session.ui.TextBox("You descend to the next floor of the dungeon.");
+			yield return session.BuildAndAddLayout(session.zones[z]);
 			session.SwapToMapMode();
 		}
 		public override Sprite ExploredSprite(SessionManager session)
@@ -215,6 +223,7 @@ public class PartyMember {
 		PartyMember o = obj as PartyMember;
 		if (o == null) return false;
 		return Util.ListEquals(inventory, o.inventory) && 
+			Util.ListEquals(blessings, o.blessings) &&
 			image == o.image &&
 			hp == o.hp &&
 			damage == o.damage &&
@@ -257,13 +266,16 @@ public class RoomData {
 }
 [System.Serializable]
 public class Layout {
+	public int Zone;
 	public List<RoomData> rooms = new List<RoomData>();
 	public List<Coord> doors = new List<Coord>();
-
 	public override bool Equals(System.Object obj) {
 		Layout o = obj as Layout;
 		if (o == null) return false;
-		return Util.ListEquals(rooms, o.rooms) && Util.ListEquals(doors, o.doors);
+		return Util.ListEquals(rooms, o.rooms) && Util.ListEquals(doors, o.doors) && Zone == o.Zone;
+	}
+	public Zone GetZone(SessionManager session) {
+		return session.zones[Zone];
 	}
 }
 
