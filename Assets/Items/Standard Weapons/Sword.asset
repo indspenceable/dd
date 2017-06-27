@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Sword
   description: A sharp blade; very efficient at cutting through monsters.
+  blessingName: 
+  blessingDescription: 
   image: {fileID: 21300000, guid: ef6b23b11d8fe4934bdf37db7d06cc0f, type: 3}
   isLoot: 1
   isBlessing: 0
@@ -22,11 +24,11 @@ MonoBehaviour:
   accuracy: 0.9
   neverMiss: 0
   armorPierce: 0
-  readyTime: 6
+  readyTime: 9
   itemActivationEffect: {fileID: 1195996672295582, guid: 757dde25989784d8aa0f4f335fe568c3,
     type: 2}
   activationEffect:
-    damage: 6
+    damage: 3
     effect: {fileID: 0}
   numberOfCharges: -1
   modifier:

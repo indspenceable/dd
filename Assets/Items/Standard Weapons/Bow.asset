@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   itemName: Bow
-  description: 3/3
+  description: 
+  blessingName: 
+  blessingDescription: 
   image: {fileID: 21300020, guid: 439fafd2740a144968138dbe5010332a, type: 3}
   isLoot: 1
   isBlessing: 0
@@ -26,7 +28,7 @@ MonoBehaviour:
   itemActivationEffect: {fileID: 1195996672295582, guid: 757dde25989784d8aa0f4f335fe568c3,
     type: 2}
   activationEffect:
-    damage: 3
+    damage: 1
     effect: {fileID: 0}
   numberOfCharges: -1
   modifier:

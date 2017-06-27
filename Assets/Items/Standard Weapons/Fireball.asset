@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Tome of Fireball
   description: 12/9
+  blessingName: 
+  blessingDescription: 
   image: {fileID: 21300000, guid: f88d9d027025e4cd487a320ea181fba5, type: 3}
   isLoot: 1
   isBlessing: 0
@@ -22,11 +24,11 @@ MonoBehaviour:
   accuracy: 1
   neverMiss: 1
   armorPierce: 1
-  readyTime: 12
+  readyTime: 20
   itemActivationEffect: {fileID: 1195996672295582, guid: 3ad995b8ac4f2433fb26734093231cda,
     type: 2}
   activationEffect:
-    damage: 15
+    damage: 10
     effect: {fileID: 0}
   numberOfCharges: -1
   modifier:

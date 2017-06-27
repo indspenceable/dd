@@ -9,26 +9,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b14bd702e83724e029d462027c58b521, type: 3}
-  m_Name: WEAK_MAGIC
+  m_Name: Armor Pierce Blessing
   m_EditorClassIdentifier: 
-  itemName: Pixiedust
+  itemName: Armor Chip
   description: 
-  blessingName: 
-  blessingDescription: 
-  image: {fileID: 21300040, guid: 439fafd2740a144968138dbe5010332a, type: 3}
+  blessingName: Armor Chip
+  blessingDescription: blessing allowing you to destroy your enemies armor
+  image: {fileID: 21300086, guid: a72211e1c833246d49b9b2825b388f1d, type: 3}
   isLoot: 0
-  isBlessing: 0
+  isBlessing: 1
   cost: 0
   usableInbattle: 1
   target: 0
   accuracy: 1
   neverMiss: 1
-  armorPierce: 1
-  readyTime: 8
-  itemActivationEffect: {fileID: 0}
+  armorPierce: 0
+  readyTime: 10
+  itemActivationEffect: {fileID: 1195996672295582, guid: e3a3b20a330334e6d9f1e75f3059362d,
+    type: 2}
   activationEffect:
     damage: 2
-    effect: {fileID: 0}
+    effect: {fileID: 11400000, guid: f458cf9d8124843b59ba71bbf9f530bf, type: 2}
   numberOfCharges: -1
   modifier:
     armor: 0

@@ -13,11 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Ring of Speed
   description: 20% faster charge
-  blessingName: Blessing of Speed
-  blessingDescription: blessing increasing the speed of their actions
+  blessingName: 
+  blessingDescription: 
   image: {fileID: 21300018, guid: e7331c44774194a6ebbdfdcd75d4040a, type: 3}
   isLoot: 1
-  isBlessing: 1
+  isBlessing: 0
   cost: 750
   usableInbattle: 0
   target: 0
