@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbb49996fda9949bab62f4f39a5dc270, type: 3}
+  m_Name: 30 Goblin Savant
+  m_EditorClassIdentifier: 
+  monsterName: 
+  image: {fileID: 21300010, guid: b1545ec7d3c524a178104ae194e945e9, type: 3}
+  items:
+  - {fileID: 11400000, guid: 352bf221067174f57a34dd06cfc9e3c2, type: 2}
+  hp: 25
+  armor: 7
+  evasion: 0.5
+  difficulty: 30
