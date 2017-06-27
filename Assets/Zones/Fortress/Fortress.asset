@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83d321571d37349dabc8ab0b1c43a01d, type: 3}
-  m_Name: Goblin Fortress
+  m_Name: Fortress
   m_EditorClassIdentifier: 
   monsterDefs:
   - {fileID: 11400000, guid: 5b137d1b0b0be4bd9b29589a6fc5d40c, type: 2}
@@ -31,4 +31,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e7d3f7dc9cb374e1d90e6ea39348b63f, type: 2}
   - {fileID: 11400000, guid: c1fb2aeaa53274cf6b327825e17f8b84, type: 2}
   - {fileID: 11400000, guid: f8b89c5d52528402ba30f2609640314e, type: 2}
-  description: a heavy guarded goblin fortress
+  description: a heavy guarded fortress
